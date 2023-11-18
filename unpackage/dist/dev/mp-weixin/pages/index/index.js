@@ -165,6 +165,7 @@ var _default = {
       },
       canvasInfo: {},
       // 当前画布信息
+      wrapperStyleBase: '',
       canvasWrapperStyle: '',
       scaleRatio: 1,
       // canvas 缩放比例
@@ -201,16 +202,18 @@ var _default = {
   onLoad: function onLoad() {
     var systemInfo = uni.getSystemInfoSync();
     this.wrapperBox = {
-      width: systemInfo.windowWidth,
+      width: systemInfo.windowWidth - 20,
       // height: systemInfo.windowHeight,
-      height: systemInfo.windowWidth
+      height: systemInfo.windowWidth - 20
     };
   },
   mounted: function mounted() {
     this.initCanvas();
     // 获取canvas上下文对象
     this.canvasContext = uni.createCanvasContext('seatCanvas', this);
-    this.canvasContext.scale(this.scaleRatio, this.scaleRatio);
+    // this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+    // this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
+    this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, ";transform: scale(").concat(this.scaleRatio, ")");
     console.log(this.scaleRatio, '==ration');
     // 加载座位数据
     // this.loadSeatData();
@@ -243,7 +246,9 @@ var _default = {
       }
       this.scaleRatio = scale;
       console.log("scale==", this.scaleRatio);
-      this.canvasStyle = "width: ".concat(width, "px; height: ").concat(height, "px;");
+      var style = "width: ".concat(width, "px; height: ").concat(height, "px;");
+      this.canvasStyle = style;
+      this.wrapperStyleBase = this.canvasWrapperStyle = style;
     },
     calculateBoundingRectangle: function calculateBoundingRectangle() {
       var minX = Infinity;
@@ -514,14 +519,9 @@ var _default = {
         // // 根据缩放比例计算真实坐标
         var offsetX = x / this.scaleRatio;
         var offsetY = y / this.scaleRatio;
-        // this.drawData(false)
         var cOffsetX = -offsetX + this.wrapperBox.width / 2;
         var cOffsetY = -offsetY + this.wrapperBox.height / 2;
-        // this.canvasStyle =
-        // 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${cOffsetX}px; top: ${cOffsetY}px;`
-        // this.canvasContext.draw()
-        this.canvasWrapperStyle = "transform: translate(".concat(100, "px, ", 200, "px) scale(", 1 / this.scaleRatio, ")");
-        // this.canvasWrapperStyle = `transform: translate(${cOffsetX}px, ${cOffsetY}px) scale(${this.scaleRatio})`
+        this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, "; transform: translate(").concat(cOffsetX, "px, ").concat(cOffsetY, "px) scale(", 1, ")");
         this.lastTapTime = null;
         this.lastTapPos = {
           x: null,
@@ -565,8 +565,9 @@ var _default = {
         // canvas.style.transform = `scale(${scale})`;
         // 处理缩放
         // this.drawData(false)
-        // const offsetX = -this.wrapperBox.width / 2 * (scale - 1)
-        // const offsetY = -this.wrapperBox.height / 2 * (scale - 1)
+        var offsetX = -this.wrapperBox.width / 2 * (scale - 1);
+        var offsetY = -this.wrapperBox.height / 2 * (scale - 1);
+        this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, "; transform: translate(").concat(offsetX, "px, ").concat(offsetY, "px) scale(").concat(scale, ")");
         // this.canvasContext.scale(scale, scale)
         // this.canvasStyle =
         // 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`

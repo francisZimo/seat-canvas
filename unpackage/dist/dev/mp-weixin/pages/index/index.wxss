@@ -38,6 +38,9 @@
   position: absolute;
   left: 0;
   top: 0;
+  -webkit-transform-origin: left top;
+          transform-origin: left top;
+  border: 1px solid red;
 }
 .canvas-box.data-v-57280228 {
   position: absolute;

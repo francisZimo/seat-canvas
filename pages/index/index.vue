@@ -24,6 +24,7 @@ export default {
 				height: 400
 			},
 			canvasInfo: {}, // 当前画布信息
+			wrapperStyleBase: '',
 			canvasWrapperStyle: '',
 			scaleRatio: 1, // canvas 缩放比例
 			lastTapTime: null,
@@ -60,16 +61,18 @@ export default {
 	onLoad() {
 		const systemInfo = uni.getSystemInfoSync();
 		this.wrapperBox = {
-			width: systemInfo.windowWidth,
+			width: systemInfo.windowWidth - 20,
 			// height: systemInfo.windowHeight,
-			height: systemInfo.windowWidth
+			height: systemInfo.windowWidth - 20
 		}
 	},
 	mounted() {
 		this.initCanvas()
 		// 获取canvas上下文对象
 		this.canvasContext = uni.createCanvasContext('seatCanvas', this);
-		this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+		// this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+		// this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
+		this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
 		console.log(this.scaleRatio, '==ration')
 		// 加载座位数据
 		// this.loadSeatData();
@@ -104,10 +107,9 @@ export default {
 			}
 			this.scaleRatio = scale
 			console.log("scale==", this.scaleRatio)
-
-			this.canvasStyle = `width: ${width}px; height: ${height}px;`;
-
-
+			const style = `width: ${width}px; height: ${height}px;`
+			this.canvasStyle = style;
+			this.wrapperStyleBase = this.canvasWrapperStyle = style;
 		},
 
 		calculateBoundingRectangle() {
@@ -409,14 +411,9 @@ export default {
 				// // 根据缩放比例计算真实坐标
 				let offsetX = x / this.scaleRatio;
 				let offsetY = y / this.scaleRatio;
-				// this.drawData(false)
 				const cOffsetX = -offsetX + this.wrapperBox.width / 2;
 				const cOffsetY = -offsetY + this.wrapperBox.height / 2;
-				// this.canvasStyle =
-				// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${cOffsetX}px; top: ${cOffsetY}px;`
-				// this.canvasContext.draw()
-				this.canvasWrapperStyle = `transform: translate(${100}px, ${200}px) scale(${1 / this.scaleRatio})`
-				// this.canvasWrapperStyle = `transform: translate(${cOffsetX}px, ${cOffsetY}px) scale(${this.scaleRatio})`
+				this.canvasWrapperStyle = `${this.wrapperStyleBase}; transform: translate(${cOffsetX}px, ${cOffsetY}px) scale(${1})`
 				this.lastTapTime = null;
 				this.lastTapPos = {
 					x: null,
@@ -464,8 +461,9 @@ export default {
 				// canvas.style.transform = `scale(${scale})`;
 				// 处理缩放
 				// this.drawData(false)
-				// const offsetX = -this.wrapperBox.width / 2 * (scale - 1)
-				// const offsetY = -this.wrapperBox.height / 2 * (scale - 1)
+				const offsetX = -this.wrapperBox.width / 2 * (scale - 1)
+				const offsetY = -this.wrapperBox.height / 2 * (scale - 1)
+				this.canvasWrapperStyle = `${this.wrapperStyleBase}; transform: translate(${offsetX}px, ${offsetY}px) scale(${scale})`
 				// this.canvasContext.scale(scale, scale)
 				// this.canvasStyle =
 				// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`
@@ -498,6 +496,8 @@ export default {
 		position: absolute;
 		left: 0;
 		top: 0;
+		transform-origin: left top;
+		border: 1px solid red;
 	}
 
 }
