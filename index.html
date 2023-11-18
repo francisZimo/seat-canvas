@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<script>
+			var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+				CSS.supports('top: constant(a)'))
+			document.write(
+				'<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+				(coverSupport ? ', viewport-fit=cover' : '') + '" />')
+		</script>
+		<script>
+			(function() {
+				var src = '//eruda.liriliri.io/eruda.min.js';
+				if (!/eruda=true/.test(window.location)) return;
+				document.write('<scr' + 'ipt src="' + src + '"></scr' + 'ipt>');
+				setTimeout(() => {
+					// 初始化
+					eruda && eruda.init()
+				}, 3000)
+			})();
+		</script>
+
+		<script>
+			(function() {
+				var script = document.createElement('script');
+				script.src = "https://cdn.jsdelivr.net/npm/eruda";
+				document.body.append(script);
+				console.log('eruda==')
+				script.onload = function() {
+					eruda.init();
+				}
+			})();
+			console.log('==hha')
+		</script>
+		<title></title>
+		<!--preload-links-->
+		<!--app-context-->
+	</head>
+	<body>
+		<div id="app"><!--app-html--></div>
+		<script type="module" src="/main.js"></script>
+	</body>
+</html>

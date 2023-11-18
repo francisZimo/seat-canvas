@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "eruda": "^3.0.1",
+    "fabric": "^5.3.0"
+  }
+}
