@@ -70,7 +70,7 @@ export default {
 		this.initCanvas()
 		// 获取canvas上下文对象
 		this.canvasContext = uni.createCanvasContext('seatCanvas', this);
-		// this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+		this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
 		// this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
 		this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
 		console.log(this.scaleRatio, '==ration')
