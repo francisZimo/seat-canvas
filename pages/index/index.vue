@@ -1,17 +1,38 @@
 <template>
-	<view class="content" :style="{ width: wrapperBox.width + 'px', height: wrapperBox.height + 'px' }">
-		<view class="canvas-wrapper" :style="canvasWrapperStyle">
-			<canvas class="canvas-box" :style="canvasStyle" canvas-id="seatCanvas" @touchstart="onCanvasTouchStart"
-				@touchmove="onCanvasTouchMove" id="seatCanvas"></canvas>
-		</view>
+	<movable-area>
+		<movable-view direction="all" out-of-bounds>text</movable-view>
+	</movable-area>
 
-	</view>
+	<!-- <movable-area :scale-area="true" class="area-wrap"
+		:style="{ width: wrapperBox.width + 'px', height: wrapperBox.height + 'px' }">
+		<movable-view class="view-wrap" direction="all" out-of-bounds scale scale-min="0.1" scale-max="10"
+			:style="{ width: canvasInfo.width*scaleRatio + 'px', height: canvasInfo.height*scaleRatio + 'px' }"
+			@scale="onScale">
+
+			<canvas class="canvas-box" :style="canvasStyle" canvas-id="seatCanvas" @touchstart="onCanvasTouchStart"
+					@touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd" id="seatCanvas"></canvas>
+		</movable-view>
+	</movable-area> -->
+	<!-- <view class="content" :style="{ width: wrapperBox.width + 'px', height: wrapperBox.height + 'px' }">
+		<movable-area>
+			<movable-view :x="x" :y="y" direction="all" @change="onChange">
+
+
+				<canvas class="canvas-box" :style="canvasStyle" canvas-id="seatCanvas" @touchstart="onCanvasTouchStart"
+					@touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd" id="seatCanvas"></canvas>
+
+			</movable-view>
+		</movable-area>
+	</view> -->
 </template>
 
 <script>
 import {
 	seatInfo
 } from './seatData.js'
+// import { throttle } from 'lodash';
+import _ from 'lodash'
+
 
 let initialDistance = null;
 let scale = 1;
@@ -19,6 +40,13 @@ console.log(seatInfo, '==seatInfo')
 export default {
 	data() {
 		return {
+			scaleValue: 1,
+			x: 0,
+			y: 0,
+			old: {
+				x: 0,
+				y: 0
+			},
 			wrapperBox: {
 				width: 400,
 				height: 400
@@ -26,6 +54,7 @@ export default {
 			canvasInfo: {}, // 当前画布信息
 			canvasWrapperStyle: '',
 			scaleRatio: 1, // canvas 缩放比例
+			scaleRationBase: 1, // 底层缩放
 			lastTapTime: null,
 			lastTapPos: {
 				x: null,
@@ -62,15 +91,16 @@ export default {
 		this.wrapperBox = {
 			width: systemInfo.windowWidth,
 			// height: systemInfo.windowHeight,
-			height: systemInfo.windowWidth
+			height: systemInfo.windowHeight - 300
 		}
 	},
 	mounted() {
 		this.initCanvas()
 		// 获取canvas上下文对象
 		this.canvasContext = uni.createCanvasContext('seatCanvas', this);
+		//  this.canvasInfo
 		this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
-		console.log(this.scaleRatio, '==ration')
+
 		// 加载座位数据
 		// this.loadSeatData();
 
@@ -84,10 +114,40 @@ export default {
 	},
 
 	methods: {
+		onScale(e) {
+			console.log(e.detail.scale, '==scale')
+		},
+		tap: function (e) {
+			this.x = this.old.x
+			this.y = this.old.y
+			this.$nextTick(function () {
+				this.x = 30
+				this.y = 30
+			})
+		},
+		onTouchStart() {
+			console.log("touchstart");
+		},
+		onTouchMove() {
+			console.log("touchmove");
+		},
+		onTouchEnd() {
+			console.log("touchend");
+		},
+		onChange(e) {
+			console.log(e, '==e')
+			console.log("change");
+		},
+
+		// onChange: function (e) {
+		// 	console.log(e, '===e')
+		// 	this.old.x = e.detail.x
+		// 	this.old.y = e.detail.y
+		// },
 		initCanvas() {
 			const rectCanvas = this.calculateBoundingRectangle()
 			this.canvasInfo = rectCanvas
-			console.log(rectCanvas, '==rectCanvas')
+
 			const {
 				x,
 				y,
@@ -102,10 +162,12 @@ export default {
 			} else {
 				scale = this.wrapperBox.height / height
 			}
-			this.scaleRatio = scale
-			console.log("scale==", this.scaleRatio)
+			this.scaleRatio = scale;
+			this.scaleRationBase = scale;
 
-			this.canvasStyle = `width: ${width}px; height: ${height}px;`;
+
+			// this.canvasStyle = `width: ${width}px; height: ${height}px;`;
+			this.canvasStyle = `width: ${width * this.scaleRatio}px; height: ${height * this.scaleRatio}px;`;
 
 
 		},
@@ -121,10 +183,10 @@ export default {
 				const x = item.p.location.x;
 				const y = item.p.location.y;
 				if (!item.p.width) {
-					console.log(item)
+					// console.log(item)
 				}
 				if (!item.p.height) {
-					console.log(item)
+					// console.log(item)
 				}
 
 				const width = item.p.width || 0;
@@ -217,7 +279,7 @@ export default {
 					y: item.y - this.baseYPoint
 				}
 			})
-			console.log(points, '==points')
+
 			this.drawPolygon({
 				context: this.canvasContext,
 				points
@@ -278,7 +340,7 @@ export default {
 				y: position.location.y - this.baseYPoint + (style['label.yoffset'] || 0),
 				name: position.name
 			}
-			console.log(payload, '==payload')
+
 			this.drawText(payload)
 		},
 
@@ -317,7 +379,7 @@ export default {
 				}
 
 				if (type === 'region') {
-					console.log('==region')
+
 					this.handleRegion(item)
 				}
 
@@ -388,10 +450,10 @@ export default {
 			console.log(e.touches, '==touches')
 			if (e.touches.length >= 2) {
 				// 计算两点之间的距离
-				let xMove = event.touches[0].clientX - event.touches[1].clientX;
-				let yMove = event.touches[0].clientY - event.touches[1].clientY;
+				let xMove = event.touches[0].x - event.touches[1].y;
+				let yMove = event.touches[0].x - event.touches[1].y;
 				initialDistance = Math.sqrt(xMove * xMove + yMove * yMove);
-				console.log('缩放 2指间')
+				console.log('缩放 2指间', initialDistance)
 				return;
 			}
 			// 获取触摸点坐标
@@ -409,27 +471,25 @@ export default {
 				// // 根据缩放比例计算真实坐标
 				let offsetX = x / this.scaleRatio;
 				let offsetY = y / this.scaleRatio;
-				// this.drawData(false)
+				this.drawData(false)
 				const cOffsetX = -offsetX + this.wrapperBox.width / 2;
 				const cOffsetY = -offsetY + this.wrapperBox.height / 2;
-				// this.canvasStyle =
-				// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${cOffsetX}px; top: ${cOffsetY}px;`
-				// this.canvasContext.draw()
-				this.canvasWrapperStyle = `transform: translate(${100}px, ${200}px) scale(${1 / this.scaleRatio})`
-				// this.canvasWrapperStyle = `transform: translate(${cOffsetX}px, ${cOffsetY}px) scale(${this.scaleRatio})`
+				this.canvasStyle =
+					` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${cOffsetX}px; top: ${cOffsetY}px;`
+				this.canvasContext.draw()
 				this.lastTapTime = null;
 				this.lastTapPos = {
 					x: null,
 					y: null
 				};
 			} else {
-				console.log('chufa')
+				// console.log('chufa')
 				this.lastTapTime = currentTime;
 				this.lastTapPos = {
 					x: e.touches[0].x,
 					y: e.touches[0].y
 				};
-				console.log(this.lastTapPos, '===lastTables')
+				// console.log(this.lastTapPos, '===lastTables')
 			}
 
 			// // 判断是否点击到座位
@@ -445,39 +505,61 @@ export default {
 
 
 		},
-		onCanvasTouchMove(event) {
-			if (event.touches.length >= 2) {
-				let xMove = event.touches[0].x - event.touches[1].x;
-				let yMove = event.touches[0].y - event.touches[1].y;
+		onCanvasTouchMove: _.throttle(function (event) {
+			console.log('move')
+			// if (event.touches.length >= 2) {
+			// 	console.log('双指 缩放')
+			// 	let xMove = event.touches[0].x - event.touches[1].x;
+			// 	let yMove = event.touches[0].y - event.touches[1].y;
 
-				// 新的触摸点间距离
-				let distance = Math.sqrt(xMove * xMove + yMove * yMove);
-
-				// 计算新旧触摸点间距离差异, 得到缩放值
-				scale *= distance / initialDistance;
-
-				// 确保scale值在  范围内 
-				scale = Math.max(this.scaleRatio, Math.min(scale, 1));
-
+			// 	// 新的触摸点间距离
+			// 	let distance = Math.sqrt(xMove * xMove + yMove * yMove);
+			// 	console.log(distance, '==distance')
+			// 	// 判断是放大还是缩小
+			// 	let isShrink = distance < initialDistance;
 
 
-				// canvas.style.transform = `scale(${scale})`;
-				// 处理缩放
-				// this.drawData(false)
-				// const offsetX = -this.wrapperBox.width / 2 * (scale - 1)
-				// const offsetY = -this.wrapperBox.height / 2 * (scale - 1)
-				// this.canvasContext.scale(scale, scale)
-				// this.canvasStyle =
-				// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`
-				// this.canvasContext.draw()
+			// 	// 计算新旧触摸点间距离差异, 得到缩放值
+			// 	scale *= distance / initialDistance;
+			// 	scale *= 0.5
+			// 	scale = isShrink ? -scale : scale
+
+			// 	// 确保scale值在  范围内 
+			// 	// scale = Math.max(this.scaleRatio, Math.min(scale, 1));
+
+			// 	console.log(scale, '===scale')
+			// 	this.scaleRatio += scale;
+			// 	scale = Math.max(this.scaleRationBase, Math.min(this.scaleRatio, 1));
+			// 	this.scaleRatio = Math.abs(scale);
+			// 	console.log(this.scaleRatio, '===this.scaleRatio')
 
 
+			// 	// 处理缩放
+			// 	this.drawData(false)
+			// 	// const offsetX = this.wrapperBox.width / 2 * (this.scaleRatio - 1)
+			// 	// const offsetY = this.wrapperBox.height / 2 * (this.scaleRatio - 1)
+			// 	const offsetX = this.canvasInfo.width * this.scaleRatio / 2 + this.wrapperBox.width / 2
+			// 	const offsetY = this.canvasInfo.height * this.scaleRatio / 2 + this.wrapperBox.height / 2
+			// 	console.log(offsetX, offsetY, '==offest', this.scaleRatio)
+			// 	// this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+			// 	// this.canvasContext.scale(1, 1)
 
-				// 更新initialDistance为当前distance
-				initialDistance = distance;
+			// 	this.canvasContext.draw()
+			// 	this.canvasStyle =
+			// 		` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
+			// 	// this.canvasStyle =
+			// 	// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`
+			// 	// 更新initialDistance为当前distance
+			// 	initialDistance = distance;
 
-			}
+			// }
+		}, 100),
+		onCanvasTouchEnd(event) {
+			// 重置
+			initialDistance = null;
+
 		}
+
 
 	}
 }
@@ -503,8 +585,78 @@ export default {
 }
 
 .canvas-box {
-	position: absolute;
-	left: 0;
-	top: 0;
+	// position: absolute;
+	// left: 0;
+	// top: 0;
+}
+
+.box {
+	width: 100px;
+	height: 100px;
+	background-color: red;
+}
+
+.area-wrap {
+	width: 400rpx;
+	height: 300rpx;
+	border: 1px solid red;
+	background-color: #f8f8f8;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.view-wrap {
+	width: 100px;
+	height: 100px;
+	border: 1px solid blue;
+	overflow: hidden;
+	background: blue;
+}
+
+// movable-view {
+// 	display: flex;
+// 	align-items: center;
+// 	justify-content: center;
+// 	height: 150rpx;
+// 	width: 150rpx;
+// 	background-color: #007AFF;
+// 	color: #fff;
+// }
+
+// movable-area {
+// 	height: 300rpx;
+// 	width: 100%;
+// 	background-color: #D8D8D8;
+// 	overflow: hidden;
+// }
+
+// .max {
+// 	width: 500rpx;
+// 	height: 500rpx;
+// }
+</style>
+<style>
+movable-view {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 150rpx;
+	width: 150rpx;
+	background-color: #007AFF;
+	color: #fff;
+}
+
+movable-area {
+	height: 300rpx;
+	width: 100%;
+	background-color: #D8D8D8;
+	overflow: hidden;
+}
+
+.max {
+	width: 500rpx;
+	height: 500rpx;
 }
 </style>
