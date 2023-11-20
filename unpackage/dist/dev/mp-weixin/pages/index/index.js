@@ -150,8 +150,6 @@ var _seatData = __webpack_require__(/*! ./seatData.js */ 40);
 //
 //
 //
-//
-//
 
 var initialDistance = null;
 var scale = 1;
@@ -212,21 +210,8 @@ var _default = {
     // 获取canvas上下文对象
     this.canvasContext = uni.createCanvasContext('seatCanvas', this);
     this.canvasContext.scale(this.scaleRatio, this.scaleRatio);
-    // this.canvasWrapperStyle = `${this.wrapperStyleBase};transform: scale(${this.scaleRatio})`
-    this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, ";transform: scale(").concat(this.scaleRatio, ")");
-    console.log(this.scaleRatio, '==ration');
-    // 加载座位数据
-    // this.loadSeatData();
-
-    // 绘制座位图
-    // this.drawSeatMap();
-
     this.drawData();
-
-    // var context = wx.createCanvasContext('first'); //还记得 在wxml里面canvas的id叫first吗
-    // this.wxCanvas = new wxDraw(context, 0, 0, 400, 500);
   },
-
   methods: {
     initCanvas: function initCanvas() {
       var rectCanvas = this.calculateBoundingRectangle();
@@ -245,7 +230,6 @@ var _default = {
         scale = this.wrapperBox.height / height;
       }
       this.scaleRatio = scale;
-      console.log("scale==", this.scaleRatio);
       var style = "width: ".concat(width, "px; height: ").concat(height, "px;");
       this.canvasStyle = style;
       this.wrapperStyleBase = this.canvasWrapperStyle = style;
@@ -453,45 +437,42 @@ var _default = {
       });
       isDraw && this.canvasContext.draw();
     },
-    drawSeatMap: function drawSeatMap() {
-      var _this3 = this;
-      // 清空画布
-      // this.canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
-      this.canvasContext.clearRect(0, 0, 1000, 1000);
-
-      // 绘制座位
-      this.seatData.forEach(function (seat) {
-        if (seat.type === 'rect') {
-          _this3.canvasContext.beginPath();
-          _this3.canvasContext.rect(seat.x, seat.y, seat.width, seat.height);
-          _this3.canvasContext.setFillStyle(seat.status === 'available' ? 'green' : 'red');
-          _this3.canvasContext.fill();
-          _this3.canvasContext.closePath();
-        }
-        if (seat.type === 'circle') {
-          _this3.canvasContext.beginPath();
-          _this3.canvasContext.arc(seat.x, seat.y, seat.radius, 0, 2 * Math.PI);
-          _this3.canvasContext.setFillStyle(seat.status === 'available' ? 'green' : 'red');
-          _this3.canvasContext.fill();
-          _this3.canvasContext.closePath();
-        }
-      });
-      if (this.selectedSeat) {
-        var _this$selectedSeat = this.selectedSeat,
-          x = _this$selectedSeat.x,
-          y = _this$selectedSeat.y,
-          radius = _this$selectedSeat.radius;
-        this.canvasContext.beginPath();
-        this.canvasContext.arc(x, y, radius, 0, 2 * Math.PI);
-        this.canvasContext.setFillStyle('blue');
-        this.canvasContext.fill();
-        this.canvasContext.closePath();
-      }
-
-      // 绘制完成
-
-      this.canvasContext.draw();
-    },
+    // drawSeatMap() {
+    // 	// 清空画布
+    // 	// this.canvasContext.clearRect(0, 0, canvasWidth, canvasHeight);
+    // 	this.canvasContext.clearRect(0, 0, 1000, 1000);
+    // 	// 绘制座位
+    // 	this.seatData.forEach(seat => {
+    // 		if (seat.type === 'rect') {
+    // 			this.canvasContext.beginPath();
+    // 			this.canvasContext.rect(seat.x, seat.y, seat.width, seat.height);
+    // 			this.canvasContext.setFillStyle(seat.status === 'available' ? 'green' : 'red');
+    // 			this.canvasContext.fill();
+    // 			this.canvasContext.closePath();
+    // 		}
+    // 		if (seat.type === 'circle') {
+    // 			this.canvasContext.beginPath();
+    // 			this.canvasContext.arc(seat.x, seat.y, seat.radius, 0, 2 * Math.PI);
+    // 			this.canvasContext.setFillStyle(seat.status === 'available' ? 'green' : 'red');
+    // 			this.canvasContext.fill();
+    // 			this.canvasContext.closePath();
+    // 		}
+    // 	});
+    // 	if (this.selectedSeat) {
+    // 		const {
+    // 			x,
+    // 			y,
+    // 			radius
+    // 		} = this.selectedSeat
+    // 		this.canvasContext.beginPath();
+    // 		this.canvasContext.arc(x, y, radius, 0, 2 * Math.PI);
+    // 		this.canvasContext.setFillStyle('blue');
+    // 		this.canvasContext.fill();
+    // 		this.canvasContext.closePath();
+    // 	}
+    // 	// 绘制完成
+    // 	this.canvasContext.draw();
+    // },
     zoomIn: function zoomIn() {
       console.log('双击放大');
     },
@@ -521,7 +502,13 @@ var _default = {
         var offsetY = y / this.scaleRatio;
         var cOffsetX = -offsetX + this.wrapperBox.width / 2;
         var cOffsetY = -offsetY + this.wrapperBox.height / 2;
-        this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, "; transform: translate(").concat(cOffsetX, "px, ").concat(cOffsetY, "px) scale(", 1, ")");
+        this.canvasContext.translate(cOffsetX, cOffsetY);
+        this.drawData(false);
+        this.canvasContext.scale(1);
+        this.canvasContext.draw();
+        console.log(this.wrapperStyleBase, '双击放大偏移', cOffsetX, cOffsetY);
+        // this.canvasWrapperStyle =
+        // 	`${this.wrapperStyleBase}; transform: translate(${cOffsetX}px, ${cOffsetY}px) scale(${1})`
         this.lastTapTime = null;
         this.lastTapPos = {
           x: null,
@@ -567,7 +554,9 @@ var _default = {
         // this.drawData(false)
         var offsetX = -this.wrapperBox.width / 2 * (scale - 1);
         var offsetY = -this.wrapperBox.height / 2 * (scale - 1);
-        this.canvasWrapperStyle = "".concat(this.wrapperStyleBase, "; transform: translate(").concat(offsetX, "px, ").concat(offsetY, "px) scale(").concat(scale, ")");
+
+        // 	this.canvasWrapperStyle =
+        // 		`${this.wrapperStyleBase}; transform: translate(${offsetX}px, ${offsetY}px) scale(${scale})`
         // this.canvasContext.scale(scale, scale)
         // this.canvasStyle =
         // 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`
