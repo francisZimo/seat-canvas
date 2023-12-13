@@ -5,6 +5,14 @@
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+
+		{
+			"path": "pages/index/movable",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
 		}
 	],
 	"globalStyle": {

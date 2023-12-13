@@ -1,8 +1,7 @@
 <template>
 	<view class="content" :style="{ width: wrapperBox.width + 'px', height: wrapperBox.height + 'px' }">
-		<!-- <view class="canvas-wrapper" :style="canvasWrapperStyle">	</view> -->
 		<canvas class="canvas-box" :style="canvasStyle" canvas-id="seatCanvas" @touchstart="onCanvasTouchStart"
-			@touchmove="onCanvasTouchMove" id="seatCanvas"></canvas>
+			@touchmove="onCanvasTouchMove" id="seatCanvas" @touchend="onCanvasTouchEnd"></canvas>
 	</view>
 </template>
 
@@ -10,6 +9,10 @@
 	import {
 		seatInfo
 	} from './seatData.js'
+	import {
+		throttle
+	} from 'lodash'
+
 
 	let initialDistance = null;
 	let scale = 1;
@@ -33,27 +36,15 @@
 				baseXPoint: 0,
 				baseYPoint: 0,
 				canvasStyle: 'border: 1px solid red',
-				title: 'Hello',
 				canvasContext: null, // canvas上下文对象
-				seatData: [{
-						id: 1,
-						x: 100,
-						y: 100,
-						radius: 50,
-						type: 'circle',
-						status: 'available'
-					},
-					{
-						id: 2,
-						x: 200,
-						y: 200,
-						radius: 50,
-						type: 'circle',
-						status: 'unavailable'
-					},
-
-				], // 座位数据
 				selectedSeat: null, // 当前选中的座位
+				touchStartX: 0, // 触摸起始点X坐标
+				touchStartY: 0, // 触摸起始点Y坐标
+				offsetX: 0, // X轴偏移量
+				offsetY: 0, // Y轴偏移量
+				isMoving: false,
+				canvasContext1: null,
+				tempImg: null //暂存图片
 			}
 		},
 		onLoad() {
@@ -66,13 +57,58 @@
 		},
 		mounted() {
 			this.initCanvas()
+			this.initOffscreenCanvas()
 			// 获取canvas上下文对象
 			this.canvasContext = uni.createCanvasContext('seatCanvas', this);
 			this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+
+			// this.canvasContext.getContext('2d')
+
+
 			this.drawData()
+			// this.canvasContext1
+			// this.canvasContext1.drawImage(canvasContext, 0, 0,
+			// 	500, 500);
+
 		},
 
 		methods: {
+			// copyToMain() {
+			// 	//从离屏画布复制到主画布上面显示
+			// 	let that = this;
+			// 	uni.canvasToTempFilePath({
+			// 		x: 0,
+			// 		y: 0,
+			// 		width: this.scale * 300,//假设初始大小为300*300
+			// 		height: this.scale * 300,
+			// 		destWidth: this.scale * 300,//目标大小也要按照比例缩放
+			// 		destHeight: this.scale * 300,
+			// 		canvasId: 'offscreenCanvas',
+			// 		success: (res) => {
+			// 			that.mainCtx.drawImage(res.tempFilePath, 0, 0, this.scale * 300, this.scale * 300);//假设我们想让它始终显示在主画布中央位置，那就需要计算一下位置。
+			// 			that.mainCtx.draw();
+			// 			console.log('h绘制完成', this.scale * 300)
+			// 		}
+			// 	}, this)
+			// },
+			// 创建离屏canvas
+			initOffscreenCanvas() {
+				console.log(this.canvasInfo, '==canvasInfo')
+				const canvas = uni.createOffscreenCanvas({
+					type: '2d',
+					width: this.canvasInfo.width,
+					height: this.canvasInfo.height
+				})
+				// 获取 context。注意这里必须要与创建时的 type 一致
+				const context = canvas.getContext('2d')
+				console.log(context, '===contextxx')
+				context.clearRect(0, 0, 300, 150)
+				context.clearRect(0, 0, 300, 300)
+
+				context.fillText('MINA', 100, 100)
+				this.canvasContext1 = context
+
+			},
 			initCanvas() {
 				const rectCanvas = this.calculateBoundingRectangle()
 				this.canvasInfo = rectCanvas;
@@ -108,10 +144,10 @@
 					const x = item.p.location.x;
 					const y = item.p.location.y;
 					if (!item.p.width) {
-						console.log(item)
+						// console.log(item)
 					}
 					if (!item.p.height) {
-						console.log(item)
+						// console.log(item)
 					}
 
 					const width = item.p.width || 0;
@@ -204,7 +240,6 @@
 						y: item.y - this.baseYPoint
 					}
 				})
-				console.log(points, '==points')
 				this.drawPolygon({
 					context: this.canvasContext,
 					points
@@ -265,7 +300,6 @@
 					y: position.location.y - this.baseYPoint + (style['label.yoffset'] || 0),
 					name: position.name
 				}
-				console.log(payload, '==payload')
 				this.drawText(payload)
 			},
 
@@ -369,9 +403,27 @@
 				console.log('双击放大')
 
 			},
+
 			onCanvasTouchStart(e) {
 				const event = e
-				console.log(e.touches, '==touches')
+				console.log(e.touches, '==touchesStart')
+				this.isMoving = false;
+
+				uni.canvasToTempFilePath({
+					x: 0,
+					y: 0,
+					// width: 1000,
+					// height: 1000,
+					// destWidth: 1000,
+					// destHeight: 1000,
+					canvasId: 'seatCanvas',
+					success: (res) => {
+						// 在H5平台下，tempFilePath 为 base64
+						console.log(res.tempFilePath, '==生成base64')
+						this.tempImg = res.tempFilePath
+					}
+				})
+
 				if (e.touches.length >= 2) {
 					// 计算两点之间的距离
 					let xMove = event.touches[0].clientX - event.touches[1].clientX;
@@ -383,6 +435,8 @@
 				// 获取触摸点坐标
 				const x = e.touches[0].x;
 				const y = e.touches[0].y;
+				this.touchStartX = x;
+				this.touchStartY = y;
 				console.log(x, y, '==xy')
 				let currentTime = e.timeStamp;
 				let gapTime = currentTime - (this.lastTapTime ? this.lastTapTime : 0);
@@ -434,7 +488,47 @@
 
 
 			},
-			onCanvasTouchMove(event) {
+			drawCanvas() {
+				console.log('drawCanvas', this.tempImg)
+				if (this.tempImg) {
+					console.log('===this.tempImg')
+
+					this.canvasContext.translate(this.offsetX, this.offsetY);
+
+					this.canvasContext.drawImage(this.tempImg, 0, 0, this.canvasInfo.width, this.canvasInfo
+						.height); //假设我们想让它始终显示在主画布中央位置，那就需要计算一下位置。
+					this.canvasContext.draw();
+					return;
+				}
+
+				// if (!this.isMoving) return;
+
+				this.canvasContext.translate(this.offsetX, this.offsetY);
+				this.canvasContext.scale(this.scaleRatio, this.scaleRatio)
+				this.drawData(false)
+
+				// console.log(scaleRatio)
+				this.canvasContext.draw();
+			},
+			onCanvasTouchMove: throttle(function(event) {
+				console.log('touchMove')
+				this.isMoving = true
+				if (event.touches.length == 1) {
+					this.touchMoveX = event.touches[0].x;
+					this.touchMoveY = event.touches[0].y;
+
+					const offsetX = this.touchMoveX - this.touchStartX;
+					const offsetY = this.touchMoveY - this.touchStartY;
+					if (Math.abs(offsetX) > 10 || Math.abs(offsetY) > 10) {
+						console.log('移动')
+					}
+					console.log(offsetX, offsetY, '===offset')
+					this.offsetX += offsetX;
+					this.offsetY += offsetY;
+					this.touchStartX = this.touchMoveX;
+					this.touchStartY = this.touchMoveY;
+					this.drawCanvas();
+				}
 				if (event.touches.length >= 2) {
 					let xMove = event.touches[0].x - event.touches[1].x;
 					let yMove = event.touches[0].y - event.touches[1].y;
@@ -462,13 +556,21 @@
 					// this.canvasStyle =
 					// 	` width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; left: ${offsetX}px; top: ${offsetY}px;`
 					// this.canvasContext.draw()
-
-
-
 					// 更新initialDistance为当前distance
 					initialDistance = distance;
 
 				}
+			}, 200),
+			onCanvasTouchEnd() {
+				console.log('touchEnd')
+				this.isMoving = false;
+				// setTimeout(() => {
+				// 	this.isMoving = false
+				// }, 1000)
+				this.tempImg = null;
+				this.drawCanvas();
+				// this.isMoveing = false
+
 			}
 
 		}
