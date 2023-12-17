@@ -64,6 +64,7 @@ export default {
 			imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
 			seatPosition: '',
 			isShowSeatImg: false,
+			curSelectSeat: null,
 		}
 	},
 	onLoad() {
@@ -160,11 +161,24 @@ export default {
 			this.draw()
 		},
 		draw() {
+
+
 			this.canvasClass.reset()
 			this.clearCanvas();
 			this.ctx.translate(this.offset.x, this.offset.y);
 			this.ctx.scale(this.scale, this.scale);
 			this.userDraw();
+
+			if (this.curSelectSeat) {
+				const config = this.curSelectSeat
+				const left = config.x * this.scale + this.offset.x + 'px'
+				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - 115 + 'px'
+				this.seatPosition = `left: ${left}; top: ${top};`
+
+			}
+
+
+
 		},
 
 		// 放大
@@ -266,16 +280,8 @@ export default {
 						if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
 							seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
 							if (seatInfoList[i].isSelect) {
-
 								const { config } = shapeInfo
-
-								// this.seatPosition = {
-								// 	left: (config.x - this.curOffset.x) / this.scale + 'px',
-								// 	bottom: (config.y - this.curOffset.y) / this.scale - 100 + 'px'
-								// }
-								// const left = (config.x + this.curOffset.x) / this.scale + 'px'
-								// const bottom = (config.y + this.curOffset.y) / this.scale - 100 + 'px'
-								// (x-canvasInfo.curOffset.x)/canvasInfo.scale
+								this.curSelectSeat = config
 								const left = config.x * this.scale + this.curOffset.x + 'px'
 								const top = config.y * this.scale + this.curOffset.y - config.radius * this.scale - 115 + 'px'
 								console.log(left, top, '==left, bottom')

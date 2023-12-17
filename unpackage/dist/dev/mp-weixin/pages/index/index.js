@@ -201,7 +201,8 @@ var _default = {
       canvasStyle: 'width: 300px; height: 300px; border: 1px solid blue;',
       imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
       seatPosition: '',
-      isShowSeatImg: false
+      isShowSeatImg: false,
+      curSelectSeat: null
     };
   },
   onLoad: function onLoad() {},
@@ -290,6 +291,12 @@ var _default = {
       this.ctx.translate(this.offset.x, this.offset.y);
       this.ctx.scale(this.scale, this.scale);
       this.userDraw();
+      if (this.curSelectSeat) {
+        var config = this.curSelectSeat;
+        var left = config.x * this.scale + this.offset.x + 'px';
+        var top = config.y * this.scale + this.offset.y - config.radius * this.scale - 115 + 'px';
+        this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
+      }
     },
     // 放大
     zoomIn: function zoomIn() {
@@ -396,14 +403,7 @@ var _default = {
               seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
               if (seatInfoList[i].isSelect) {
                 var config = shapeInfo.config;
-
-                // this.seatPosition = {
-                // 	left: (config.x - this.curOffset.x) / this.scale + 'px',
-                // 	bottom: (config.y - this.curOffset.y) / this.scale - 100 + 'px'
-                // }
-                // const left = (config.x + this.curOffset.x) / this.scale + 'px'
-                // const bottom = (config.y + this.curOffset.y) / this.scale - 100 + 'px'
-                // (x-canvasInfo.curOffset.x)/canvasInfo.scale
+                _this.curSelectSeat = config;
                 var left = config.x * _this.scale + _this.curOffset.x + 'px';
                 var top = config.y * _this.scale + _this.curOffset.y - config.radius * _this.scale - 115 + 'px';
                 console.log(left, top, '==left, bottom');
