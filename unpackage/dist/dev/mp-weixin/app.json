@@ -1,7 +1,6 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/index/movable"
+    "pages/index/index"
   ],
   "subPackages": [],
   "window": {
