@@ -4,11 +4,12 @@
 			<img class="seat-img" :src="imgUrl" alt="">
 		</view>
 		<view :style="tuhmbnailStyle" class="thumbnail-box">
-			<img :src="thumbnailImg" class="thumbnail-img" />
+			<!-- <img :src="thumbnailImg" class="thumbnail-img" /> -->
+			<canvas class="thumbnail-canvas" canvas-id="thumbnailCanvas"></canvas>
 			<view class="visible-area"></view>
 		</view>
-		<canvas v-show="isShowCanvas" class="canvas-box" :style="canvasStyle" canvas-id="myCanvas"
-			@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
+		<canvas class="canvas-box" :style="canvasStyle" canvas-id="myCanvas" @touchstart="onCanvasTouchStart"
+			@touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
 		<view class="btn" @click="zoomIn">放大</view>
 		<view class="btn" @click="zoomOut">缩小</view>
 		<view class="btn" @click="reset">还原</view>
@@ -64,7 +65,7 @@ export default {
 			heightRatio: 1,
 			startX: 0,
 			startY: 0,
-			canvasStyle: 'width: 400px; height: 400px; border: 1px solid blue;',
+			canvasStyle: 'width: 300px; height: 300px; border: 1px solid blue;',
 			imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
 			seatPosition: '',
 			isShowSeatImg: false,
@@ -73,8 +74,7 @@ export default {
 			thumbnailInfo: {
 				width: 200,
 				height: 200
-			},
-			isShowCanvas: false
+			}
 		}
 	},
 	onLoad() {
@@ -86,6 +86,8 @@ export default {
 	},
 
 	mounted() {
+
+		this.initPage()
 		this.init()
 
 	},
@@ -95,26 +97,43 @@ export default {
 			console.log(this.canvasInfo, '===canvasInfo')
 			uni.canvasToTempFilePath({
 				canvasId: 'myCanvas',
-				width: this.wrapperBox.width,
-				height: this.wrapperBox.height,
-				destWidth: this.wrapperBox.width,
-				destHeight: this.wrapperBox.height,
+				width: 1000,
+				height: 1000,
+				// width: this.canvasInfo.width,
+				// height: this.canvasInfo.height,
+				// destWidth: this.canvasInfo.width,
+				// destHeight: this.canvasInfo.height,
 				success: (res) => {
+					// 获取图片信息
+					uni.getImageInfo({
+						src: res.tempFilePath,
+						success: (info) => {
+							console.log('图片宽度：', info.width);
+							console.log('图片高度：', info.height);
+						},
+						fail: () => {
+							uni.showToast({
+								title: '获取图片信息失败',
+								icon: 'none'
+							});
+						}
+					});
+					// 读取临时文件内容
 					uni.getFileSystemManager().readFile({
 						filePath: res.tempFilePath,
 						encoding: 'base64',
 						success: (data) => {
 							const base64Data = 'data:image/png;base64,' + data.data;
 							this.thumbnailImg = base64Data;
-							console.log(base64Data, '==base64');
+							console.log(base64Data);
 						},
 						fail: () => {
-
+							uni.showToast({
+								title: '读取文件失败',
+								icon: 'none'
+							});
 						}
 					});
-
-				},
-				fail: () => {
 
 				}
 			}, this);
@@ -144,8 +163,9 @@ export default {
 			this.maxScale = 2;
 			this.widthRatio = 1.5;
 			this.heightRatio = 1.5;
-
-
+			const style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px; border:1px solid blue;`
+			this.canvasStyle = style;
+			this.wrapperStyleBase = this.canvasWrapperStyle = style;
 		},
 
 		calculateBoundingRectangle() {
@@ -187,39 +207,18 @@ export default {
 			console.log('myClick')
 		},
 		init() {
-			this.initPage()
-
-			// const style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px; border:1px solid blue;`
-			// this.canvasStyle = style;
-
-			let style = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px; border:1px solid blue;`
-			this.canvasStyle = style;
 			const ctx = uni.createCanvasContext('myCanvas', this);
 			this.ctx = ctx;
-			ctx.setLineWidth(4); // 设置边框宽度
 			this.canvasContext = ctx;
 			const canvasBase = new CanvasBase({
 				ctx
 			})
 			this.canvasClass = canvasBase;
 			this.draw()
-			this.isShowCanvas = true;
-			setTimeout(() => {
-				this.exportThumbnail()
-			}, 10)
-			setTimeout(() => {
-				style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
-				this.wrapperStyleBase = this.canvasWrapperStyle = style;
-				this.canvasStyle = style;
-				this.isShowCanvas = true;
-			}, 500)
-			// this.exportThumbnail()
-			// style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
-			// this.wrapperStyleBase = this.canvasWrapperStyle = style;
-			// this.canvasStyle = style;
-
 		},
 		draw() {
+
+
 			this.canvasClass.reset()
 			this.clearCanvas();
 			this.ctx.translate(this.offset.x, this.offset.y);
@@ -235,8 +234,8 @@ export default {
 			}
 
 			// 缩略图展示
-			// this.isThumbnail = true;
-			// this.exportThumbnail()
+			this.isThumbnail = true;
+			this.exportThumbnail()
 		},
 
 		// drawThumbnail
@@ -411,7 +410,10 @@ export default {
 					this.handleSeat(item)
 				}
 			})
+
 			isDraw && this.ctx.draw();
+
+			// this.ctx.draw()
 		},
 		// 绘制矩形
 		drawRectangle(payload) {
@@ -423,11 +425,12 @@ export default {
 				height
 			} = payload;
 			context.beginPath();
-			context.setStrokeStyle('black'); // 设置边框颜色
+			context.setStrokeStyle('#000000'); // 设置边框颜色
+			context.setLineWidth(2); // 设置边框宽度
 			context.rect(x, y, width, height);
+			context.stroke(); // 绘制边框
 			context.closePath();
 			context.stroke();
-
 		},
 		// 绘制文本
 		drawText(payload) {
@@ -437,13 +440,9 @@ export default {
 				y,
 				name
 			} = payload;
-			context.beginPath()
 			context.setTextAlign('center');
 			context.setTextBaseline('middle');
-			context.setFillStyle('black');
 			context.fillText(name, x, y);
-			context.closePath()
-
 		},
 		// 绘制圆形
 		drawCircle(payload) {
@@ -453,12 +452,12 @@ export default {
 				y,
 				radius,
 			} = payload;
-
 			context.beginPath();
-			context.setStrokeStyle('black')
 			context.arc(x, y, radius, 0, 2 * Math.PI);
-			context.closePath();
+			context.setStrokeStyle()
 			context.stroke()
+			context.closePath();
+
 		},
 		// 绘制多边形
 		drawPolygon(info) {
@@ -476,9 +475,8 @@ export default {
 				context.lineTo(points[i].x, points[i].y);
 			}
 			context.setStrokeStyle('black')
-			context.closePath();
 			context.stroke()
-
+			context.closePath();
 		},
 		handleShapeRegion(info) {
 			const position = info.p

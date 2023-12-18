@@ -19,24 +19,31 @@ class Circle extends Event {
             info
         } = this.config
         this.isSelect=!!info.isSelect
-            
+      
+ 
         if(!this.isSelect){
             fillStyle&&(ctx.fillStyle = fillStyle)
-            ctx.beginPath()
-            ctx.arc(x, y, radius, 0, 2 * Math.PI)
+            ctx.beginPath()  
             ctx.setStrokeStyle('black'); // 设置边框颜色
-            ctx.setLineWidth(2); // 设置边框宽度
-            ctx.stroke()
+            ctx.arc(x, y, radius, 0, 2 * Math.PI)
             ctx.closePath()
+            ctx.setFillStyle('white');
+            ctx.fill();
+            ctx.stroke()
+            
         }else{
             fillStyle&&(ctx.fillStyle = fillStyle)
             ctx.beginPath()
-            ctx.arc(x, y, radius, 0, 2 * Math.PI)
             ctx.setStrokeStyle('red'); // 设置边框颜色
-            ctx.setLineWidth(2); // 设置边框宽度
-            ctx.stroke()
+            ctx.arc(x, y, radius, 0, 2 * Math.PI)
             ctx.closePath()
+            ctx.setFillStyle('white');
+            ctx.fill();
+            ctx.fill();
         }
+         // 恢复之前的填充颜色
+    //   this.ctx.setFillStyle(currentFillStyle);
+    
        
     }
 

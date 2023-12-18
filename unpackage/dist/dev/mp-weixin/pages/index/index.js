@@ -158,6 +158,10 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
@@ -198,11 +202,17 @@ var _default = {
       heightRatio: 1,
       startX: 0,
       startY: 0,
-      canvasStyle: 'width: 300px; height: 300px; border: 1px solid blue;',
+      canvasStyle: 'width: 400px; height: 400px; border: 1px solid blue;',
       imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
       seatPosition: '',
       isShowSeatImg: false,
-      curSelectSeat: null
+      curSelectSeat: null,
+      thumbnailImg: '',
+      thumbnailInfo: {
+        width: 200,
+        height: 200
+      },
+      isShowCanvas: false
     };
   },
   onLoad: function onLoad() {},
@@ -210,10 +220,34 @@ var _default = {
     // this.init()
   },
   mounted: function mounted() {
-    this.initPage();
     this.init();
   },
   methods: {
+    exportThumbnail: function exportThumbnail() {
+      var _this = this;
+      // 导出为临时文件路径
+      console.log(this.canvasInfo, '===canvasInfo');
+      uni.canvasToTempFilePath({
+        canvasId: 'myCanvas',
+        width: this.wrapperBox.width,
+        height: this.wrapperBox.height,
+        destWidth: this.wrapperBox.width,
+        destHeight: this.wrapperBox.height,
+        success: function success(res) {
+          uni.getFileSystemManager().readFile({
+            filePath: res.tempFilePath,
+            encoding: 'base64',
+            success: function success(data) {
+              var base64Data = 'data:image/png;base64,' + data.data;
+              _this.thumbnailImg = base64Data;
+              console.log(base64Data, '==base64');
+            },
+            fail: function fail() {}
+          });
+        },
+        fail: function fail() {}
+      }, this);
+    },
     initPage: function initPage() {
       var rectCanvas = this.calculateBoundingRectangle();
       this.canvasInfo = rectCanvas;
@@ -236,9 +270,6 @@ var _default = {
       this.maxScale = 2;
       this.widthRatio = 1.5;
       this.heightRatio = 1.5;
-      var style = "width: ".concat(this.wrapperBox.width, "px; height: ").concat(this.wrapperBox.height, "px; border:1px solid blue;");
-      this.canvasStyle = style;
-      this.wrapperStyleBase = this.canvasWrapperStyle = style;
     },
     calculateBoundingRectangle: function calculateBoundingRectangle() {
       var minX = Infinity;
@@ -276,14 +307,37 @@ var _default = {
       console.log('myClick');
     },
     init: function init() {
+      var _this2 = this;
+      this.initPage();
+
+      // const style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px; border:1px solid blue;`
+      // this.canvasStyle = style;
+
+      var style = "width: ".concat(this.canvasInfo.width, "px; height: ").concat(this.canvasInfo.height, "px; border:1px solid blue;");
+      this.canvasStyle = style;
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.ctx = ctx;
+      ctx.setLineWidth(4); // 设置边框宽度
       this.canvasContext = ctx;
       var canvasBase = new _canvas.default({
         ctx: ctx
       });
       this.canvasClass = canvasBase;
       this.draw();
+      this.isShowCanvas = true;
+      setTimeout(function () {
+        _this2.exportThumbnail();
+      }, 10);
+      setTimeout(function () {
+        style = "width: ".concat(_this2.wrapperBox.width, "px; height: ").concat(_this2.wrapperBox.height, "px;");
+        _this2.wrapperStyleBase = _this2.canvasWrapperStyle = style;
+        _this2.canvasStyle = style;
+        _this2.isShowCanvas = true;
+      }, 500);
+      // this.exportThumbnail()
+      // style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
+      // this.wrapperStyleBase = this.canvasWrapperStyle = style;
+      // this.canvasStyle = style;
     },
     draw: function draw() {
       this.canvasClass.reset();
@@ -291,12 +345,32 @@ var _default = {
       this.ctx.translate(this.offset.x, this.offset.y);
       this.ctx.scale(this.scale, this.scale);
       this.userDraw();
+
+      // 弹窗定位
       if (this.curSelectSeat) {
         var config = this.curSelectSeat;
         var left = config.x * this.scale + this.offset.x + 'px';
         var top = config.y * this.scale + this.offset.y - config.radius * this.scale - 115 + 'px';
         this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
       }
+
+      // 缩略图展示
+      // this.isThumbnail = true;
+      // this.exportThumbnail()
+    },
+    // drawThumbnail
+    drawThumbnail: function drawThumbnail() {
+      var thumbnailCtx = uni.createCanvasContext('thumbnailCanvas', this);
+      // uni.canvasToTempFilePath({
+      // 	x: 0,
+      // 	y: 0,
+      // 	canvasId: 'seatCanvas',
+      // 	success: (res) => {
+      // 		// 在H5平台下，tempFilePath 为 base64
+      // 		console.log(res.tempFilePath, '==生成base64')
+      // 		this.tempImg = res.tempFilePath
+      // 	}
+      // })
     },
     // 放大
     zoomIn: function zoomIn() {
@@ -383,7 +457,7 @@ var _default = {
     },
     // 处理座位
     handleSeat: function handleSeat(info) {
-      var _this = this;
+      var _this3 = this;
       var position = info.p;
       var circleInfo = {
         ctx: this.canvasContext,
@@ -403,24 +477,24 @@ var _default = {
               seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
               if (seatInfoList[i].isSelect) {
                 var config = shapeInfo.config;
-                _this.curSelectSeat = config;
-                var left = config.x * _this.scale + _this.curOffset.x + 'px';
-                var top = config.y * _this.scale + _this.curOffset.y - config.radius * _this.scale - 115 + 'px';
+                _this3.curSelectSeat = config;
+                var left = config.x * _this3.scale + _this3.curOffset.x + 'px';
+                var top = config.y * _this3.scale + _this3.curOffset.y - config.radius * _this3.scale - 115 + 'px';
                 console.log(left, top, '==left, bottom');
-                _this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
-                _this.isShowSeatImg = true;
+                _this3.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
+                _this3.isShowSeatImg = true;
               } else {
-                _this.isShowSeatImg = false;
+                _this3.isShowSeatImg = false;
               }
               break;
             }
           }
         }
-        _this.draw();
+        _this3.draw();
       });
     },
     userDraw: function userDraw() {
-      var _this2 = this;
+      var _this4 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       seatInfoList.forEach(function (item) {
         var type = 'seat';
@@ -440,25 +514,23 @@ var _default = {
           type = 'seat';
         }
         if (type === 'stage') {
-          _this2.handleStage(item);
+          _this4.handleStage(item);
         }
         if (type === 'region') {
           console.log('==region');
-          _this2.handleRegion(item);
+          _this4.handleRegion(item);
         }
         if (type === 'shapeRegion') {
-          _this2.handleShapeRegion(item);
+          _this4.handleShapeRegion(item);
         }
         if (type === 'row') {
-          _this2.handleRow(item);
+          _this4.handleRow(item);
         }
         if (type === 'seat') {
-          _this2.handleSeat(item);
+          _this4.handleSeat(item);
         }
       });
       isDraw && this.ctx.draw();
-
-      // this.ctx.draw()
     },
     // 绘制矩形
     drawRectangle: function drawRectangle(payload) {
@@ -468,10 +540,8 @@ var _default = {
         width = payload.width,
         height = payload.height;
       context.beginPath();
-      context.setStrokeStyle('#000000'); // 设置边框颜色
-      context.setLineWidth(2); // 设置边框宽度
+      context.setStrokeStyle('black'); // 设置边框颜色
       context.rect(x, y, width, height);
-      context.stroke(); // 绘制边框
       context.closePath();
       context.stroke();
     },
@@ -481,9 +551,12 @@ var _default = {
         x = payload.x,
         y = payload.y,
         name = payload.name;
+      context.beginPath();
       context.setTextAlign('center');
       context.setTextBaseline('middle');
+      context.setFillStyle('black');
       context.fillText(name, x, y);
+      context.closePath();
     },
     // 绘制圆形
     drawCircle: function drawCircle(payload) {
@@ -492,10 +565,10 @@ var _default = {
         y = payload.y,
         radius = payload.radius;
       context.beginPath();
+      context.setStrokeStyle('black');
       context.arc(x, y, radius, 0, 2 * Math.PI);
-      context.setStrokeStyle();
-      context.stroke();
       context.closePath();
+      context.stroke();
     },
     // 绘制多边形
     drawPolygon: function drawPolygon(info) {
@@ -510,17 +583,17 @@ var _default = {
         context.lineTo(points[i].x, points[i].y);
       }
       context.setStrokeStyle('black');
-      context.stroke();
       context.closePath();
+      context.stroke();
     },
     handleShapeRegion: function handleShapeRegion(info) {
-      var _this3 = this;
+      var _this5 = this;
       var position = info.p;
       var positionList = position.points;
       var points = positionList.map(function (item) {
         return {
-          x: item.x - _this3.baseXPoint,
-          y: item.y - _this3.baseYPoint
+          x: item.x - _this5.baseXPoint,
+          y: item.y - _this5.baseYPoint
         };
       });
       this.drawPolygon({
