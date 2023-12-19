@@ -1,16 +1,23 @@
 <template>
 	<view>
 		<view class="content">
-			<view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
-				<img class="seat-img" :src="imgUrl" alt="">
-			</view>
+			<!-- <cover-view :style="thumbnailStyle" class="thumbnail-box">
+				<cover-image :src="thumbnailImg" class="thumbnail-img" ></cover-image>
+				<cover-view :style="visibleAreaStyle" class="visible-area"></cover-view>
+			</cover-view> -->
 			<view :style="thumbnailStyle" class="thumbnail-box">
 				<img :src="thumbnailImg" class="thumbnail-img" />
 				<view :style="visibleAreaStyle" class="visible-area"></view>
 			</view>
-			<canvas v-show="isShowCanvas" class="canvas-box" :style="canvasStyle" canvas-id="myCanvas"
-				@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
-
+			<view :style="canvasStyle" class="canvas-wrapper">
+				<canvas v-show="isShowCanvas" class="canvas-box" :style="canvasStyle" canvas-id="myCanvas"
+					@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
+				<cover-view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
+					<cover-view class="seat-anchor"></cover-view>
+					<cover-image class="seat-img" :src="imgUrl" alt=""></cover-image>
+					<cover-view class="blank-space"></cover-view>
+				</cover-view>
+			</view>
 		</view>
 		<view class="btn" @click="zoomIn">放大</view>
 		<view class="btn" @click="zoomOut">缩小</view>
@@ -81,7 +88,8 @@ export default {
 				width: 400,
 				height: 400
 			},
-			thumbnailScale: 1
+			thumbnailScale: 1,
+			seatBoxHeight: 115
 
 		}
 	},
@@ -150,7 +158,7 @@ export default {
 			this.scale = scale;
 			this.preScale = scale;
 			this.minScale = scale;
-			this.maxScale = 1;
+			this.maxScale = 2;
 			this.widthRatio = 1.5;
 			this.heightRatio = 1.5;
 
@@ -247,25 +255,16 @@ export default {
 			if (this.curSelectSeat) {
 				const config = this.curSelectSeat
 				const left = config.x * this.scale + this.offset.x + 'px'
-				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - 115 + 'px'
+				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
 				this.seatPosition = `left: ${left}; top: ${top};`
 			}
 
 			// 缩略图展示
-			// this.isThumbnail = true;
-			// this.exportThumbnail()
 			const { width, height } = this.thumbnailInfo;
-			// const diffScale = this.scale - this.scaleBase + 1
 			const diffScale = this.scale / this.scaleBase
 			const changeWidth = width / diffScale;
 			const changeHeight = height / diffScale;
 			const changeStyle = `width: ${changeWidth - 2}px; height:${changeHeight - 2}px; `
-			// this.thumbnailInfo = {
-			// 	width: changeWidth,
-			// 	height: changeHeight
-			// }
-			const changeScale = this.canvasInitInfo.width / this.thumbnailInfo.width
-			// this.visibleAreaStyle = `${changeStyle} left:${-this.offset.x / changeScale}px; top:${-this.offset.y / changeScale}px;`
 			this.visibleAreaStyle = `${changeStyle} left:${-this.offset.x / this.thumbnailScale / diffScale}px; top:${-this.offset.y / this.thumbnailScale / diffScale}px;`
 		},
 
@@ -357,6 +356,7 @@ export default {
 			}
 			const circleInstance = this.canvasClass.circle(circleInfo)
 			circleInstance.on('touchend', (shapeInfo) => {
+
 				const originData = shapeInfo.config.info
 				if (originData.c) {
 					for (let i = 0; i < seatInfoList.length; i++) {
@@ -366,15 +366,18 @@ export default {
 							if (seatInfoList[i].isSelect) {
 								const { config } = shapeInfo
 								this.curSelectSeat = config
-								const left = config.x * this.scale + this.curOffset.x + 'px'
-								const top = config.y * this.scale + this.curOffset.y - config.radius * this.scale - 115 + 'px'
+								console.log(config, '==config')
+								const left = config.x * this.scale + this.offset.x + 'px'
+								const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
 								this.seatPosition = `left: ${left}; top: ${top};`
 								this.isShowSeatImg = true;
 
 							} else {
 								this.isShowSeatImg = false;
 							}
-							break;
+
+						} else {
+							seatInfoList[i].isSelect = false
 						}
 					}
 				}
@@ -384,8 +387,9 @@ export default {
 		},
 
 		userDraw(isDraw = true) {
+			console.log('==用户绘制')
 			seatInfoList.forEach((item) => {
-				console.log('=start foreach')
+				console.log('==遍历中')
 				let type = 'seat'
 				if (item.class.indexOf('StageNode') > -1) {
 					type = 'stage'
@@ -574,7 +578,7 @@ export default {
 				this.draw();
 			}
 
-		}, 300),
+		}, 200),
 		onCanvasTouchEnd(e) {
 			this.curOffset.x = this.offset.x;
 			this.curOffset.y = this.offset.y;
@@ -623,29 +627,36 @@ export default {
 		}
 	}
 
+	.canvas-wrapper {
+		position: relative;
+	}
+
 	.seat-view {
 		position: absolute;
 		width: 100px;
-		height: 100px;
-		border: 1px solid red;
 		top: 0;
 		left: 0;
-		z-index: 999;
+		z-index: 200;
 		transform: translateX(-50%);
 
+
 		.seat-img {
-			width: 100%;
-			height: 100%;
+			width: 100px;
+			height: 100px;
 			border-radius: 2px;
 		}
 
-		// 三角
-		&::after {
-			content: '';
+		.blank-space {
+			width: 100%;
+			height: 10px;
+		}
+
+		// 三角形
+		.seat-anchor {
 			position: absolute;
 			left: 50%;
 			transform: translateX(-50%);
-			bottom: -10px;
+			bottom: 0;
 			width: 0;
 			height: 0;
 			border-top: 10px solid red;
@@ -655,6 +666,7 @@ export default {
 		}
 	}
 }
+
 
 .canvas-box {
 	width: 750rpx;

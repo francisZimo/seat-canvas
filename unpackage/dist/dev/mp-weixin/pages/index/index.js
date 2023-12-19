@@ -165,6 +165,13 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
@@ -219,7 +226,8 @@ var _default = {
         width: 400,
         height: 400
       },
-      thumbnailScale: 1
+      thumbnailScale: 1,
+      seatBoxHeight: 115
     };
   },
   onLoad: function onLoad() {},
@@ -274,7 +282,7 @@ var _default = {
       this.scale = scale;
       this.preScale = scale;
       this.minScale = scale;
-      this.maxScale = 1;
+      this.maxScale = 2;
       this.widthRatio = 1.5;
       this.heightRatio = 1.5;
     },
@@ -363,27 +371,18 @@ var _default = {
       if (this.curSelectSeat) {
         var config = this.curSelectSeat;
         var left = config.x * this.scale + this.offset.x + 'px';
-        var top = config.y * this.scale + this.offset.y - config.radius * this.scale - 115 + 'px';
+        var top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px';
         this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
       }
 
       // 缩略图展示
-      // this.isThumbnail = true;
-      // this.exportThumbnail()
       var _this$thumbnailInfo = this.thumbnailInfo,
         width = _this$thumbnailInfo.width,
         height = _this$thumbnailInfo.height;
-      // const diffScale = this.scale - this.scaleBase + 1
       var diffScale = this.scale / this.scaleBase;
       var changeWidth = width / diffScale;
       var changeHeight = height / diffScale;
       var changeStyle = "width: ".concat(changeWidth - 2, "px; height:").concat(changeHeight - 2, "px; ");
-      // this.thumbnailInfo = {
-      // 	width: changeWidth,
-      // 	height: changeHeight
-      // }
-      var changeScale = this.canvasInitInfo.width / this.thumbnailInfo.width;
-      // this.visibleAreaStyle = `${changeStyle} left:${-this.offset.x / changeScale}px; top:${-this.offset.y / changeScale}px;`
       this.visibleAreaStyle = "".concat(changeStyle, " left:").concat(-this.offset.x / this.thumbnailScale / diffScale, "px; top:").concat(-this.offset.y / this.thumbnailScale / diffScale, "px;");
     },
     // 放大
@@ -486,14 +485,16 @@ var _default = {
               if (seatInfoList[i].isSelect) {
                 var config = shapeInfo.config;
                 _this3.curSelectSeat = config;
-                var left = config.x * _this3.scale + _this3.curOffset.x + 'px';
-                var top = config.y * _this3.scale + _this3.curOffset.y - config.radius * _this3.scale - 115 + 'px';
+                console.log(config, '==config');
+                var left = config.x * _this3.scale + _this3.offset.x + 'px';
+                var top = config.y * _this3.scale + _this3.offset.y - config.radius * _this3.scale - _this3.seatBoxHeight + 'px';
                 _this3.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
                 _this3.isShowSeatImg = true;
               } else {
                 _this3.isShowSeatImg = false;
               }
-              break;
+            } else {
+              seatInfoList[i].isSelect = false;
             }
           }
         }
@@ -503,8 +504,9 @@ var _default = {
     userDraw: function userDraw() {
       var _this4 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
+      console.log('==用户绘制');
       seatInfoList.forEach(function (item) {
-        console.log('=start foreach');
+        console.log('==遍历中');
         var type = 'seat';
         if (item.class.indexOf('StageNode') > -1) {
           type = 'stage';
@@ -668,7 +670,7 @@ var _default = {
         this.offset.y = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
         this.draw();
       }
-    }, 300),
+    }, 200),
     onCanvasTouchEnd: function onCanvasTouchEnd(e) {
       this.curOffset.x = this.offset.x;
       this.curOffset.y = this.offset.y;

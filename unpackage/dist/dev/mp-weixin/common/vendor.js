@@ -21628,424 +21628,436 @@ var seatInfo = {
   // 		'select.padding': 0,
   // 	},
   // },
+  // {
+  // 	class: 'b2.RowNode',
+  // 	ref: 334,
+  // 	p: {
+  // 		name: 'M2排',
+  // 		angle: 90,
+  // 		location: {
+  // 			x: 1030.4720311537267,
+  // 			y: 1037.439558866745
+  // 		}
+  // 	},
+  // 	s: {
+  // 		'group.fill': false,
+  // 		'group.fill.color': '#FFFFFF',
+  // 		'group.shape': 'roundrect',
+  // 		'group.outline.width': 0,
+  // 		'group.outline.color': '#000000',
+  // 		'group.padding': 2,
+  // 		'vector.outline.pattern': [2, 2],
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'label.position': 'center',
+  // 		'label.xoffset': -30.000013617311197,
+  // 		'label.yoffset': 119.99999434017536,
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		angle: '90'
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 335,
+  // 	p: {
+  // 		name: '17',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 1159.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 17
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 336,
+  // 	p: {
+  // 		name: '16',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 1119.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 16
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 337,
+  // 	p: {
+  // 		name: '15',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 1079.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 15
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 338,
+  // 	p: {
+  // 		name: '14',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 1039.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 14
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 339,
+  // 	p: {
+  // 		name: '13',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 999.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 13
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 340,
+  // 	p: {
+  // 		name: '12',
+  // 		angle: 90,
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720175364155,
+  // 			y: 959.4395532069204
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 12
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 341,
+  // 	p: {
+  // 		name: '11',
+  // 		parent: 334,
+  // 		location: {
+  // 			x: 1036.4720447710386,
+  // 			y: 919.4395645265699
+  // 		},
+  // 		width: 20,
+  // 		height: 20
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 11
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.RowNode',
+  // 	ref: 342,
+  // 	p: {
+  // 		name: 'M2排',
+  // 		angle: -90,
+  // 		location: {
+  // 			x: 828.9036749472589,
+  // 			y: 1185.8165375195704
+  // 		}
+  // 	},
+  // 	s: {
+  // 		'group.fill': false,
+  // 		'group.fill.color': '#FFFFFF',
+  // 		'group.shape': 'roundrect',
+  // 		'group.outline.width': 0,
+  // 		'group.outline.color': '#000000',
+  // 		'group.padding': 2,
+  // 		'vector.outline.pattern': [2, 2],
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'label.position': 'center',
+  // 		'label.xoffset': -189.9999694824212,
+  // 		'label.yoffset': 0.000026271449542036862,
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		angle: '-90'
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 343,
+  // 	p: {
+  // 		name: '25',
+  // 		angle: 90,
+  // 		parent: 342,
+  // 		location: {
+  // 			x: 794.9036768093503,
+  // 			y: 1187.8165112481213
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 25
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 344,
+  // 	p: {
+  // 		name: '22',
+  // 		angle: -90,
+  // 		parent: 342,
+  // 		location: {
+  // 			x: 674.9037054648377,
+  // 			y: 1187.81656379102
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 22
+  // 	},
+  // },
+  // {
+  // 	class: 'b2.SeatNode',
+  // 	ref: 345,
+  // 	p: {
+  // 		name: '23',
+  // 		angle: -90,
+  // 		parent: 342,
+  // 		location: {
+  // 			x: 714.9037054648377,
+  // 			y: 1187.81656379102
+  // 		},
+  // 		width: 20,
+  // 		height: 20,
+  // 	},
+  // 	s: {
+  // 		'body.type': 'vector',
+  // 		'vector.shape': 'circle',
+  // 		'vector.fill.color': '#cdcdcd',
+  // 		'vector.outline.width': 1,
+  // 		'vector.outline.color': '#000000',
+  // 		'vector.outline.pattern': [10, 0],
+  // 		'label.position': 'center',
+  // 		'label.font': '10px arial',
+  // 		'label2.position': 'left.left',
+  // 		'label2.yoffset': 0,
+  // 		'shadow.blur': 4,
+  // 		'shadow.xoffset': 0,
+  // 		'shadow.yoffset': 0,
+  // 		'select.style': 'shadow',
+  // 		'select.padding': 0,
+  // 		'select.color': '#ff0000',
+  // 	},
+  // 	c: {
+  // 		'business.row': 'M2',
+  // 		'business.seat': 23
+  // 	},
+  // },
   {
-    class: 'b2.RowNode',
-    ref: 334,
-    p: {
-      name: 'M2排',
-      angle: 90,
-      location: {
-        x: 1030.4720311537267,
-        y: 1037.439558866745
-      }
-    },
-    s: {
-      'group.fill': false,
-      'group.fill.color': '#FFFFFF',
-      'group.shape': 'roundrect',
-      'group.outline.width': 0,
-      'group.outline.color': '#000000',
-      'group.padding': 2,
-      'vector.outline.pattern': [2, 2],
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'label.position': 'center',
-      'label.xoffset': -30.000013617311197,
-      'label.yoffset': 119.99999434017536
-    },
-    c: {
-      'business.row': 'M2',
-      angle: '90'
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 335,
-    p: {
-      name: '17',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 1159.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 17
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 336,
-    p: {
-      name: '16',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 1119.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 16
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 337,
-    p: {
-      name: '15',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 1079.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 15
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 338,
-    p: {
-      name: '14',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 1039.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 14
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 339,
-    p: {
-      name: '13',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 999.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 13
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 340,
-    p: {
-      name: '12',
-      angle: 90,
-      parent: 334,
-      location: {
-        x: 1036.4720175364155,
-        y: 959.4395532069204
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 12
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 341,
-    p: {
-      name: '11',
-      parent: 334,
-      location: {
-        x: 1036.4720447710386,
-        y: 919.4395645265699
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 11
-    }
-  }, {
-    class: 'b2.RowNode',
-    ref: 342,
-    p: {
-      name: 'M2排',
-      angle: -90,
-      location: {
-        x: 828.9036749472589,
-        y: 1185.8165375195704
-      }
-    },
-    s: {
-      'group.fill': false,
-      'group.fill.color': '#FFFFFF',
-      'group.shape': 'roundrect',
-      'group.outline.width': 0,
-      'group.outline.color': '#000000',
-      'group.padding': 2,
-      'vector.outline.pattern': [2, 2],
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'label.position': 'center',
-      'label.xoffset': -189.9999694824212,
-      'label.yoffset': 0.000026271449542036862
-    },
-    c: {
-      'business.row': 'M2',
-      angle: '-90'
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 343,
-    p: {
-      name: '25',
-      angle: 90,
-      parent: 342,
-      location: {
-        x: 794.9036768093503,
-        y: 1187.8165112481213
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 25
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 344,
-    p: {
-      name: '22',
-      angle: -90,
-      parent: 342,
-      location: {
-        x: 674.9037054648377,
-        y: 1187.81656379102
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 22
-    }
-  }, {
-    class: 'b2.SeatNode',
-    ref: 345,
-    p: {
-      name: '23',
-      angle: -90,
-      parent: 342,
-      location: {
-        x: 714.9037054648377,
-        y: 1187.81656379102
-      },
-      width: 20,
-      height: 20
-    },
-    s: {
-      'body.type': 'vector',
-      'vector.shape': 'circle',
-      'vector.fill.color': '#cdcdcd',
-      'vector.outline.width': 1,
-      'vector.outline.color': '#000000',
-      'vector.outline.pattern': [10, 0],
-      'label.position': 'center',
-      'label.font': '10px arial',
-      'label2.position': 'left.left',
-      'label2.yoffset': 0,
-      'shadow.blur': 4,
-      'shadow.xoffset': 0,
-      'shadow.yoffset': 0,
-      'select.style': 'shadow',
-      'select.padding': 0,
-      'select.color': '#ff0000'
-    },
-    c: {
-      'business.row': 'M2',
-      'business.seat': 23
-    }
-  }, {
     class: 'b2.SeatNode',
     ref: 346,
     p: {
