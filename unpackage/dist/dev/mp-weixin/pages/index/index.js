@@ -162,27 +162,27 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
 var _default = {
   data: function data() {
     return {
+      // 系统信息
       wrapperBox: {
-        width: 400,
+        width: 750,
         height: 400
       },
       scaleBase: 1,
       baseXPoint: 0,
       baseYPoint: 0,
       canvasClass: null,
-      width: 300,
-      height: 300,
-      cssWidth: 300,
-      cssHeight: 300,
       maxScale: 8,
       minScale: 0.4,
-      scaleStep: 0.1,
+      scaleStep: 0.2,
       ctx: null,
       scale: 1,
       preScale: 1,
@@ -212,27 +212,33 @@ var _default = {
         width: 200,
         height: 200
       },
-      isShowCanvas: false
+      thumbnailStyle: '',
+      isShowCanvas: false,
+      visibleAreaStyle: '',
+      canvasInitInfo: {
+        width: 400,
+        height: 400
+      },
+      thumbnailScale: 1
     };
   },
   onLoad: function onLoad() {},
-  onReady: function onReady() {
-    // this.init()
-  },
+  onReady: function onReady() {},
   mounted: function mounted() {
+    var systemInfo = uni.getSystemInfoSync();
+    this.wrapperBox.width = systemInfo.windowWidth;
     this.init();
   },
   methods: {
     exportThumbnail: function exportThumbnail() {
       var _this = this;
       // 导出为临时文件路径
-      console.log(this.canvasInfo, '===canvasInfo');
       uni.canvasToTempFilePath({
         canvasId: 'myCanvas',
-        width: this.wrapperBox.width,
-        height: this.wrapperBox.height,
-        destWidth: this.wrapperBox.width,
-        destHeight: this.wrapperBox.height,
+        width: this.canvasInitInfo.width,
+        height: this.canvasInitInfo.height,
+        destWidth: this.canvasInitInfo.width,
+        destHeight: this.canvasInitInfo.height,
         success: function success(res) {
           uni.getFileSystemManager().readFile({
             filePath: res.tempFilePath,
@@ -240,7 +246,7 @@ var _default = {
             success: function success(data) {
               var base64Data = 'data:image/png;base64,' + data.data;
               _this.thumbnailImg = base64Data;
-              console.log(base64Data, '==base64');
+              _this.visibleAreaStyle = "width: ".concat(_this.thumbnailInfo.width - 3, "px; height: ").concat(_this.thumbnailInfo.height - 3, "px;");
             },
             fail: function fail() {}
           });
@@ -258,16 +264,17 @@ var _default = {
       this.baseXPoint = x;
       this.baseYPoint = y;
       var scale = 1;
-      if (width > height) {
-        scale = this.wrapperBox.width / width;
-      } else {
-        scale = this.wrapperBox.height / height;
-      }
+      // if (width > height) {
+      // 	scale = this.wrapperBox.width / width
+      // } else {
+      // 	scale = this.wrapperBox.height / height
+      // }
+      scale = this.wrapperBox.width / width;
       this.scaleBase = scale;
       this.scale = scale;
       this.preScale = scale;
       this.minScale = scale;
-      this.maxScale = 2;
+      this.maxScale = 1;
       this.widthRatio = 1.5;
       this.heightRatio = 1.5;
     },
@@ -303,21 +310,26 @@ var _default = {
         height: height
       };
     },
-    myClick: function myClick() {
-      console.log('myClick');
-    },
     init: function init() {
       var _this2 = this;
       this.initPage();
-
-      // const style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px; border:1px solid blue;`
-      // this.canvasStyle = style;
-
-      var style = "width: ".concat(this.canvasInfo.width, "px; height: ").concat(this.canvasInfo.height, "px; border:1px solid blue;");
+      var width = this.canvasInfo.width * this.scale;
+      var height = this.canvasInfo.height * this.scale;
+      this.canvasInitInfo = {
+        width: width,
+        height: height
+      };
+      var thumbnailScale = this.canvasInitInfo.width / this.thumbnailInfo.width;
+      this.thumbnailScale = thumbnailScale;
+      this.thumbnailInfo = {
+        width: this.thumbnailInfo.width,
+        height: this.canvasInitInfo.height / thumbnailScale
+      };
+      this.thumbnailStyle = "width: ".concat(this.thumbnailInfo.width, "px; height: ").concat(this.thumbnailInfo.height, "px; border: 1px solid blue;");
+      var style = "width: ".concat(width, "px; height: ").concat(height, "px; border:1px solid blue;");
       this.canvasStyle = style;
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.ctx = ctx;
-      ctx.setLineWidth(4); // 设置边框宽度
       this.canvasContext = ctx;
       var canvasBase = new _canvas.default({
         ctx: ctx
@@ -327,13 +339,13 @@ var _default = {
       this.isShowCanvas = true;
       setTimeout(function () {
         _this2.exportThumbnail();
-      }, 10);
-      setTimeout(function () {
-        style = "width: ".concat(_this2.wrapperBox.width, "px; height: ").concat(_this2.wrapperBox.height, "px;");
-        _this2.wrapperStyleBase = _this2.canvasWrapperStyle = style;
-        _this2.canvasStyle = style;
-        _this2.isShowCanvas = true;
       }, 500);
+      // setTimeout(() => {
+      // 	style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
+      // 	this.wrapperStyleBase = this.canvasWrapperStyle = style;
+      // 	this.canvasStyle = style;
+      // 	this.isShowCanvas = true;
+      // }, 500)
       // this.exportThumbnail()
       // style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
       // this.wrapperStyleBase = this.canvasWrapperStyle = style;
@@ -344,6 +356,7 @@ var _default = {
       this.clearCanvas();
       this.ctx.translate(this.offset.x, this.offset.y);
       this.ctx.scale(this.scale, this.scale);
+      this.ctx.setLineWidth(4); // 设置边框宽度
       this.userDraw();
 
       // 弹窗定位
@@ -357,24 +370,24 @@ var _default = {
       // 缩略图展示
       // this.isThumbnail = true;
       // this.exportThumbnail()
-    },
-    // drawThumbnail
-    drawThumbnail: function drawThumbnail() {
-      var thumbnailCtx = uni.createCanvasContext('thumbnailCanvas', this);
-      // uni.canvasToTempFilePath({
-      // 	x: 0,
-      // 	y: 0,
-      // 	canvasId: 'seatCanvas',
-      // 	success: (res) => {
-      // 		// 在H5平台下，tempFilePath 为 base64
-      // 		console.log(res.tempFilePath, '==生成base64')
-      // 		this.tempImg = res.tempFilePath
-      // 	}
-      // })
+      var _this$thumbnailInfo = this.thumbnailInfo,
+        width = _this$thumbnailInfo.width,
+        height = _this$thumbnailInfo.height;
+      // const diffScale = this.scale - this.scaleBase + 1
+      var diffScale = this.scale / this.scaleBase;
+      var changeWidth = width / diffScale;
+      var changeHeight = height / diffScale;
+      var changeStyle = "width: ".concat(changeWidth - 2, "px; height:").concat(changeHeight - 2, "px; ");
+      // this.thumbnailInfo = {
+      // 	width: changeWidth,
+      // 	height: changeHeight
+      // }
+      var changeScale = this.canvasInitInfo.width / this.thumbnailInfo.width;
+      // this.visibleAreaStyle = `${changeStyle} left:${-this.offset.x / changeScale}px; top:${-this.offset.y / changeScale}px;`
+      this.visibleAreaStyle = "".concat(changeStyle, " left:").concat(-this.offset.x / this.thumbnailScale / diffScale, "px; top:").concat(-this.offset.y / this.thumbnailScale / diffScale, "px;");
     },
     // 放大
     zoomIn: function zoomIn() {
-      console.log('==放大');
       this.scale += this.scaleStep;
       if (this.scale > this.maxScale) {
         this.scale = this.maxScale;
@@ -384,7 +397,6 @@ var _default = {
     },
     // 缩小
     zoomOut: function zoomOut() {
-      console.log('==缩小');
       this.scale -= this.scaleStep;
       if (this.scale < this.minScale) {
         this.scale = this.minScale;
@@ -392,15 +404,12 @@ var _default = {
       }
       this.zoom.call(this);
     },
-    /**
-     * 缩放操作
-     * isMouse 是否鼠标为中心缩放，true:鼠标中心缩放 false:画布中间缩放
-     */
     zoom: function zoom() {
       // 是否居中放大
-      this.mousePos.x = this.width / 2;
-      this.mousePos.y = this.height / 2;
-      console.log('先', this.offset);
+      this.mousePos.x = this.canvasInitInfo.width / 2;
+      this.mousePos.y = this.canvasInitInfo.height / 2;
+      // 放大系数：this.scale / this.preScale =>n
+      // 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
       this.offset.x = this.mousePos.x - (this.mousePos.x - this.offset.x) * this.scale / this.preScale;
       this.offset.y = this.mousePos.y - (this.mousePos.y - this.offset.y) * this.scale / this.preScale;
       this.draw();
@@ -409,7 +418,7 @@ var _default = {
       this.curOffset.y = this.offset.y;
     },
     clearCanvas: function clearCanvas() {
-      this.ctx.clearRect(0, 0, this.width, this.height);
+      this.ctx.clearRect(0, 0, this.canvasInitInfo.width, this.canvasInitInfo.height);
     },
     // 还原
     reset: function reset() {
@@ -468,7 +477,6 @@ var _default = {
       };
       var circleInstance = this.canvasClass.circle(circleInfo);
       circleInstance.on('touchend', function (shapeInfo) {
-        console.log('==shapeInfo', shapeInfo);
         var originData = shapeInfo.config.info;
         if (originData.c) {
           for (var i = 0; i < seatInfoList.length; i++) {
@@ -480,7 +488,6 @@ var _default = {
                 _this3.curSelectSeat = config;
                 var left = config.x * _this3.scale + _this3.curOffset.x + 'px';
                 var top = config.y * _this3.scale + _this3.curOffset.y - config.radius * _this3.scale - 115 + 'px';
-                console.log(left, top, '==left, bottom');
                 _this3.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
                 _this3.isShowSeatImg = true;
               } else {
@@ -497,6 +504,7 @@ var _default = {
       var _this4 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       seatInfoList.forEach(function (item) {
+        console.log('=start foreach');
         var type = 'seat';
         if (item.class.indexOf('StageNode') > -1) {
           type = 'stage';
@@ -517,7 +525,6 @@ var _default = {
           _this4.handleStage(item);
         }
         if (type === 'region') {
-          console.log('==region');
           _this4.handleRegion(item);
         }
         if (type === 'shapeRegion') {
@@ -631,19 +638,16 @@ var _default = {
       this.drawText(payload);
     },
     onCanvasTouchStart: function onCanvasTouchStart(e) {
-      console.log('touchStart', e.touches[0].x, e.touches[0].y);
       if (e.touches.length >= 2) {
         // 计算两点之间的距离
         var xMove = e.touches[0].x - e.touches[1].x;
         var yMove = e.touches[0].y - e.touches[1].y;
         initialDistance = Math.sqrt(xMove * xMove + yMove * yMove);
-        console.log('缩放 2指间');
       }
       this.startX = e.touches[0].x;
       this.startY = e.touches[0].y;
     },
     onCanvasTouchMove: (0, _lodash.throttle)(function (e) {
-      console.log('onCanvasTouchMove');
       if (e.touches.length >= 2) {
         var xMove = e.touches[0].x - e.touches[1].x;
         var yMove = e.touches[0].y - e.touches[1].y;
@@ -653,7 +657,6 @@ var _default = {
 
         // 计算新旧触摸点间距离差异, 得到缩放值
         var scale = distance / initialDistance;
-        console.log(scale, '==scale');
         if (scale >= 1) {
           this.zoomIn();
         } else {
@@ -665,9 +668,8 @@ var _default = {
         this.offset.y = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
         this.draw();
       }
-    }, 200),
+    }, 300),
     onCanvasTouchEnd: function onCanvasTouchEnd(e) {
-      console.log('onCanvasTouchEnd', e, e.type);
       this.curOffset.x = this.offset.x;
       this.curOffset.y = this.offset.y;
       this.canvasClass.handleEvent(e, {

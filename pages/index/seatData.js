@@ -11192,833 +11192,833 @@ export const seatInfo = {
 		// 		'business.seat': 22
 		// 	},
 		// },
-		{
-			class: 'b2.SeatNode',
-			ref: 311,
-			p: {
-				name: '24',
-				parent: 300,
-				location: {
-					x: 317.9454536826909,
-					y: 1085.9853664861205
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 24
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 312,
-			p: {
-				name: '26',
-				parent: 300,
-				location: {
-					x: 357.9454536826908,
-					y: 1085.9853664861205
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 26
-			},
-		},
-		{
-			class: 'b2.RowNode',
-			ref: 313,
-			p: {
-				name: '特种1排',
-				parent: 293,
-				location: {
-					x: 137.20000939825934,
-					y: 981.4212631494611
-				}
-			},
-			s: {
-				'group.fill': false,
-				'group.fill.color': '#FFFFFF',
-				'group.shape': 'roundrect',
-				'group.outline.width': 0,
-				'group.outline.color': '#000000',
-				'group.padding': 2,
-				'vector.outline.pattern': [2, 2],
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'label.position': 'center',
-				'label.xoffset': -230,
-				'label.yoffset': 1.1368683772161603e-13,
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1'
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 314,
-			p: {
-				name: '2',
-				parent: 313,
-				location: {
-					x: 343.20000939825985,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 2
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 315,
-			p: {
-				name: '1',
-				parent: 313,
-				location: {
-					x: 303.20000939825997,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 1
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 316,
-			p: {
-				name: '3',
-				parent: 313,
-				location: {
-					x: 263.2000093982596,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 3
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 317,
-			p: {
-				name: '5',
-				parent: 313,
-				location: {
-					x: 223.20000939825962,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 5
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 318,
-			p: {
-				name: '7',
-				parent: 313,
-				location: {
-					x: 183.20000939825962,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 7
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 319,
-			p: {
-				name: '9',
-				parent: 313,
-				location: {
-					x: 143.2000093982594,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 9
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 320,
-			p: {
-				name: '11',
-				parent: 313,
-				location: {
-					x: 103.20000939825934,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 11
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 321,
-			p: {
-				name: '13',
-				parent: 313,
-				location: {
-					x: 63.20000939825934,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 13
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 322,
-			p: {
-				name: '15',
-				parent: 313,
-				location: {
-					x: 23.20000939825934,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 15
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 323,
-			p: {
-				name: '17',
-				parent: 313,
-				location: {
-					x: -16.79999060174066,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 17
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 324,
-			p: {
-				name: '19',
-				parent: 313,
-				location: {
-					x: -56.79999060174066,
-					y: 983.4212631494612
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 19
-			},
-		},
-		{
-			class: 'b2.RowNode',
-			ref: 325,
-			p: {
-				name: '特种1排',
-				parent: 293,
-				location: {
-					x: 98.27024593040926,
-					y: 918.9909393793209
-				}
-			},
-			s: {
-				'group.fill': false,
-				'group.fill.color': '#FFFFFF',
-				'group.shape': 'roundrect',
-				'group.outline.width': 0,
-				'group.outline.color': '#000000',
-				'group.padding': 2,
-				'vector.outline.pattern': [2, 2],
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'label.position': 'center',
-				'label.xoffset': -150,
-				'label.yoffset': 0,
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1'
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 326,
-			p: {
-				name: '33',
-				parent: 325,
-				location: {
-					x: -15.72975406959074,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 33
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 327,
-			p: {
-				name: '31',
-				parent: 325,
-				location: {
-					x: 24.27024593040926,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 31
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 328,
-			p: {
-				name: '29',
-				parent: 325,
-				location: {
-					x: 64.27024593040926,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 29
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 329,
-			p: {
-				name: '27',
-				parent: 325,
-				location: {
-					x: 104.27024593040926,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 27
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 330,
-			p: {
-				name: '25',
-				parent: 325,
-				location: {
-					x: 144.27024593040926,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 25
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 331,
-			p: {
-				name: '23',
-				parent: 325,
-				location: {
-					x: 184.27024593040954,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 23
-			},
-		},
-		{
-			class: 'b2.SeatNode',
-			ref: 332,
-			p: {
-				name: '21',
-				parent: 325,
-				location: {
-					x: 224.27024593040954,
-					y: 920.9909393793209
-				},
-				width: 20,
-				height: 20
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'circle',
-				'vector.fill.color': '#cdcdcd',
-				'vector.outline.width': 1,
-				'vector.outline.color': '#000000',
-				'vector.outline.pattern': [10, 0],
-				'label.position': 'center',
-				'label.font': '10px arial',
-				'label2.position': 'left.left',
-				'label2.yoffset': 0,
-				'shadow.blur': 4,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.style': 'shadow',
-				'select.padding': 0,
-				'select.color': '#ff0000',
-			},
-			c: {
-				'business.region': '圆区',
-				'business.row': '特种1',
-				'business.seat': 21
-			},
-		},
-		{
-			class: 'b2.StageNode',
-			ref: 333,
-			p: {
-				name: 'Stage',
-				location: {
-					x: 697.115445269436,
-					y: 936.5073180180348
-				},
-				width: 273.5785958719507,
-				height: 226.58863009268237,
-			},
-			s: {
-				'body.type': 'vector',
-				'vector.shape': 'rectangle',
-				'vector.fill.color': 'rgba(255,68,68,0.4)',
-				'vector.outline.width': 2,
-				'vector.outline.color': '#000000',
-				'label.position': 'center',
-				'label.font': '20px arial',
-				'label.xoffset': 0,
-				'label.yoffset': 0,
-				'shadow.xoffset': 0,
-				'shadow.yoffset': 0,
-				'select.padding': 0,
-			},
-		},
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 311,
+		// 	p: {
+		// 		name: '24',
+		// 		parent: 300,
+		// 		location: {
+		// 			x: 317.9454536826909,
+		// 			y: 1085.9853664861205
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 24
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 312,
+		// 	p: {
+		// 		name: '26',
+		// 		parent: 300,
+		// 		location: {
+		// 			x: 357.9454536826908,
+		// 			y: 1085.9853664861205
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 26
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.RowNode',
+		// 	ref: 313,
+		// 	p: {
+		// 		name: '特种1排',
+		// 		parent: 293,
+		// 		location: {
+		// 			x: 137.20000939825934,
+		// 			y: 981.4212631494611
+		// 		}
+		// 	},
+		// 	s: {
+		// 		'group.fill': false,
+		// 		'group.fill.color': '#FFFFFF',
+		// 		'group.shape': 'roundrect',
+		// 		'group.outline.width': 0,
+		// 		'group.outline.color': '#000000',
+		// 		'group.padding': 2,
+		// 		'vector.outline.pattern': [2, 2],
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'label.position': 'center',
+		// 		'label.xoffset': -230,
+		// 		'label.yoffset': 1.1368683772161603e-13,
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1'
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 314,
+		// 	p: {
+		// 		name: '2',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 343.20000939825985,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 2
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 315,
+		// 	p: {
+		// 		name: '1',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 303.20000939825997,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 1
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 316,
+		// 	p: {
+		// 		name: '3',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 263.2000093982596,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 3
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 317,
+		// 	p: {
+		// 		name: '5',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 223.20000939825962,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 5
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 318,
+		// 	p: {
+		// 		name: '7',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 183.20000939825962,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 7
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 319,
+		// 	p: {
+		// 		name: '9',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 143.2000093982594,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 9
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 320,
+		// 	p: {
+		// 		name: '11',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 103.20000939825934,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 11
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 321,
+		// 	p: {
+		// 		name: '13',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 63.20000939825934,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 13
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 322,
+		// 	p: {
+		// 		name: '15',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: 23.20000939825934,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 15
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 323,
+		// 	p: {
+		// 		name: '17',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: -16.79999060174066,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 17
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 324,
+		// 	p: {
+		// 		name: '19',
+		// 		parent: 313,
+		// 		location: {
+		// 			x: -56.79999060174066,
+		// 			y: 983.4212631494612
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 19
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.RowNode',
+		// 	ref: 325,
+		// 	p: {
+		// 		name: '特种1排',
+		// 		parent: 293,
+		// 		location: {
+		// 			x: 98.27024593040926,
+		// 			y: 918.9909393793209
+		// 		}
+		// 	},
+		// 	s: {
+		// 		'group.fill': false,
+		// 		'group.fill.color': '#FFFFFF',
+		// 		'group.shape': 'roundrect',
+		// 		'group.outline.width': 0,
+		// 		'group.outline.color': '#000000',
+		// 		'group.padding': 2,
+		// 		'vector.outline.pattern': [2, 2],
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'label.position': 'center',
+		// 		'label.xoffset': -150,
+		// 		'label.yoffset': 0,
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1'
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 326,
+		// 	p: {
+		// 		name: '33',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: -15.72975406959074,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 33
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 327,
+		// 	p: {
+		// 		name: '31',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 24.27024593040926,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 31
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 328,
+		// 	p: {
+		// 		name: '29',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 64.27024593040926,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 29
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 329,
+		// 	p: {
+		// 		name: '27',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 104.27024593040926,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 27
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 330,
+		// 	p: {
+		// 		name: '25',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 144.27024593040926,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 25
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 331,
+		// 	p: {
+		// 		name: '23',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 184.27024593040954,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 23
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.SeatNode',
+		// 	ref: 332,
+		// 	p: {
+		// 		name: '21',
+		// 		parent: 325,
+		// 		location: {
+		// 			x: 224.27024593040954,
+		// 			y: 920.9909393793209
+		// 		},
+		// 		width: 20,
+		// 		height: 20
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'circle',
+		// 		'vector.fill.color': '#cdcdcd',
+		// 		'vector.outline.width': 1,
+		// 		'vector.outline.color': '#000000',
+		// 		'vector.outline.pattern': [10, 0],
+		// 		'label.position': 'center',
+		// 		'label.font': '10px arial',
+		// 		'label2.position': 'left.left',
+		// 		'label2.yoffset': 0,
+		// 		'shadow.blur': 4,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.style': 'shadow',
+		// 		'select.padding': 0,
+		// 		'select.color': '#ff0000',
+		// 	},
+		// 	c: {
+		// 		'business.region': '圆区',
+		// 		'business.row': '特种1',
+		// 		'business.seat': 21
+		// 	},
+		// },
+		// {
+		// 	class: 'b2.StageNode',
+		// 	ref: 333,
+		// 	p: {
+		// 		name: 'Stage',
+		// 		location: {
+		// 			x: 697.115445269436,
+		// 			y: 936.5073180180348
+		// 		},
+		// 		width: 273.5785958719507,
+		// 		height: 226.58863009268237,
+		// 	},
+		// 	s: {
+		// 		'body.type': 'vector',
+		// 		'vector.shape': 'rectangle',
+		// 		'vector.fill.color': 'rgba(255,68,68,0.4)',
+		// 		'vector.outline.width': 2,
+		// 		'vector.outline.color': '#000000',
+		// 		'label.position': 'center',
+		// 		'label.font': '20px arial',
+		// 		'label.xoffset': 0,
+		// 		'label.yoffset': 0,
+		// 		'shadow.xoffset': 0,
+		// 		'shadow.yoffset': 0,
+		// 		'select.padding': 0,
+		// 	},
+		// },
 		{
 			class: 'b2.RowNode',
 			ref: 334,

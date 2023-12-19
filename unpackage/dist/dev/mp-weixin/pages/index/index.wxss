@@ -26,9 +26,12 @@
 /* 文章场景相关 */
 .content.data-v-57280228 {
   width: 750rpx;
-  height: 800px;
+  height: 600px;
   position: relative;
   overflow: hidden;
+  border: 1px solid red;
+  display: flex;
+  align-items: center;
 }
 .content .thumbnail-box.data-v-57280228 {
   width: 200px;
@@ -36,8 +39,9 @@
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   top: 0;
-  right: 0;
-  z-index: 100;
+  right: 3px;
+  z-index: 999;
+  overflow: hidden;
 }
 .content .thumbnail-box .thumbnail-img.data-v-57280228 {
   width: 100%;
@@ -48,7 +52,7 @@
   top: 0;
   left: 0;
   z-index: 100;
-  border: 1px solid red;
+  border: 2px solid red;
 }
 .content .seat-view.data-v-57280228 {
   position: absolute;

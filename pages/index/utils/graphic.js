@@ -39,7 +39,7 @@ class Circle extends Event {
             ctx.closePath()
             ctx.setFillStyle('white');
             ctx.fill();
-            ctx.fill();
+            ctx.stroke();
         }
          // 恢复之前的填充颜色
     //   this.ctx.setFillStyle(currentFillStyle);
