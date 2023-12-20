@@ -10,7 +10,7 @@
 				<view :style="visibleAreaStyle" class="visible-area"></view>
 			</view>
 			<view :style="canvasStyle" class="canvas-wrapper">
-				<canvas v-show="isShowCanvas" class="canvas-box" :style="canvasStyle" canvas-id="myCanvas"
+				<canvas class="canvas-box" :style="canvasStyle" id="myCanvas" canvas-id="myCanvas"
 					@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
 				<cover-view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
 					<cover-view class="seat-anchor"></cover-view>
@@ -19,6 +19,8 @@
 				</cover-view>
 			</view>
 		</view>
+		<canvas class="temp-canvas-box" canvas-id="tempCanvas"></canvas>
+
 		<view class="btn" @click="zoomIn">放大</view>
 		<view class="btn" @click="zoomOut">缩小</view>
 		<view class="btn" @click="reset">还原</view>
@@ -72,6 +74,7 @@ export default {
 			startX: 0,
 			startY: 0,
 			canvasStyle: 'width: 400px; height: 400px; border: 1px solid blue;',
+			tempStyle: 'width: 500px; height: 500px; border: 1px solid blue;',
 			imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
 			seatPosition: '',
 			isShowSeatImg: false,
@@ -89,7 +92,10 @@ export default {
 				height: 400
 			},
 			thumbnailScale: 1,
-			seatBoxHeight: 115
+			seatBoxHeight: 115,
+			hasOffScreenCanvasData: false,
+			isTouchMoving: false,
+			canvasType: '' // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
 
 		}
 	},
@@ -103,42 +109,55 @@ export default {
 	mounted() {
 		const systemInfo = uni.getSystemInfoSync();
 		this.wrapperBox.width = systemInfo.windowWidth;
+
 		this.init()
+
 
 	},
 	methods: {
 		exportThumbnail() {
+
+			console.log(this.canvasInfo, '===this.canvasInitInfo')
+			// const style = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
+			// console.log(style, '==style')
+			// this.tempStyle = style;
+			const tempCtx = uni.createCanvasContext('tempCanvas', this);
+			this.canvasContext = tempCtx;
+			tempCtx.setLineWidth(4)
+			this.canvasType = 'cache'
+			this.userDraw()
 			// 导出为临时文件路径
+			// destWidth: this.canvasInfo.width,
+			// 	destHeight: this.canvasInfo.height,
 			uni.canvasToTempFilePath({
-				canvasId: 'myCanvas',
-				width: this.canvasInitInfo.width,
-				height: this.canvasInitInfo.height,
-				destWidth: this.canvasInitInfo.width,
-				destHeight: this.canvasInitInfo.height,
+				canvasId: 'tempCanvas',
 				success: (res) => {
+					console.log('输出res了')
 					uni.getFileSystemManager().readFile({
 						filePath: res.tempFilePath,
 						encoding: 'base64',
 						success: (data) => {
+							console.log('出现base64了')
 							const base64Data = 'data:image/png;base64,' + data.data;
 							this.thumbnailImg = base64Data;
+							console.log(this.thumbnailImg, '==base64')
 							this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
+							this.startTargeCanvas()
 						},
-						fail: () => {
 
-						}
 					});
 
 				},
-				fail: () => {
 
-				}
 			}, this);
+
+
 		},
 
-		initPage() {
+		initData() {
 			const rectCanvas = this.calculateBoundingRectangle()
 			this.canvasInfo = rectCanvas;
+
 			const {
 				x,
 				y,
@@ -201,10 +220,76 @@ export default {
 				height: height
 			};
 		},
-		init() {
-			this.initPage()
-			const width = this.canvasInfo.width * this.scale
-			const height = this.canvasInfo.height * this.scale
+		async sleep(time = 1000) {
+			return new Promise((resolve) => {
+				setTimeout(() => {
+					resolve()
+				}, time)
+			})
+		},
+		async init() {
+			this.initData()
+			this.tempStyle = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
+
+			try {
+				// this.exportThumbnail()
+				// await this.sleep(3000)
+				this.startTargeCanvas()
+				console.log('==结束')
+
+			} catch (e) {
+				console.log(e, '===错误')
+			}
+			// await this.exportThumbnail()
+			// await this.sleep(3000)
+
+			// let width = this.canvasInfo.width * this.scale
+			// let height = this.canvasInfo.height * this.scale
+			// console.log('==开始正式渲染', width, height)
+			// this.canvasInitInfo = {
+			// 	width,
+			// 	height
+			// }
+			// const thumbnailScale = this.canvasInitInfo.width / this.thumbnailInfo.width;
+			// this.thumbnailScale = thumbnailScale
+			// this.thumbnailInfo = {
+			// 	width: this.thumbnailInfo.width,
+			// 	height: this.canvasInitInfo.height / thumbnailScale
+			// }
+			// this.thumbnailStyle = `width: ${this.thumbnailInfo.width}px; height: ${this.thumbnailInfo.height}px; border: 1px solid blue;`
+			// let style = `width: ${width}px; height: ${height}px; border:1px solid blue;`
+			// this.canvasStyle = style;
+			// const ctx = uni.createCanvasContext('myCanvas', this);
+			// this.canvasContext = ctx;
+			// this.canvasType = 'target'
+			// const canvasBase = new CanvasBase({
+			// 	ctx
+			// })
+			// this.canvasClass = canvasBase;
+			// this.draw()
+			// this.isShowCanvas = true;
+			// setTimeout(() => {
+			// 	this.exportThumbnail()
+			// }, 500)
+
+
+			// setTimeout(() => {
+			// 	style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
+			// 	this.wrapperStyleBase = this.canvasWrapperStyle = style;
+			// 	this.canvasStyle = style;
+			// 	this.isShowCanvas = true;
+			// }, 500)
+			// this.exportThumbnail()
+			// style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
+			// this.wrapperStyleBase = this.canvasWrapperStyle = style;
+			// this.canvasStyle = style;
+
+		},
+
+		startTargeCanvas() {
+			let width = this.canvasInfo.width * this.scale
+			let height = this.canvasInfo.height * this.scale
+			console.log('==开始正式渲染', width, height)
 			this.canvasInitInfo = {
 				width,
 				height
@@ -219,37 +304,34 @@ export default {
 			let style = `width: ${width}px; height: ${height}px; border:1px solid blue;`
 			this.canvasStyle = style;
 			const ctx = uni.createCanvasContext('myCanvas', this);
-			this.ctx = ctx;
-
 			this.canvasContext = ctx;
+			this.canvasType = 'target'
 			const canvasBase = new CanvasBase({
 				ctx
 			})
 			this.canvasClass = canvasBase;
 			this.draw()
 			this.isShowCanvas = true;
-			setTimeout(() => {
-				this.exportThumbnail()
-			}, 500)
-			// setTimeout(() => {
-			// 	style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
-			// 	this.wrapperStyleBase = this.canvasWrapperStyle = style;
-			// 	this.canvasStyle = style;
-			// 	this.isShowCanvas = true;
-			// }, 500)
-			// this.exportThumbnail()
-			// style = `width: ${this.wrapperBox.width}px; height: ${this.wrapperBox.height}px;`
-			// this.wrapperStyleBase = this.canvasWrapperStyle = style;
-			// this.canvasStyle = style;
-
 		},
+
 		draw() {
 			this.canvasClass.reset()
 			this.clearCanvas();
-			this.ctx.translate(this.offset.x, this.offset.y);
-			this.ctx.scale(this.scale, this.scale);
-			this.ctx.setLineWidth(4); // 设置边框宽度
-			this.userDraw();
+			this.canvasContext.translate(this.offset.x, this.offset.y);
+			this.canvasContext.scale(this.scale, this.scale);
+			this.canvasContext.setLineWidth(4); // 设置边框宽度
+			if (this.isTouchMoving) {
+				if (this.thumbnailImg) {
+					console.log('绘制图片')
+					this.canvasContext.drawImage(this.thumbnailImg, 0, 0, this.canvasInfo.width, this.canvasInfo.height);
+					this.canvasContext.draw()
+				}
+			} else {
+				console.log('重新绘制')
+				this.userDraw();
+			}
+
+
 
 			// 弹窗定位
 			if (this.curSelectSeat) {
@@ -303,7 +385,7 @@ export default {
 		},
 		clearCanvas() {
 
-			this.ctx.clearRect(0, 0, this.canvasInitInfo.width, this.canvasInitInfo.height);
+			this.canvasContext.clearRect(0, 0, this.canvasInitInfo.width, this.canvasInitInfo.height);
 
 		},
 		// 还原
@@ -348,42 +430,48 @@ export default {
 		handleSeat(info) {
 			const position = info.p;
 			const circleInfo = {
-				ctx: this.canvasContext,
+				context: this.canvasContext,
 				radius: position.height / 2,
 				x: position.location.x - this.baseXPoint,
 				y: position.location.y - this.baseYPoint,
 				info
 			}
-			const circleInstance = this.canvasClass.circle(circleInfo)
-			circleInstance.on('touchend', (shapeInfo) => {
+			if (this.canvasType === 'target') {
+				const circleInstance = this.canvasClass.circle(circleInfo)
+				circleInstance.on('touchend', (shapeInfo) => {
 
-				const originData = shapeInfo.config.info
-				if (originData.c) {
-					for (let i = 0; i < seatInfoList.length; i++) {
-						const item = seatInfoList[i]
-						if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
-							seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
-							if (seatInfoList[i].isSelect) {
-								const { config } = shapeInfo
-								this.curSelectSeat = config
-								console.log(config, '==config')
-								const left = config.x * this.scale + this.offset.x + 'px'
-								const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
-								this.seatPosition = `left: ${left}; top: ${top};`
-								this.isShowSeatImg = true;
+					const originData = shapeInfo.config.info
+					if (originData.c) {
+						for (let i = 0; i < seatInfoList.length; i++) {
+							const item = seatInfoList[i]
+							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
+								if (seatInfoList[i].isSelect) {
+									const { config } = shapeInfo
+									this.curSelectSeat = config
+									const left = config.x * this.scale + this.offset.x + 'px'
+									const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
+									this.seatPosition = `left: ${left}; top: ${top};`
+									this.isShowSeatImg = true;
+
+								} else {
+									this.isShowSeatImg = false;
+								}
 
 							} else {
-								this.isShowSeatImg = false;
+								seatInfoList[i].isSelect = false
 							}
-
-						} else {
-							seatInfoList[i].isSelect = false
 						}
 					}
-				}
-				this.draw()
+					this.draw()
 
-			})
+				})
+			} else {
+				// 绘制圆形
+				this.drawCircle(circleInfo)
+
+			}
+
 		},
 
 		userDraw(isDraw = true) {
@@ -425,7 +513,8 @@ export default {
 					this.handleSeat(item)
 				}
 			})
-			isDraw && this.ctx.draw();
+			isDraw && this.canvasContext.draw();
+			console.log('绘制结束')
 		},
 		// 绘制矩形
 		drawRectangle(payload) {
@@ -472,7 +561,10 @@ export default {
 			context.setStrokeStyle('black')
 			context.arc(x, y, radius, 0, 2 * Math.PI);
 			context.closePath();
+			context.setFillStyle('white');
+			context.fill();
 			context.stroke()
+
 		},
 		// 绘制多边形
 		drawPolygon(info) {
@@ -542,6 +634,7 @@ export default {
 
 
 		onCanvasTouchStart(e) {
+			this.isTouchMoving = false
 			if (e.touches.length >= 2) {
 				// 计算两点之间的距离
 				let xMove = e.touches[0].x - e.touches[1].x;
@@ -552,8 +645,10 @@ export default {
 			this.startY = e.touches[0].y
 
 
+
 		},
 		onCanvasTouchMove: throttle(function (e) {
+			this.isTouchMoving = true
 			if (e.touches.length >= 2) {
 				let xMove = e.touches[0].x - e.touches[1].x;
 				let yMove = e.touches[0].y - e.touches[1].y;
@@ -580,8 +675,10 @@ export default {
 
 		}, 200),
 		onCanvasTouchEnd(e) {
+			this.isTouchMoving = false
 			this.curOffset.x = this.offset.x;
 			this.curOffset.y = this.offset.y;
+			this.draw()
 			this.canvasClass.handleEvent(e, { curOffset: this.curOffset, scale: this.scale })
 
 		}
@@ -596,11 +693,14 @@ export default {
 	width: 750rpx;
 	height: 600px;
 	// overflow: scroll;
-	position: relative;
+	// position: absolute;
+	// left: 0;
+	// top: 0;
 	overflow: hidden;
 	border: 1px solid red;
 	display: flex;
 	align-items: center;
+	background-color: #f8f8f8;
 
 
 	.thumbnail-box {
@@ -670,9 +770,15 @@ export default {
 
 .canvas-box {
 	width: 750rpx;
-	height: 400px;
+	height: 800px;
 	border: 1px solid red;
 
+}
+
+.temp-canvas-box {
+	width: 500px;
+	height: 500px;
+	border: 1px solid blue;
 }
 
 .btn {

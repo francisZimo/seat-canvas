@@ -27,11 +27,11 @@
 .content.data-v-57280228 {
   width: 750rpx;
   height: 600px;
-  position: relative;
   overflow: hidden;
   border: 1px solid red;
   display: flex;
   align-items: center;
+  background-color: #f8f8f8;
 }
 .content .thumbnail-box.data-v-57280228 {
   width: 200px;
@@ -90,8 +90,13 @@
 }
 .canvas-box.data-v-57280228 {
   width: 750rpx;
-  height: 400px;
+  height: 800px;
   border: 1px solid red;
+}
+.temp-canvas-box.data-v-57280228 {
+  width: 500px;
+  height: 500px;
+  border: 1px solid blue;
 }
 .btn.data-v-57280228 {
   width: 50px;

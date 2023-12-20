@@ -2,9 +2,9 @@ import Event from './eventBus.js'
 
 // 圆形
 class Circle extends Event {
-    constructor(opts, ctx) {
+    constructor(opts, context) {
         super()
-        this.ctx = ctx
+        this.ctx = context
         this.config = opts,
         this.isSelect=false
         this.type='circle'
