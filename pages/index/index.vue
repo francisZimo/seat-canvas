@@ -19,7 +19,7 @@
 				</cover-view>
 			</view>
 		</view>
-		<canvas class="temp-canvas-box" canvas-id="tempCanvas"></canvas>
+		<canvas class="temp-canvas-box" :style="tempStyle" canvas-id="tempCanvas"></canvas>
 
 		<view class="btn" @click="zoomIn">放大</view>
 		<view class="btn" @click="zoomOut">缩小</view>
@@ -73,8 +73,8 @@ export default {
 			heightRatio: 1,
 			startX: 0,
 			startY: 0,
-			canvasStyle: 'width: 400px; height: 400px; border: 1px solid blue;',
-			tempStyle: 'width: 500px; height: 500px; border: 1px solid blue;',
+			canvasStyle: 'width: 400px; height: 400px; ',
+			tempStyle: 'width: 1405px; height: 1430px; ',
 			imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
 			seatPosition: '',
 			isShowSeatImg: false,
@@ -115,6 +115,53 @@ export default {
 
 	},
 	methods: {
+
+		old() {
+			const style = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
+			console.log(style, '==style')
+			this.tempStyle = style;
+			const tempCtx = uni.createCanvasContext('tempCanvas', this);
+			this.canvasContext = tempCtx;
+			console.log(this.canvasContext, '== old canvas')
+			tempCtx.setLineWidth(4)
+			this.canvasType = 'cache'
+			this.userDraw()
+			const _this = this
+			uni.canvasToTempFilePath({
+				canvasId: 'tempCanvas',
+				// width: this.canvasInfo.width,
+				// height: this.canvasInfo.height,
+				// destWidth: this.canvasInfo.width,
+				// destHeight: this.canvasInfo.height,
+				success: (res) => {
+					console.log('canvasToTempFilePath==')
+					uni.getFileSystemManager().readFile({
+						filePath: res.tempFilePath,
+						encoding: 'base64',
+						success: (data) => {
+							// console.log('getFileSystemManager==')
+							// const base64Data = 'data:image/png;base64,' + data.data;
+							// this.thumbnailImg = base64Data;
+							// this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
+							console.log('出现base64了')
+							const base64Data = 'data:image/png;base64,' + data.data;
+							_this.thumbnailImg = base64Data;
+							console.log(_this.thumbnailImg, '==base64')
+							_this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
+
+						},
+						fail: () => {
+
+						}
+					});
+
+				},
+				fail: () => {
+
+				}
+			}, this);
+		},
+
 		exportThumbnail() {
 
 			console.log(this.canvasInfo, '===this.canvasInitInfo')
@@ -131,6 +178,10 @@ export default {
 			// 	destHeight: this.canvasInfo.height,
 			uni.canvasToTempFilePath({
 				canvasId: 'tempCanvas',
+				width: this.canvasInitInfo.width,
+				height: this.canvasInitInfo.height,
+				destWidth: this.canvasInitInfo.width,
+				destHeight: this.canvasInitInfo.height,
 				success: (res) => {
 					console.log('输出res了')
 					uni.getFileSystemManager().readFile({
@@ -142,7 +193,9 @@ export default {
 							this.thumbnailImg = base64Data;
 							console.log(this.thumbnailImg, '==base64')
 							this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
-							this.startTargeCanvas()
+							setTimeout(() => {
+								this.startTargeCanvas()
+							}, 3000);
 						},
 
 					});
@@ -234,7 +287,13 @@ export default {
 			try {
 				// this.exportThumbnail()
 				// await this.sleep(3000)
-				this.startTargeCanvas()
+
+				this.old()
+
+				setTimeout(() => {
+					// this.startTargeCanvas()
+				}, 2000)
+
 				console.log('==结束')
 
 			} catch (e) {
@@ -269,7 +328,7 @@ export default {
 			// this.draw()
 			// this.isShowCanvas = true;
 			// setTimeout(() => {
-			// 	this.exportThumbnail()
+			// 	this.old()
 			// }, 500)
 
 
@@ -305,11 +364,13 @@ export default {
 			this.canvasStyle = style;
 			const ctx = uni.createCanvasContext('myCanvas', this);
 			this.canvasContext = ctx;
+			console.log(this.canvasContext, '== start target canvas')
 			this.canvasType = 'target'
 			const canvasBase = new CanvasBase({
 				ctx
 			})
 			this.canvasClass = canvasBase;
+			console.log(this.canvasClass, '===canvasClass')
 			this.draw()
 			this.isShowCanvas = true;
 		},
@@ -320,6 +381,8 @@ export default {
 			this.canvasContext.translate(this.offset.x, this.offset.y);
 			this.canvasContext.scale(this.scale, this.scale);
 			this.canvasContext.setLineWidth(4); // 设置边框宽度
+			console.log('touchMoving', this.isTouchMoving)
+			console.log('缩略图')
 			if (this.isTouchMoving) {
 				if (this.thumbnailImg) {
 					console.log('绘制图片')
@@ -649,6 +712,7 @@ export default {
 		},
 		onCanvasTouchMove: throttle(function (e) {
 			this.isTouchMoving = true
+			console.log('touchMove')
 			if (e.touches.length >= 2) {
 				let xMove = e.touches[0].x - e.touches[1].x;
 				let yMove = e.touches[0].y - e.touches[1].y;
@@ -776,8 +840,8 @@ export default {
 }
 
 .temp-canvas-box {
-	width: 500px;
-	height: 500px;
+	width: 1495px;
+	height: 1630px;
 	border: 1px solid blue;
 }
 

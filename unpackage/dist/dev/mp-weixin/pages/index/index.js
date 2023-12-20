@@ -213,8 +213,8 @@ var _default = {
       heightRatio: 1,
       startX: 0,
       startY: 0,
-      canvasStyle: 'width: 400px; height: 400px; border: 1px solid blue;',
-      tempStyle: 'width: 500px; height: 500px; border: 1px solid blue;',
+      canvasStyle: 'width: 400px; height: 400px; ',
+      tempStyle: 'width: 1405px; height: 1430px; ',
       imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
       seatPosition: '',
       isShowSeatImg: false,
@@ -246,8 +246,48 @@ var _default = {
     this.init();
   },
   methods: {
-    exportThumbnail: function exportThumbnail() {
+    old: function old() {
+      var _this2 = this;
+      var style = "width: ".concat(this.canvasInfo.width, "px; height: ").concat(this.canvasInfo.height, "px;");
+      console.log(style, '==style');
+      this.tempStyle = style;
+      var tempCtx = uni.createCanvasContext('tempCanvas', this);
+      this.canvasContext = tempCtx;
+      console.log(this.canvasContext, '== old canvas');
+      tempCtx.setLineWidth(4);
+      this.canvasType = 'cache';
+      this.userDraw();
       var _this = this;
+      uni.canvasToTempFilePath({
+        canvasId: 'tempCanvas',
+        // width: this.canvasInfo.width,
+        // height: this.canvasInfo.height,
+        // destWidth: this.canvasInfo.width,
+        // destHeight: this.canvasInfo.height,
+        success: function success(res) {
+          console.log('canvasToTempFilePath==');
+          uni.getFileSystemManager().readFile({
+            filePath: res.tempFilePath,
+            encoding: 'base64',
+            success: function success(data) {
+              // console.log('getFileSystemManager==')
+              // const base64Data = 'data:image/png;base64,' + data.data;
+              // this.thumbnailImg = base64Data;
+              // this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
+              console.log('出现base64了');
+              var base64Data = 'data:image/png;base64,' + data.data;
+              _this.thumbnailImg = base64Data;
+              console.log(_this.thumbnailImg, '==base64');
+              _this.visibleAreaStyle = "width: ".concat(_this2.thumbnailInfo.width - 3, "px; height: ").concat(_this2.thumbnailInfo.height - 3, "px;");
+            },
+            fail: function fail() {}
+          });
+        },
+        fail: function fail() {}
+      }, this);
+    },
+    exportThumbnail: function exportThumbnail() {
+      var _this3 = this;
       console.log(this.canvasInfo, '===this.canvasInitInfo');
       // const style = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
       // console.log(style, '==style')
@@ -262,6 +302,10 @@ var _default = {
       // 	destHeight: this.canvasInfo.height,
       uni.canvasToTempFilePath({
         canvasId: 'tempCanvas',
+        width: this.canvasInitInfo.width,
+        height: this.canvasInitInfo.height,
+        destWidth: this.canvasInitInfo.width,
+        destHeight: this.canvasInitInfo.height,
         success: function success(res) {
           console.log('输出res了');
           uni.getFileSystemManager().readFile({
@@ -270,10 +314,12 @@ var _default = {
             success: function success(data) {
               console.log('出现base64了');
               var base64Data = 'data:image/png;base64,' + data.data;
-              _this.thumbnailImg = base64Data;
-              console.log(_this.thumbnailImg, '==base64');
-              _this.visibleAreaStyle = "width: ".concat(_this.thumbnailInfo.width - 3, "px; height: ").concat(_this.thumbnailInfo.height - 3, "px;");
-              _this.startTargeCanvas();
+              _this3.thumbnailImg = base64Data;
+              console.log(_this3.thumbnailImg, '==base64');
+              _this3.visibleAreaStyle = "width: ".concat(_this3.thumbnailInfo.width - 3, "px; height: ").concat(_this3.thumbnailInfo.height - 3, "px;");
+              setTimeout(function () {
+                _this3.startTargeCanvas();
+              }, 3000);
             }
           });
         }
@@ -358,18 +404,22 @@ var _default = {
       }))();
     },
     init: function init() {
-      var _this2 = this;
+      var _this4 = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.initData();
-                _this2.tempStyle = "width: ".concat(_this2.canvasInfo.width, "px; height: ").concat(_this2.canvasInfo.height, "px;");
+                _this4.initData();
+                _this4.tempStyle = "width: ".concat(_this4.canvasInfo.width, "px; height: ").concat(_this4.canvasInfo.height, "px;");
                 try {
                   // this.exportThumbnail()
                   // await this.sleep(3000)
-                  _this2.startTargeCanvas();
+
+                  _this4.old();
+                  setTimeout(function () {
+                    // this.startTargeCanvas()
+                  }, 2000);
                   console.log('==结束');
                 } catch (e) {
                   console.log(e, '===错误');
@@ -403,7 +453,7 @@ var _default = {
                 // this.draw()
                 // this.isShowCanvas = true;
                 // setTimeout(() => {
-                // 	this.exportThumbnail()
+                // 	this.old()
                 // }, 500)
 
                 // setTimeout(() => {
@@ -443,11 +493,13 @@ var _default = {
       this.canvasStyle = style;
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.canvasContext = ctx;
+      console.log(this.canvasContext, '== start target canvas');
       this.canvasType = 'target';
       var canvasBase = new _canvas.default({
         ctx: ctx
       });
       this.canvasClass = canvasBase;
+      console.log(this.canvasClass, '===canvasClass');
       this.draw();
       this.isShowCanvas = true;
     },
@@ -457,6 +509,8 @@ var _default = {
       this.canvasContext.translate(this.offset.x, this.offset.y);
       this.canvasContext.scale(this.scale, this.scale);
       this.canvasContext.setLineWidth(4); // 设置边框宽度
+      console.log('touchMoving', this.isTouchMoving);
+      console.log('缩略图');
       if (this.isTouchMoving) {
         if (this.thumbnailImg) {
           console.log('绘制图片');
@@ -566,7 +620,7 @@ var _default = {
     },
     // 处理座位
     handleSeat: function handleSeat(info) {
-      var _this3 = this;
+      var _this5 = this;
       var position = info.p;
       var circleInfo = {
         context: this.canvasContext,
@@ -586,20 +640,20 @@ var _default = {
                 seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
                 if (seatInfoList[i].isSelect) {
                   var config = shapeInfo.config;
-                  _this3.curSelectSeat = config;
-                  var left = config.x * _this3.scale + _this3.offset.x + 'px';
-                  var top = config.y * _this3.scale + _this3.offset.y - config.radius * _this3.scale - _this3.seatBoxHeight + 'px';
-                  _this3.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
-                  _this3.isShowSeatImg = true;
+                  _this5.curSelectSeat = config;
+                  var left = config.x * _this5.scale + _this5.offset.x + 'px';
+                  var top = config.y * _this5.scale + _this5.offset.y - config.radius * _this5.scale - _this5.seatBoxHeight + 'px';
+                  _this5.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
+                  _this5.isShowSeatImg = true;
                 } else {
-                  _this3.isShowSeatImg = false;
+                  _this5.isShowSeatImg = false;
                 }
               } else {
                 seatInfoList[i].isSelect = false;
               }
             }
           }
-          _this3.draw();
+          _this5.draw();
         });
       } else {
         // 绘制圆形
@@ -607,7 +661,7 @@ var _default = {
       }
     },
     userDraw: function userDraw() {
-      var _this4 = this;
+      var _this6 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       console.log('==用户绘制');
       seatInfoList.forEach(function (item) {
@@ -629,19 +683,19 @@ var _default = {
           type = 'seat';
         }
         if (type === 'stage') {
-          _this4.handleStage(item);
+          _this6.handleStage(item);
         }
         if (type === 'region') {
-          _this4.handleRegion(item);
+          _this6.handleRegion(item);
         }
         if (type === 'shapeRegion') {
-          _this4.handleShapeRegion(item);
+          _this6.handleShapeRegion(item);
         }
         if (type === 'row') {
-          _this4.handleRow(item);
+          _this6.handleRow(item);
         }
         if (type === 'seat') {
-          _this4.handleSeat(item);
+          _this6.handleSeat(item);
         }
       });
       isDraw && this.canvasContext.draw();
@@ -704,13 +758,13 @@ var _default = {
       context.stroke();
     },
     handleShapeRegion: function handleShapeRegion(info) {
-      var _this5 = this;
+      var _this7 = this;
       var position = info.p;
       var positionList = position.points;
       var points = positionList.map(function (item) {
         return {
-          x: item.x - _this5.baseXPoint,
-          y: item.y - _this5.baseYPoint
+          x: item.x - _this7.baseXPoint,
+          y: item.y - _this7.baseYPoint
         };
       });
       this.drawPolygon({
@@ -760,6 +814,7 @@ var _default = {
     },
     onCanvasTouchMove: (0, _lodash.throttle)(function (e) {
       this.isTouchMoving = true;
+      console.log('touchMove');
       if (e.touches.length >= 2) {
         var xMove = e.touches[0].x - e.touches[1].x;
         var yMove = e.touches[0].y - e.touches[1].y;
