@@ -244,7 +244,14 @@ var _default = {
       // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
       tempFilePath: '',
       isShowTemp: true,
-      thumbnailTempImg: ''
+      thumbnailTempImg: '',
+      boundary: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0
+      },
+      isCancelDraw: false
     };
   },
   onLoad: function onLoad() {},
@@ -259,7 +266,6 @@ var _default = {
       var _this2 = this;
       var tempCtx = uni.createCanvasContext('tempCanvas', this);
       this.canvasContext = tempCtx;
-      console.log(this.canvasContext, '== exportThumbnail canvas');
       tempCtx.setLineWidth(4);
       this.canvasType = 'cache';
       this.userDraw();
@@ -271,7 +277,6 @@ var _default = {
         destWidth: this.canvasInfo.width,
         destHeight: this.canvasInfo.height,
         success: function success(res) {
-          console.log('canvasToTempFilePath==');
           _this2.tempFilePath = res.tempFilePath;
           _this.visibleAreaStyle = "width: ".concat(_this2.thumbnailInfo.width - 3, "px; height: ").concat(_this2.thumbnailInfo.height - 3, "px;");
         },
@@ -293,7 +298,8 @@ var _default = {
       // } else {
       // 	scale = this.wrapperBox.height / height
       // }
-      scale = this.wrapperBox.width / width;
+      scale = +(this.wrapperBox.width / width).toFixed(2);
+      console.log(scale, '===scalexxxx111');
       this.scaleBase = scale;
       this.scale = scale;
       this.preScale = scale;
@@ -380,9 +386,16 @@ var _default = {
       }))();
     },
     startTargeCanvas: function startTargeCanvas() {
-      var width = this.canvasInfo.width * this.scale;
-      var height = this.canvasInfo.height * this.scale;
-      console.log('==开始正式渲染', width, height);
+      console.log(this.scale, '==xxscale');
+      var width = Math.round(this.canvasInfo.width * this.scale);
+      var height = Math.round(this.canvasInfo.height * this.scale);
+      this.boundary = {
+        left: 0,
+        right: width,
+        top: 0,
+        bottom: height
+      };
+      console.log(this.boundary, '==boundary');
       this.canvasInitInfo = {
         width: width,
         height: height
@@ -398,7 +411,6 @@ var _default = {
       this.canvasStyle = style;
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.canvasContext = ctx;
-      console.log(this.canvasContext, '== start target canvas');
       this.canvasType = 'target';
       var canvasBase = new _canvas.default({
         ctx: ctx
@@ -413,16 +425,18 @@ var _default = {
       this.canvasContext.translate(this.offset.x, this.offset.y);
       this.canvasContext.scale(this.scale, this.scale);
       this.canvasContext.setLineWidth(4); // 设置边框宽度
-      console.log('touchMoving', this.isTouchMoving);
-      console.log('缩略图');
+
       if (this.isTouchMoving) {
         if (this.tempFilePath) {
-          console.log('绘制图片');
+          console.log('缩略图绘制');
           this.canvasContext.drawImage(this.tempFilePath, 0, 0, this.canvasInfo.width, this.canvasInfo.height);
           this.canvasContext.draw();
+        } else {
+          console.log('重新绘制1');
+          this.userDraw();
         }
       } else {
-        console.log('重新绘制');
+        console.log('重新绘制2');
         this.userDraw();
       }
 
@@ -449,6 +463,7 @@ var _default = {
       this.scale += this.scaleStep;
       if (this.scale > this.maxScale) {
         this.scale = this.maxScale;
+        return;
       }
       this.zoom.call(this);
     },
@@ -457,6 +472,7 @@ var _default = {
       this.scale -= this.scaleStep;
       if (this.scale < this.minScale) {
         this.scale = this.minScale;
+        return;
       }
       this.zoom.call(this);
     },
@@ -468,6 +484,7 @@ var _default = {
       // 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
       this.offset.x = this.mousePos.x - (this.mousePos.x - this.offset.x) * this.scale / this.preScale;
       this.offset.y = this.mousePos.y - (this.mousePos.y - this.offset.y) * this.scale / this.preScale;
+      console.log("==zoomxx", this.scale);
       this.draw();
       this.preScale = this.scale;
       this.curOffset.x = this.offset.x;
@@ -568,7 +585,6 @@ var _default = {
     userDraw: function userDraw() {
       var _this5 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
-      console.log('==用户绘制');
       seatInfoList.forEach(function (item) {
         console.log('==遍历中');
         var type = 'seat';
@@ -720,7 +736,7 @@ var _default = {
       this.startX = e.touches[0].x;
       this.startY = e.touches[0].y;
     },
-    onCanvasTouchMove: (0, _lodash.throttle)(function (e) {
+    onCanvasTouchMove: function onCanvasTouchMove(e) {
       this.isTouchMoving = true;
       console.log('touchMove');
       if (e.touches.length >= 2) {
@@ -742,13 +758,35 @@ var _default = {
         this.offset.x = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
         this.offset.y = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
         this.draw();
+        // const offsetX = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
+        // const offsetY = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
+        // // console.log(this.offset, '==offset')
+        // const changeX = this.offset.x * this.scaleBase
+        // const changeY = this.offset.y * this.scaleBase
+        // console.log(changeX, changeY, '==offsetxx')
+        // // console.log(changeX, '==offsetxx', this.boundary.left + changeX)
+        // const isOverLeft = this.boundary.left + changeX < 0
+        // const isOverRight = this.boundary.right + changeX > this.canvasInitInfo.width
+        // const isOverTop = this.boundary.top + changeY < 0
+        // const isOverBottom = this.boundary.bottom + changeY > this.canvasInitInfo.height
+        // if (isOverLeft || isOverRight || isOverTop || isOverBottom) {
+        // 	console.log('超出边界')
+        // 	this.isCancelDraw = true;
+        // 	return;
+        // }
+        // this.offset.x = offsetX;
+        // this.offset.y = offsetY;
+        // this.draw();
       }
-    }, 200),
+    },
     onCanvasTouchEnd: function onCanvasTouchEnd(e) {
       this.isTouchMoving = false;
-      this.curOffset.x = this.offset.x;
-      this.curOffset.y = this.offset.y;
-      this.draw();
+      if (!this.isCancelDraw) {
+        this.curOffset.x = this.offset.x;
+        this.curOffset.y = this.offset.y;
+        this.draw();
+      }
+      this.isCancelDraw = false;
       this.canvasClass.handleEvent(e, {
         curOffset: this.curOffset,
         scale: this.scale

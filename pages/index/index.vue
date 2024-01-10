@@ -103,7 +103,14 @@ export default {
 			canvasType: '', // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
 			tempFilePath: '',
 			isShowTemp: true,
-			thumbnailTempImg: ''
+			thumbnailTempImg: '',
+			boundary: {
+				left: 0,
+				right: 0,
+				top: 0,
+				bottom: 0
+			},
+			isCancelDraw: false
 
 		}
 	},
@@ -131,7 +138,7 @@ export default {
 
 			const tempCtx = uni.createCanvasContext('tempCanvas', this);
 			this.canvasContext = tempCtx;
-			console.log(this.canvasContext, '== exportThumbnail canvas')
+
 			tempCtx.setLineWidth(4)
 			this.canvasType = 'cache'
 			this.userDraw()
@@ -143,9 +150,10 @@ export default {
 				destWidth: this.canvasInfo.width,
 				destHeight: this.canvasInfo.height,
 				success: (res) => {
-					console.log('canvasToTempFilePath==')
+
 					this.tempFilePath = res.tempFilePath;
-					_this.visibleAreaStyle = `width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
+					_this.visibleAreaStyle =
+						`width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
 				},
 				fail: () => {
 
@@ -171,7 +179,8 @@ export default {
 			// } else {
 			// 	scale = this.wrapperBox.height / height
 			// }
-			scale = this.wrapperBox.width / width
+			scale = +(this.wrapperBox.width / width).toFixed(2)
+			console.log(scale, '===scalexxxx111')
 			this.scaleBase = scale;
 			this.scale = scale;
 			this.preScale = scale;
@@ -239,9 +248,16 @@ export default {
 		},
 
 		startTargeCanvas() {
-			let width = this.canvasInfo.width * this.scale
-			let height = this.canvasInfo.height * this.scale
-			console.log('==开始正式渲染', width, height)
+			console.log(this.scale, '==xxscale')
+			let width = Math.round(this.canvasInfo.width * this.scale)
+			let height = Math.round(this.canvasInfo.height * this.scale)
+			this.boundary = {
+				left: 0,
+				right: width,
+				top: 0,
+				bottom: height
+			}
+			console.log(this.boundary, '==boundary')
 			this.canvasInitInfo = {
 				width,
 				height
@@ -252,12 +268,13 @@ export default {
 				width: this.thumbnailInfo.width,
 				height: this.canvasInitInfo.height / thumbnailScale
 			}
-			this.thumbnailStyle = `width: ${this.thumbnailInfo.width}px; height: ${this.thumbnailInfo.height}px; border: 1px solid blue;`
+			this.thumbnailStyle =
+				`width: ${this.thumbnailInfo.width}px; height: ${this.thumbnailInfo.height}px; border: 1px solid blue;`
 			let style = `width: ${width}px; height: ${height}px; border:1px solid blue;`
 			this.canvasStyle = style;
 			const ctx = uni.createCanvasContext('myCanvas', this);
 			this.canvasContext = ctx;
-			console.log(this.canvasContext, '== start target canvas')
+
 			this.canvasType = 'target'
 			const canvasBase = new CanvasBase({
 				ctx
@@ -273,16 +290,22 @@ export default {
 			this.canvasContext.translate(this.offset.x, this.offset.y);
 			this.canvasContext.scale(this.scale, this.scale);
 			this.canvasContext.setLineWidth(4); // 设置边框宽度
-			console.log('touchMoving', this.isTouchMoving)
-			console.log('缩略图')
+
+
 			if (this.isTouchMoving) {
+
 				if (this.tempFilePath) {
-					console.log('绘制图片')
-					this.canvasContext.drawImage(this.tempFilePath, 0, 0, this.canvasInfo.width, this.canvasInfo.height);
+					console.log('缩略图绘制')
+
+					this.canvasContext.drawImage(this.tempFilePath, 0, 0, this.canvasInfo.width, this.canvasInfo
+						.height);
 					this.canvasContext.draw()
+				} else {
+					console.log('重新绘制1')
+					this.userDraw();
 				}
 			} else {
-				console.log('重新绘制')
+				console.log('重新绘制2')
 				this.userDraw();
 			}
 
@@ -292,17 +315,22 @@ export default {
 			if (this.curSelectSeat) {
 				const config = this.curSelectSeat
 				const left = config.x * this.scale + this.offset.x + 'px'
-				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
+				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight +
+					'px'
 				this.seatPosition = `left: ${left}; top: ${top};`
 			}
 
 			// 缩略图展示
-			const { width, height } = this.thumbnailInfo;
+			const {
+				width,
+				height
+			} = this.thumbnailInfo;
 			const diffScale = this.scale / this.scaleBase
 			const changeWidth = width / diffScale;
 			const changeHeight = height / diffScale;
 			const changeStyle = `width: ${changeWidth - 2}px; height:${changeHeight - 2}px; `
-			this.visibleAreaStyle = `${changeStyle} left:${-this.offset.x / this.thumbnailScale / diffScale}px; top:${-this.offset.y / this.thumbnailScale / diffScale}px;`
+			this.visibleAreaStyle =
+				`${changeStyle} left:${-this.offset.x / this.thumbnailScale / diffScale}px; top:${-this.offset.y / this.thumbnailScale / diffScale}px;`
 		},
 
 		// 放大
@@ -310,7 +338,7 @@ export default {
 			this.scale += this.scaleStep;
 			if (this.scale > this.maxScale) {
 				this.scale = this.maxScale;
-
+				return;
 			}
 			this.zoom.call(this);
 		},
@@ -320,12 +348,13 @@ export default {
 			this.scale -= this.scaleStep;
 			if (this.scale < this.minScale) {
 				this.scale = this.minScale;
-
+				return;
 			}
 			this.zoom.call(this);
 		},
 
 		zoom() {
+
 			// 是否居中放大
 			this.mousePos.x = this.canvasInitInfo.width / 2;
 			this.mousePos.y = this.canvasInitInfo.height / 2;
@@ -333,6 +362,7 @@ export default {
 			// 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
 			this.offset.x = this.mousePos.x - ((this.mousePos.x - this.offset.x) * this.scale) / this.preScale;
 			this.offset.y = this.mousePos.y - ((this.mousePos.y - this.offset.y) * this.scale) / this.preScale;
+			console.log("==zoomxx", this.scale)
 			this.draw();
 			this.preScale = this.scale;
 			this.curOffset.x = this.offset.x;
@@ -353,9 +383,18 @@ export default {
 			this.clearCanvas();
 			this.scale = this.scaleBase; // 当前缩放
 			this.preScale = this.scaleBase; // 当前缩放
-			this.offset = { x: 0, y: 0 }; // 拖动偏移
-			this.curOffset = { x: 0, y: 0 }; // 当前偏移
-			this.mousePos = { x: 0, y: 0 }; //
+			this.offset = {
+				x: 0,
+				y: 0
+			}; // 拖动偏移
+			this.curOffset = {
+				x: 0,
+				y: 0
+			}; // 当前偏移
+			this.mousePos = {
+				x: 0,
+				y: 0
+			}; //
 		},
 		handleRegion(info) {
 			const style = info.s
@@ -405,10 +444,13 @@ export default {
 							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
 								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
 								if (seatInfoList[i].isSelect) {
-									const { config } = shapeInfo
+									const {
+										config
+									} = shapeInfo
 									this.curSelectSeat = config
 									const left = config.x * this.scale + this.offset.x + 'px'
-									const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
+									const top = config.y * this.scale + this.offset.y - config.radius * this
+										.scale - this.seatBoxHeight + 'px'
 									this.seatPosition = `left: ${left}; top: ${top};`
 									this.isShowSeatImg = true;
 
@@ -433,7 +475,7 @@ export default {
 		},
 
 		userDraw(isDraw = true) {
-			console.log('==用户绘制')
+
 			seatInfoList.forEach((item) => {
 				console.log('==遍历中')
 				let type = 'seat'
@@ -608,7 +650,7 @@ export default {
 
 
 		},
-		onCanvasTouchMove: throttle(function (e) {
+		onCanvasTouchMove: function (e) {
 			this.isTouchMoving = true
 			console.log('touchMove')
 			if (e.touches.length >= 2) {
@@ -620,6 +662,7 @@ export default {
 
 				// 计算新旧触摸点间距离差异, 得到缩放值
 				const scale = distance / initialDistance;
+
 				if (scale >= 1) {
 					this.zoomIn()
 				} else {
@@ -633,15 +676,41 @@ export default {
 				this.offset.x = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
 				this.offset.y = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
 				this.draw();
+				// const offsetX = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
+				// const offsetY = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
+				// // console.log(this.offset, '==offset')
+				// const changeX = this.offset.x * this.scaleBase
+				// const changeY = this.offset.y * this.scaleBase
+				// console.log(changeX, changeY, '==offsetxx')
+				// // console.log(changeX, '==offsetxx', this.boundary.left + changeX)
+				// const isOverLeft = this.boundary.left + changeX < 0
+				// const isOverRight = this.boundary.right + changeX > this.canvasInitInfo.width
+				// const isOverTop = this.boundary.top + changeY < 0
+				// const isOverBottom = this.boundary.bottom + changeY > this.canvasInitInfo.height
+				// if (isOverLeft || isOverRight || isOverTop || isOverBottom) {
+				// 	console.log('超出边界')
+				// 	this.isCancelDraw = true;
+				// 	return;
+				// }
+				// this.offset.x = offsetX;
+				// this.offset.y = offsetY;
+				// this.draw();
 			}
-
-		}, 200),
+		},
 		onCanvasTouchEnd(e) {
 			this.isTouchMoving = false
-			this.curOffset.x = this.offset.x;
-			this.curOffset.y = this.offset.y;
-			this.draw()
-			this.canvasClass.handleEvent(e, { curOffset: this.curOffset, scale: this.scale })
+
+			if (!this.isCancelDraw) {
+				this.curOffset.x = this.offset.x;
+				this.curOffset.y = this.offset.y;
+				this.draw()
+			}
+			this.isCancelDraw = false;
+			this.canvasClass.handleEvent(e, {
+				curOffset: this.curOffset,
+				scale: this.scale
+			})
+
 
 		}
 
