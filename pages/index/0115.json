@@ -1,4 +1,4 @@
-export const seatInfo = {
+{
 	"version": "5.8.4",
 	"platform": "html5",
 	"images": [],

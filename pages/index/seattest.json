@@ -1,0 +1,1351 @@
+{
+	"version": "5.8.4",
+	"platform": "html5",
+	"images": [],
+	"dataBox": {
+		"class": "b2.ElementBox",
+		"s": {
+			"background.type": "vector",
+			"background.vector.fill": true,
+			"background.vector.fill.color": "white",
+			"background.vector.shape": "rect"
+		},
+		"layers": [{
+				"id": "bottom",
+				"name": "Default",
+				"visible": true,
+				"editable": true,
+				"movable": true
+			},
+			{
+				"id": "top",
+				"name": "Default",
+				"visible": true,
+				"editable": true,
+				"movable": true
+			},
+			{
+				"name": "Default",
+				"visible": true,
+				"editable": true,
+				"movable": true
+			}
+		]
+	},
+	"datas": [{
+			"class": "b2.RowNode",
+			"ref": 0,
+			"p": {
+				"name": "0排",
+				"location": {
+					"x": 124,
+					"y": 68
+				}
+			},
+			"s": {
+				"group.fill": false,
+				"group.fill.color": "#FFFFFF",
+				"group.shape": "roundrect",
+				"group.outline.width": 0,
+				"group.outline.color": "#000000",
+				"group.padding": 2,
+				"vector.outline.pattern": [
+					2,
+					2
+				],
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"label.position": "center",
+				"label.xoffset": -130,
+				"label.yoffset": 0
+			},
+			"id": "902ad7b474237fa1761f0530be74458b"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 1,
+			"p": {
+				"name": "0-0",
+				"parent": 0,
+				"location": {
+					"x": 30,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.region": "a"
+			},
+			"id": "b5e8c34a293970ce7e70ba64ca55882f"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 2,
+			"p": {
+				"name": "0-1",
+				"parent": 0,
+				"location": {
+					"x": 70,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 1
+			},
+			"id": "8ad3e50c2bc2497323c367c577ac1eb8"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 3,
+			"p": {
+				"name": "0-2",
+				"parent": 0,
+				"location": {
+					"x": 110,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 2
+			},
+			"id": "478787817c308be5b127d9c775cc100e"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 4,
+			"p": {
+				"name": "0-3",
+				"parent": 0,
+				"location": {
+					"x": 150,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 3
+			},
+			"id": "d3d6053f45f060e08cd9671955717e98"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 5,
+			"p": {
+				"name": "0-4",
+				"parent": 0,
+				"location": {
+					"x": 190,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 4
+			},
+			"id": "661fff86c12ff0a4828938b8eb5ffe4e"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 6,
+			"p": {
+				"name": "0-5",
+				"parent": 0,
+				"location": {
+					"x": 230,
+					"y": 70
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 5
+			},
+			"id": "23d3151c5062c5a7b46bdee89b172f74"
+		},
+		{
+			"class": "b2.RowNode",
+			"ref": 7,
+			"p": {
+				"name": "0排",
+				"location": {
+					"x": 124,
+					"y": 108
+				}
+			},
+			"s": {
+				"group.fill": false,
+				"group.fill.color": "#FFFFFF",
+				"group.shape": "roundrect",
+				"group.outline.width": 0,
+				"group.outline.color": "#000000",
+				"group.padding": 2,
+				"vector.outline.pattern": [
+					2,
+					2
+				],
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"label.position": "center",
+				"label.xoffset": -130,
+				"label.yoffset": 0
+			},
+			"id": "27bb0750a2f74395a8f14fd0a9149e2c"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 8,
+			"p": {
+				"name": "0-0",
+				"parent": 7,
+				"location": {
+					"x": 30,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.region": "a"
+			},
+			"id": "27c1a04c20c288908dfbe81d7da2270f"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 9,
+			"p": {
+				"name": "0-1",
+				"parent": 7,
+				"location": {
+					"x": 70,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 1
+			},
+			"id": "385c6c7ff79babc656862a637792e23b"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 10,
+			"p": {
+				"name": "0-2",
+				"parent": 7,
+				"location": {
+					"x": 110,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 2
+			},
+			"id": "44c97cb145b9f7fd8a3bc469c55cd105"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 11,
+			"p": {
+				"name": "0-3",
+				"parent": 7,
+				"location": {
+					"x": 150,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 3
+			},
+			"id": "da31bf9fcf1a531dc620fdb8a52f9c2e"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 12,
+			"p": {
+				"name": "0-4",
+				"parent": 7,
+				"location": {
+					"x": 190,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 4
+			},
+			"id": "447069086c71ab10a0302bd229ddd0f9"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 13,
+			"p": {
+				"name": "0-5",
+				"parent": 7,
+				"location": {
+					"x": 230,
+					"y": 110
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 5
+			},
+			"id": "76dc0d5c19ece15971583972d249bf0e"
+		},
+		{
+			"class": "b2.RowNode",
+			"ref": 14,
+			"p": {
+				"name": "0排",
+				"location": {
+					"x": 124,
+					"y": 148
+				}
+			},
+			"s": {
+				"group.fill": false,
+				"group.fill.color": "#FFFFFF",
+				"group.shape": "roundrect",
+				"group.outline.width": 0,
+				"group.outline.color": "#000000",
+				"group.padding": 2,
+				"vector.outline.pattern": [
+					2,
+					2
+				],
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"label.position": "center",
+				"label.xoffset": -130,
+				"label.yoffset": 0
+			},
+			"id": "8013730ff3dc4dd2afe09f6990f6b0d2"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 15,
+			"p": {
+				"name": "0-0",
+				"parent": 14,
+				"location": {
+					"x": 30,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.region": "a"
+			},
+			"id": "fb93aa36e45541e7ead99d651f24eb23"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 16,
+			"p": {
+				"name": "0-1",
+				"parent": 14,
+				"location": {
+					"x": 70,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 1
+			},
+			"id": "94822a4da054f3d7ed19e1b0c80b2b23"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 17,
+			"p": {
+				"name": "0-2",
+				"parent": 14,
+				"location": {
+					"x": 110,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 2
+			},
+			"id": "90fcb79d61e3ebf671a93c59761344fb"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 18,
+			"p": {
+				"name": "0-3",
+				"parent": 14,
+				"location": {
+					"x": 150,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 3
+			},
+			"id": "d5d1e902cb2203f10f85c9ee4b29e27d"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 19,
+			"p": {
+				"name": "0-4",
+				"parent": 14,
+				"location": {
+					"x": 190,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 4
+			},
+			"id": "51f6b5061ccddef8d5b0cfd12d6eda2a"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 20,
+			"p": {
+				"name": "0-5",
+				"parent": 14,
+				"location": {
+					"x": 230,
+					"y": 150
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 5
+			},
+			"id": "ea41f0565f9483950aa413118e511c39"
+		},
+		{
+			"class": "b2.RowNode",
+			"ref": 21,
+			"p": {
+				"name": "0排",
+				"location": {
+					"x": 124,
+					"y": 188
+				}
+			},
+			"s": {
+				"group.fill": false,
+				"group.fill.color": "#FFFFFF",
+				"group.shape": "roundrect",
+				"group.outline.width": 0,
+				"group.outline.color": "#000000",
+				"group.padding": 2,
+				"vector.outline.pattern": [
+					2,
+					2
+				],
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"label.position": "center",
+				"label.xoffset": -130,
+				"label.yoffset": 0
+			},
+			"id": "808fd4aba20664a8efa032f94ca5347c"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 22,
+			"p": {
+				"name": "0-0",
+				"parent": 21,
+				"location": {
+					"x": 30,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.region": "a"
+			},
+			"id": "11abfa71e26f46135b3600f01083a3dd"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 23,
+			"p": {
+				"name": "0-1",
+				"parent": 21,
+				"location": {
+					"x": 70,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 1
+			},
+			"id": "43dbedb37da01371f870b226422c328a"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 24,
+			"p": {
+				"name": "0-2",
+				"parent": 21,
+				"location": {
+					"x": 110,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 2
+			},
+			"id": "d45485205f3a51f048512b20041a12a8"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 25,
+			"p": {
+				"name": "0-3",
+				"parent": 21,
+				"location": {
+					"x": 150,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 3
+			},
+			"id": "266a57ff2bebf2b5147f373f79194065"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 26,
+			"p": {
+				"name": "0-4",
+				"parent": 21,
+				"location": {
+					"x": 190,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 4
+			},
+			"id": "71978d19d38c43ef6036a4a7a25a153d"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 27,
+			"p": {
+				"name": "0-5",
+				"parent": 21,
+				"location": {
+					"x": 230,
+					"y": 190
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 5
+			},
+			"id": "0db7c67204746dab7a87f87df2c270c1"
+		},
+		{
+			"class": "b2.RowNode",
+			"ref": 28,
+			"p": {
+				"name": "0排",
+				"location": {
+					"x": 124,
+					"y": 228
+				}
+			},
+			"s": {
+				"group.fill": false,
+				"group.fill.color": "#FFFFFF",
+				"group.shape": "roundrect",
+				"group.outline.width": 0,
+				"group.outline.color": "#000000",
+				"group.padding": 2,
+				"vector.outline.pattern": [
+					2,
+					2
+				],
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"label.position": "center",
+				"label.xoffset": -130,
+				"label.yoffset": 0
+			},
+			"id": "f742b235b93fe1adac680c4832a08c5c"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 29,
+			"p": {
+				"name": "0-0",
+				"parent": 28,
+				"location": {
+					"x": 30,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.region": "a"
+			},
+			"id": "c3b37bafb60723bca1e2a1498cd906f9"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 30,
+			"p": {
+				"name": "0-1",
+				"parent": 28,
+				"location": {
+					"x": 70,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 1
+			},
+			"id": "91b5b1b9fd8299cebcbcef162ee77c09"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 31,
+			"p": {
+				"name": "0-2",
+				"parent": 28,
+				"location": {
+					"x": 110,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 2
+			},
+			"id": "93fcd9fe1c01cb450f3d7a032133fe1d"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 32,
+			"p": {
+				"name": "0-3",
+				"parent": 28,
+				"location": {
+					"x": 150,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 3
+			},
+			"id": "2ce081e0c368f9e3319337ea1b32e228"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 33,
+			"p": {
+				"name": "0-4",
+				"parent": 28,
+				"location": {
+					"x": 190,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 4
+			},
+			"id": "12d81f906de97ed51fc73e31a6e9741f"
+		},
+		{
+			"class": "b2.SeatNode",
+			"ref": 34,
+			"p": {
+				"name": "0-5",
+				"parent": 28,
+				"location": {
+					"x": 230,
+					"y": 230
+				},
+				"width": 20,
+				"height": 20
+			},
+			"s": {
+				"body.type": "vector",
+				"vector.shape": "circle",
+				"vector.fill.color": "#cdcdcd",
+				"vector.outline.width": 1,
+				"vector.outline.color": "#000000",
+				"vector.outline.pattern": [
+					10,
+					0
+				],
+				"label.position": "center",
+				"label.font": "10px arial",
+				"label2.position": "left.left",
+				"label2.yoffset": 0,
+				"shadow.blur": 4,
+				"shadow.xoffset": 0,
+				"shadow.yoffset": 0,
+				"select.style": "shadow",
+				"select.padding": 0,
+				"select.color": "#ff0000"
+			},
+			"c": {
+				"business.seat": 5
+			},
+			"id": "c03c05bfd875f24e41e24e8d0076d907"
+		}
+	]
+}
