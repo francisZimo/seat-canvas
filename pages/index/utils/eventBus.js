@@ -2,8 +2,6 @@ class Event {
 	constructor() {
 		this._listener = {}
 	}
-
-
 	/**
 	 * 监听
 	 * @param {string} type

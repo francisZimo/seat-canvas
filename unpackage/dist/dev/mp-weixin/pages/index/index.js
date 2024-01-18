@@ -180,12 +180,22 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
 var _default = {
   data: function data() {
     return {
+      canvasContainerBox: {
+        width: 700,
+        height: 700
+      },
       // 系统信息
       wrapperBox: {
         width: 750,
@@ -227,7 +237,11 @@ var _default = {
       thumbnailImg: '',
       thumbnailInfo: {
         width: 200,
-        height: 200
+        height: 200,
+        top: 0,
+        left: 0,
+        changeWidth: 0,
+        changeHeight: 0
       },
       thumbnailStyle: '',
       isShowCanvas: false,
@@ -251,15 +265,29 @@ var _default = {
         top: 0,
         bottom: 0
       },
-      isCancelDraw: false
+      isCancelDraw: false,
+      diffOffsetY: 0 // 画布与真实座位中间的差值
     };
   },
   onLoad: function onLoad() {},
   onReady: function onReady() {},
   mounted: function mounted() {
-    var systemInfo = uni.getSystemInfoSync();
-    this.wrapperBox.width = systemInfo.windowWidth;
-    this.init();
+    var _this = this;
+    uni.createSelectorQuery().select('.main-content').boundingClientRect(function (rect) {
+      var width = parseInt(rect.width);
+      var height = parseInt(rect.height);
+      _this.canvasContainerBox = {
+        width: width,
+        height: height
+      };
+      var systemInfo = uni.getSystemInfoSync();
+      // this.wrapperBox.width = systemInfo.windowWidth;
+      _this.wrapperBox = {
+        width: width,
+        height: height
+      };
+      _this.init();
+    }).exec();
   },
   methods: {
     exportThumbnail: function exportThumbnail() {
@@ -269,16 +297,15 @@ var _default = {
       tempCtx.setLineWidth(4);
       this.canvasType = 'cache';
       this.userDraw();
-      var _this = this;
       uni.canvasToTempFilePath({
         canvasId: 'tempCanvas',
-        width: this.canvasInfo.width,
-        height: this.canvasInfo.height,
-        destWidth: this.canvasInfo.width,
-        destHeight: this.canvasInfo.height,
+        // width: this.canvasInfo.width,
+        // height: this.canvasInfo.height,
+        // destWidth: this.canvasInfo.width,
+        // destHeight: this.canvasInfo.height,
         success: function success(res) {
           _this2.tempFilePath = res.tempFilePath;
-          _this.visibleAreaStyle = "width: ".concat(_this2.thumbnailInfo.width - 3, "px; height: ").concat(_this2.thumbnailInfo.height - 3, "px;");
+          _this2.visibleAreaStyle = "width: ".concat(_this2.thumbnailInfo.width - 3, "px; height: ").concat(_this2.thumbnailInfo.height - 3, "px;");
         },
         fail: function fail() {}
       }, this);
@@ -299,14 +326,13 @@ var _default = {
       // 	scale = this.wrapperBox.height / height
       // }
       scale = +(this.wrapperBox.width / width).toFixed(2);
-      console.log(scale, '===scalexxxx111');
       this.scaleBase = scale;
       this.scale = scale;
       this.preScale = scale;
       this.minScale = scale;
       this.maxScale = 1;
-      this.widthRatio = 1.5;
-      this.heightRatio = 1.5;
+      this.widthRatio = 2;
+      this.heightRatio = 2;
     },
     calculateBoundingRectangle: function calculateBoundingRectangle() {
       var minX = Infinity;
@@ -373,7 +399,7 @@ var _default = {
                 _this3.tempStyle = "width: ".concat(_this3.canvasInfo.width, "px; height: ").concat(_this3.canvasInfo.height, "px;");
                 setTimeout(function () {
                   _this3.exportThumbnail();
-                  _this3.startTargeCanvas();
+                  _this3.startTargetCanvas();
                   _this3.isShowTemp = false;
                   _this3.isLoading = false;
                 }, 300);
@@ -385,29 +411,29 @@ var _default = {
         }, _callee2);
       }))();
     },
-    startTargeCanvas: function startTargeCanvas() {
-      console.log(this.scale, '==xxscale');
+    startTargetCanvas: function startTargetCanvas() {
       var width = Math.round(this.canvasInfo.width * this.scale);
       var height = Math.round(this.canvasInfo.height * this.scale);
+
+      // 反推原数据偏移
+      this.diffOffsetY = (this.canvasContainerBox.height - height) / 2;
+      this.baseYPoint -= this.diffOffsetY / this.scale;
       this.boundary = {
         left: 0,
         right: width,
         top: 0,
         bottom: height
       };
-      console.log(this.boundary, '==boundary');
       this.canvasInitInfo = {
         width: width,
         height: height
       };
       var thumbnailScale = this.canvasInitInfo.width / this.thumbnailInfo.width;
       this.thumbnailScale = thumbnailScale;
-      this.thumbnailInfo = {
-        width: this.thumbnailInfo.width,
-        height: this.canvasInitInfo.height / thumbnailScale
-      };
-      this.thumbnailStyle = "width: ".concat(this.thumbnailInfo.width, "px; height: ").concat(this.thumbnailInfo.height, "px; border: 1px solid blue;");
-      var style = "width: ".concat(width, "px; height: ").concat(height, "px; border:1px solid blue;");
+      this.thumbnailInfo.width = this.thumbnailInfo.width;
+      this.thumbnailInfo.height = this.canvasInitInfo.height / thumbnailScale;
+      this.thumbnailStyle = "width: ".concat(this.thumbnailInfo.width, "px; height: ").concat(this.thumbnailInfo.height, "px; ");
+      var style = "width: ".concat(width, "px; height: ").concat(this.canvasContainerBox.height, "px;");
       this.canvasStyle = style;
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.canvasContext = ctx;
@@ -427,15 +453,18 @@ var _default = {
       this.canvasContext.setLineWidth(4); // 设置边框宽度
 
       if (this.isTouchMoving) {
+        // this.canvasContext.translate(this.offset.x, this.offset.y);
+        // this.canvasContext.scale(this.scale, this.scale);
         if (this.tempFilePath) {
-          console.log('缩略图绘制');
-          this.canvasContext.drawImage(this.tempFilePath, 0, 0, this.canvasInfo.width, this.canvasInfo.height);
+          this.canvasContext.drawImage(this.tempFilePath, 0, this.diffOffsetY / this.scaleBase * (this.scale / this.preScale), this.canvasInfo.width, this.canvasInfo.height);
           this.canvasContext.draw();
         } else {
           console.log('重新绘制1');
           this.userDraw();
         }
       } else {
+        // this.canvasContext.translate(this.offset.x, this.offset.y);
+        // this.canvasContext.scale(this.scale, this.scale);
         console.log('重新绘制2');
         this.userDraw();
       }
@@ -449,18 +478,76 @@ var _default = {
       }
 
       // 缩略图展示
+      this.drawThumbnail();
+      // const overLayoutInfo = this.isOverLayout()
+      // if (overLayoutInfo.left) {
+      // 	this.thumbnailInfo.left = 0
+      // }
+      // if (overLayoutInfo.right) {
+
+      // 	this.thumbnailInfo.left = this.thumbnailInfo.width - this.thumbnailInfo.changeWidth
+      // }
+      // if (overLayoutInfo.top) {
+      // 	this.thumbnailInfo.top = 0
+      // }
+      // if (overLayoutInfo.bottom) {
+      // 	this.thumbnailInfo.top = this.thumbnailInfo.height - this.thumbnailInfo.changeHeight
+      // }
+      var changeStyle = "width: ".concat(this.thumbnailInfo.changeWidth - 2, "px; height:").concat(this.thumbnailInfo.changeHeight - 2, "px; ");
+      this.visibleAreaStyle = "".concat(changeStyle, " left:").concat(this.thumbnailInfo.left, "px; top:").concat(this.thumbnailInfo.top, "px;");
+    },
+    drawThumbnail: function drawThumbnail() {
+      // 缩略图展示
       var _this$thumbnailInfo = this.thumbnailInfo,
         width = _this$thumbnailInfo.width,
         height = _this$thumbnailInfo.height;
+
+      // const diffScale = this.scale / this.scaleBase
+      // const _changeWidth = width / diffScale;
+      // const _changeHeight = height / diffScale;
+      // this.thumbnailInfo.left = -this.offset.x / this.thumbnailScale / diffScale;
+      // this.thumbnailInfo.top = -this.offset.y / this.thumbnailScale / diffScale;
+      // this.thumbnailInfo.changeWidth = _changeWidth;
+      // this.thumbnailInfo.changeHeight = _changeHeight;
       var diffScale = this.scale / this.scaleBase;
-      var changeWidth = width / diffScale;
-      var changeHeight = height / diffScale;
-      var changeStyle = "width: ".concat(changeWidth - 2, "px; height:").concat(changeHeight - 2, "px; ");
-      this.visibleAreaStyle = "".concat(changeStyle, " left:").concat(-this.offset.x / this.thumbnailScale / diffScale, "px; top:").concat(-this.offset.y / this.thumbnailScale / diffScale, "px;");
+      var _changeWidth = width / diffScale;
+      // const _changeHeight = this.canvasContainerBox.height / this.thumbnailScale / diffScale;
+      var _changeHeight = this.canvasContainerBox.height / this.thumbnailScale / diffScale;
+      this.thumbnailInfo.left = -this.offset.x / this.thumbnailScale / diffScale;
+      this.thumbnailInfo.changeWidth = _changeWidth > width ? width : _changeWidth;
+      this.thumbnailInfo.changeHeight = _changeHeight;
+      this.thumbnailInfo.top = -this.offset.y / this.thumbnailScale / diffScale;
+      // const thumbnailOffsetHeight = this.diffOffsetY / this.canvasContainerBox.height * this.thumbnailInfo.changeHeight;
+      // console.log(thumbnailOffsetHeight, '===thumbnailOffsetHeight', -(this.offset.y) / this.thumbnailScale / diffScale)
+      // this.thumbnailInfo.top = -(this.offset.y) / this.thumbnailScale / diffScale;
+      // let thumbnailOffsetHeight = 0;
+      // const layoutLimitScale = this.canvasContainerBox.height / this.canvasInitInfo.height
+      // if (this.scale > layoutLimitScale) {
+      // 	thumbnailOffsetHeight = this.diffOffsetY / this.canvasContainerBox.height * this.thumbnailInfo.changeHeight;
+      // }
+      // this.thumbnailInfo.top = -(this.offset.y) / this.thumbnailScale / diffScale - thumbnailOffsetHeight;
+      // this.thumbnailInfo.changeHeight = height;
+    },
+    isOverLayout: function isOverLayout() {
+      var _this$thumbnailInfo2 = this.thumbnailInfo,
+        left = _this$thumbnailInfo2.left,
+        top = _this$thumbnailInfo2.top,
+        changeWidth = _this$thumbnailInfo2.changeWidth,
+        changeHeight = _this$thumbnailInfo2.changeHeight,
+        width = _this$thumbnailInfo2.width,
+        height = _this$thumbnailInfo2.height;
+      var offsetInfo = {
+        left: left < 0,
+        right: left + changeWidth > width,
+        top: top < 0,
+        bottom: top + changeHeight > height
+      };
+      return offsetInfo;
     },
     // 放大
     zoomIn: function zoomIn() {
       this.scale += this.scaleStep;
+      this.scale = +this.scale.toFixed(2);
       if (this.scale > this.maxScale) {
         this.scale = this.maxScale;
         return;
@@ -470,6 +557,7 @@ var _default = {
     // 缩小
     zoomOut: function zoomOut() {
       this.scale -= this.scaleStep;
+      this.scale = +this.scale.toFixed(2);
       if (this.scale < this.minScale) {
         this.scale = this.minScale;
         return;
@@ -479,12 +567,12 @@ var _default = {
     zoom: function zoom() {
       // 是否居中放大
       this.mousePos.x = this.canvasInitInfo.width / 2;
-      this.mousePos.y = this.canvasInitInfo.height / 2;
+      // this.mousePos.y = this.canvasInitInfo.height / 2;
+      this.mousePos.y = this.canvasContainerBox.height / 2;
       // 放大系数：this.scale / this.preScale =>n
       // 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
       this.offset.x = this.mousePos.x - (this.mousePos.x - this.offset.x) * this.scale / this.preScale;
       this.offset.y = this.mousePos.y - (this.mousePos.y - this.offset.y) * this.scale / this.preScale;
-      console.log("==zoomxx", this.scale);
       this.draw();
       this.preScale = this.scale;
       this.curOffset.x = this.offset.x;
@@ -529,7 +617,6 @@ var _default = {
         });
       }
       if (style['vector.shape'] && style['vector.shape'] === 'circle') {
-        console.log('唯一circle');
         this.drawCircle({
           context: this.canvasContext,
           x: position.location.x - this.baseXPoint + position.width / 2,
@@ -738,7 +825,6 @@ var _default = {
     },
     onCanvasTouchMove: function onCanvasTouchMove(e) {
       this.isTouchMoving = true;
-      console.log('touchMove');
       if (e.touches.length >= 2) {
         var xMove = e.touches[0].x - e.touches[1].x;
         var yMove = e.touches[0].y - e.touches[1].y;
@@ -755,35 +841,48 @@ var _default = {
         }
         initialDistance = distance;
       } else {
-        this.offset.x = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
-        this.offset.y = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
-        this.draw();
-        // const offsetX = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
-        // const offsetY = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
-        // // console.log(this.offset, '==offset')
-        // const changeX = this.offset.x * this.scaleBase
-        // const changeY = this.offset.y * this.scaleBase
-        // console.log(changeX, changeY, '==offsetxx')
-        // // console.log(changeX, '==offsetxx', this.boundary.left + changeX)
-        // const isOverLeft = this.boundary.left + changeX < 0
-        // const isOverRight = this.boundary.right + changeX > this.canvasInitInfo.width
-        // const isOverTop = this.boundary.top + changeY < 0
-        // const isOverBottom = this.boundary.bottom + changeY > this.canvasInitInfo.height
-        // if (isOverLeft || isOverRight || isOverTop || isOverBottom) {
-        // 	console.log('超出边界')
-        // 	this.isCancelDraw = true;
-        // 	return;
+        // 初始无法拖动
+        // if (this.scaleBase === this.scale) {
+        // 	return
         // }
-        // this.offset.x = offsetX;
-        // this.offset.y = offsetY;
-        // this.draw();
+
+        var offsetX = this.curOffset.x + (e.touches[0].x - this.startX) * this.widthRatio;
+        var offsetY = this.curOffset.y + (e.touches[0].y - this.startY) * this.heightRatio;
+
+        // this.drawThumbnail()
+        // const overLayoutInfo = this.isOverLayout()
+
+        // const oldOffsetx = this.offset.x
+        // const oldOffsety = this.offset.y
+
+        // if (overLayoutInfo.left) {
+        // 	offsetX = offsetX < oldOffsetx ? offsetX : oldOffsetx
+        // }
+        // if (overLayoutInfo.right) {
+        // 	offsetX = offsetX > oldOffsetx ? offsetX : oldOffsetx
+        // }
+
+        // if (overLayoutInfo.top) {
+        // 	offsetY = offsetY < oldOffsety ? offsetY : oldOffsety
+        // }
+        // if (overLayoutInfo.bottom) {
+        // 	offsetY = offsetY > oldOffsety ? offsetY : oldOffsety
+        // }
+        this.offset.x = offsetX;
+        this.offset.y = offsetY;
+        this.draw();
       }
     },
     onCanvasTouchEnd: function onCanvasTouchEnd(e) {
       this.isTouchMoving = false;
+      // if (this.scaleBase === this.scale) {
+      // 	return
+      // }
+
       if (!this.isCancelDraw) {
         this.curOffset.x = this.offset.x;
         this.curOffset.y = this.offset.y;
+        console.log('touchEnd重新绘制');
         this.draw();
       }
       this.isCancelDraw = false;
