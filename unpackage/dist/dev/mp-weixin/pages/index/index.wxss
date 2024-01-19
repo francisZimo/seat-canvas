@@ -26,8 +26,8 @@
 /* 文章场景相关 */
 .container.data-v-57280228 {
   width: 100%;
-  height: 100%;
-  position: absolute;
+  height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: column;
 }
@@ -67,7 +67,6 @@
 .content.data-v-57280228 {
   width: 750rpx;
   height: 600px;
-  overflow: hidden;
   border: 1px solid red;
   display: flex;
   align-items: center;
@@ -78,10 +77,9 @@
   height: 200px;
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
-  top: 0;
+  top: 100px;
   right: 3px;
   z-index: 200;
-  overflow: hidden;
 }
 .thumbnail-box .thumbnail-img.data-v-57280228 {
   width: 100%;
@@ -89,7 +87,7 @@
 }
 .thumbnail-box .visible-area.data-v-57280228 {
   position: absolute;
-  top: 0;
+  top: 0px;
   left: 0;
   z-index: 100;
   border: 2px solid red;
