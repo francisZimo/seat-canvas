@@ -186,6 +186,11 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
@@ -251,7 +256,7 @@ var _default = {
         height: 400
       },
       thumbnailScale: 1,
-      seatBoxHeight: 115,
+      seatBoxHeight: 316,
       hasOffScreenCanvasData: false,
       isTouchMoving: false,
       canvasType: '',

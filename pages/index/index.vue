@@ -6,10 +6,9 @@
 			筛选区域
 		</view>
 		<view class="main-content">
-			<!-- <view class="content"> -->
 			<cover-view :style="thumbnailStyle" class="thumbnail-box">
+
 				<cover-image :src="tempFilePath" class="thumbnail-img"></cover-image>
-				<!-- <cover-view style="background-image: `${thumbnailTempImg}`;"></cover-view> -->
 				<cover-view :style="visibleAreaStyle" class="visible-area"></cover-view>
 			</cover-view>
 			<view :style="canvasStyle" class="canvas-wrapper">
@@ -18,7 +17,13 @@
 				<cover-view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
 					<cover-view class="seat-anchor"></cover-view>
 					<cover-image class="seat-img" :src="imgUrl" alt=""></cover-image>
-					<cover-view class="blank-space"></cover-view>
+					<cover-view class="blank-space">
+						<cover-view class="seat-region">1楼</cover-view>
+						<cover-view class="divider"></cover-view>
+						<cover-view class="seat-row">10排</cover-view>
+						<cover-view class="divider"></cover-view>
+						<cover-view class="seat">20座</cover-view>
+					</cover-view>
 				</cover-view>
 			</view>
 			<!-- </view> -->
@@ -111,7 +116,7 @@ export default {
 				height: 400
 			},
 			thumbnailScale: 1,
-			seatBoxHeight: 115,
+			seatBoxHeight: 316,
 			hasOffScreenCanvasData: false,
 			isTouchMoving: false,
 			canvasType: '', // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
@@ -891,7 +896,7 @@ export default {
 	height: 200px;
 	background-color: rgba(0, 0, 0, 0.7);
 	position: absolute;
-	top: 100px;
+	top: 0px;
 	right: 3px;
 	z-index: 200;
 	// overflow: hidden;
@@ -918,36 +923,72 @@ export default {
 
 .seat-view {
 	position: absolute;
-	width: 100px;
+	width: 334px;
+	height: 316px;
+	background: #F5F5F5;
+	box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.16);
+	border-radius: 20px 20px 20px 20px;
+
 	top: 0;
 	left: 0;
 	z-index: 200;
 	transform: translateX(-50%);
+	overflow: hidden;
 
 
 	.seat-img {
-		width: 100px;
-		height: 100px;
-		border-radius: 2px;
+		width: 100%;
+		height: 236px;
+		overflow: hidden;
+		border-radius: 20px 20px 0px 0px;
 	}
 
 	.blank-space {
 		width: 100%;
-		height: 10px;
+		height: 80px;
+		display: flex;
+		align-items: center;
+
+
+		.seat-region,
+		.seat-row,
+		.seat {
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 24rpx;
+			color: #333;
+
+			height: 34px;
+			font-size: 24px;
+			font-family: PingFang SC, PingFang SC;
+			font-weight: 500;
+			color: #000000;
+
+		}
+
+		.divider {
+			width: 0px;
+			height: 22px;
+			opacity: 0.4;
+			border: 2px solid #999999;
+			background-color: #ccc;
+		}
 	}
 
 	// 三角形
 	.seat-anchor {
+
 		position: absolute;
+		bottom: -10rpx;
 		left: 50%;
-		transform: translateX(-50%);
-		bottom: 0;
 		width: 0;
 		height: 0;
-		border-top: 10px solid red;
-		border-left: 10px solid transparent;
-		border-right: 10px solid transparent;
-		border-bottom: 0 solid transparent;
+		border-width: 10rpx;
+		border-style: solid;
+		border-color: red transparent transparent transparent;
+		transform: translateX(-50%);
 	}
 }
 
