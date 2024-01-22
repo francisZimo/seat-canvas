@@ -1,6 +1,5 @@
 <template>
 	<view class="container">
-
 		<cover-view v-if="isLoading" class="loading-mask ">加载中...</cover-view>
 		<view class="filter-area">
 			筛选区域
@@ -11,22 +10,29 @@
 				<cover-image :src="tempFilePath" class="thumbnail-img"></cover-image>
 				<cover-view :style="visibleAreaStyle" class="visible-area"></cover-view>
 			</cover-view>
-			<view :style="canvasStyle" class="canvas-wrapper">
-				<canvas class="canvas-box" :style="canvasStyle" id="myCanvas" canvas-id="myCanvas"
-					@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove" @touchend="onCanvasTouchEnd"></canvas>
-				<cover-view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
-					<cover-view class="seat-anchor"></cover-view>
-					<cover-image class="seat-img" :src="imgUrl" alt=""></cover-image>
-					<cover-view class="blank-space">
-						<cover-view class="seat-region">1楼</cover-view>
-						<cover-view class="divider"></cover-view>
-						<cover-view class="seat-row">10排</cover-view>
-						<cover-view class="divider"></cover-view>
-						<cover-view class="seat">20座</cover-view>
+			<view class="canvas-area" :style="canvasStyle">
+				<view :style="canvasStyle" class="canvas-wrapper">
+					<canvas class="canvas-box" :style="canvasStyle" id="myCanvas" canvas-id="myCanvas"
+						@touchstart="onCanvasTouchStart" @touchmove="onCanvasTouchMove"
+						@touchend="onCanvasTouchEnd"></canvas>
+					<cover-view v-if="isShowSeatImg" class="seat-view" :style="seatPosition">
+						<cover-view class="seat-toast-content">
+							<cover-image class="seat-img" :src="imgUrl" alt=""></cover-image>
+							<cover-view class="blank-space">
+								<cover-view class="seat-region">1楼</cover-view>
+								<cover-view class="divider"></cover-view>
+								<cover-view class="seat-row">10排</cover-view>
+								<cover-view class="divider"></cover-view>
+								<cover-view class="seat">20座</cover-view>
+							</cover-view>
+						</cover-view>
+						<cover-view class="seat-anchor"></cover-view>
+
 					</cover-view>
-				</cover-view>
+				</view>
 			</view>
-			<!-- </view> -->
+
+
 
 			<canvas v-if="isShowTemp" class="temp-canvas-box" :style="tempStyle" id="tempCanvas"
 				canvas-id="tempCanvas"></canvas>
@@ -116,7 +122,7 @@ export default {
 				height: 400
 			},
 			thumbnailScale: 1,
-			seatBoxHeight: 316,
+			seatBoxHeight: 330,
 			hasOffScreenCanvasData: false,
 			isTouchMoving: false,
 			canvasType: '', // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
@@ -361,8 +367,8 @@ export default {
 			if (this.curSelectSeat) {
 				const config = this.curSelectSeat
 				const left = config.x * this.scale + this.offset.x + 'px'
-				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight +
-					'px'
+				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
+				console.log(top, '===top')
 				this.seatPosition = `left: ${left}; top: ${top};`
 			}
 
@@ -404,7 +410,6 @@ export default {
 			// 多出来的空余高度比例
 			const offsetScale = this.diffOffsetY / this.canvasContainerBox.height
 			const thumbnailOffsetHeight = offsetScale * (height / (1 - offsetScale * 2));
-			console.log(thumbnailOffsetHeight, '===thumbnailOffsetHeight', this.thumbnailInfo.changeHeight, this.thumbnailInfo.changeWidth)
 			this.thumbnailInfo.top = -thumbnailOffsetHeight + -(this.offset.y) / this.thumbnailScale / diffScale;
 
 		},
@@ -857,7 +862,11 @@ export default {
 		flex: 1;
 		background-color: gray;
 		position: relative;
-		overflow: hidden;
+		// overflow: hidden;
+
+		.canvas-area {
+			position: absolute;
+		}
 	}
 
 	.loading-mask {
@@ -917,23 +926,29 @@ export default {
 }
 
 .canvas-wrapper {
-	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
 	// background: yellowgreen;
 }
 
 .seat-view {
 	position: absolute;
 	width: 334px;
-	height: 316px;
-	background: #F5F5F5;
-	box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.16);
-	border-radius: 20px 20px 20px 20px;
-
 	top: 0;
 	left: 0;
 	z-index: 200;
 	transform: translateX(-50%);
-	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	.seat-toast-content {
+		background: #F5F5F5;
+		box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.16);
+		border-radius: 20px 20px 20px 20px;
+	}
 
 
 	.seat-img {
@@ -979,16 +994,11 @@ export default {
 
 	// 三角形
 	.seat-anchor {
-
-		position: absolute;
-		bottom: -10rpx;
-		left: 50%;
-		width: 0;
-		height: 0;
-		border-width: 10rpx;
-		border-style: solid;
-		border-color: red transparent transparent transparent;
-		transform: translateX(-50%);
+		width: 28px;
+		height: 14px;
+		background-color: red;
+		background: url('./img/triangle-down.png') no-repeat center / 100%;
+		margin: 0 auto;
 	}
 }
 

@@ -191,6 +191,12 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
@@ -256,7 +262,7 @@ var _default = {
         height: 400
       },
       thumbnailScale: 1,
-      seatBoxHeight: 316,
+      seatBoxHeight: 330,
       hasOffScreenCanvasData: false,
       isTouchMoving: false,
       canvasType: '',
@@ -483,6 +489,7 @@ var _default = {
         var config = this.curSelectSeat;
         var left = config.x * this.scale + this.offset.x + 'px';
         var top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px';
+        console.log(top, '===top');
         this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
       }
 
@@ -519,7 +526,6 @@ var _default = {
       // 多出来的空余高度比例
       var offsetScale = this.diffOffsetY / this.canvasContainerBox.height;
       var thumbnailOffsetHeight = offsetScale * (height / (1 - offsetScale * 2));
-      console.log(thumbnailOffsetHeight, '===thumbnailOffsetHeight', this.thumbnailInfo.changeHeight, this.thumbnailInfo.changeWidth);
       this.thumbnailInfo.top = -thumbnailOffsetHeight + -this.offset.y / this.thumbnailScale / diffScale;
     },
     isOverLayout: function isOverLayout() {

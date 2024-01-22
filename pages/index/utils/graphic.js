@@ -1,4 +1,5 @@
 import Event from './eventBus.js'
+import selectImg from './select.png'
 
 // 圆形
 class Circle extends Event {
@@ -21,7 +22,7 @@ class Circle extends Event {
         this.isSelect=!!info.isSelect
       
  
-        if(!this.isSelect){
+        
             fillStyle&&(ctx.fillStyle = fillStyle)
             ctx.beginPath()  
             ctx.setStrokeStyle('black'); // 设置边框颜色
@@ -31,16 +32,36 @@ class Circle extends Event {
             ctx.fill();
             ctx.stroke()
             
-        }else{
-            fillStyle&&(ctx.fillStyle = fillStyle)
-            ctx.beginPath()
-            ctx.setStrokeStyle('red'); // 设置边框颜色
-            ctx.arc(x, y, radius, 0, 2 * Math.PI)
-            ctx.closePath()
-            ctx.setFillStyle('white');
-            ctx.fill();
-            ctx.stroke();
+      
+            // fillStyle&&(ctx.fillStyle = fillStyle)
+            // ctx.beginPath()
+            // ctx.setStrokeStyle('red'); // 设置边框颜色
+            // ctx.arc(x, y, radius, 0, 2 * Math.PI)
+            // ctx.closePath()
+            // ctx.setFillStyle('white');
+            // ctx.fill();
+            // ctx.stroke();
+
+
+            // 绘制一个对号
+            // ctx.beginPath();
+            // ctx.setStrokeStyle('red'); // 设置边框颜色
+            // ctx.moveTo(x - radius / 2, y);
+            // ctx.lineTo(x, y + radius / 2);
+            // ctx.lineTo(x + radius / 2, y - radius / 2);
+            // ctx.stroke();
+            // ctx.closePath();
+
+
+            // 已经有了对号图片，添加上去
+         
+
+        
+        if(this.isSelect){
+            const img = selectImg
+            ctx.drawImage(img, x - radius , y - radius, radius*2, radius*2)
         }
+        
          // 恢复之前的填充颜色
     //   this.ctx.setFillStyle(currentFillStyle);
     
