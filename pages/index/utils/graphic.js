@@ -1,5 +1,5 @@
 import Event from './eventBus.js'
-import selectImg from './select.png'
+// import selectImg from './select.png'
 
 // 圆形
 class Circle extends Event {
@@ -31,8 +31,8 @@ class Circle extends Event {
         ctx.stroke()
     
         if(this.isSelect){
-            const img = selectImg
-            ctx.drawImage(img, x - radius , y - radius, radius*2, radius*2)
+            // const img = selectImg
+            ctx.drawImage('/static/select.png', x - radius , y - radius, radius*2, radius*2)
         }    
     }
 

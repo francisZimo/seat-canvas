@@ -40775,9 +40775,9 @@ var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/h
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 48));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 49));
 var _eventBus = _interopRequireDefault(__webpack_require__(/*! ./eventBus.js */ 50));
-var _select = _interopRequireDefault(__webpack_require__(/*! ./select.png */ 52));
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+// import selectImg from './select.png'
 // 圆形
 var Circle = /*#__PURE__*/function (_Event) {
   (0, _inherits2.default)(Circle, _Event);
@@ -40811,8 +40811,8 @@ var Circle = /*#__PURE__*/function (_Event) {
       ctx.fill();
       ctx.stroke();
       if (this.isSelect) {
-        var img = _select.default;
-        ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
+        // const img = selectImg
+        ctx.drawImage('/static/select.png', x - radius, y - radius, radius * 2, radius * 2);
       }
     }
   }, {
@@ -40836,16 +40836,6 @@ var Circle = /*#__PURE__*/function (_Event) {
   return Circle;
 }(_eventBus.default);
 exports.Circle = Circle;
-
-/***/ }),
-/* 52 */
-/*!*********************************************************************************!*\
-  !*** /Users/wangyongju/Documents/个人资料/seat-canvas/pages/index/utils/select.png ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAqxJREFUSEu9l01oE0EUx3+NrUnRgBpBb1JJIr0oQiEknrSt2kNB8QNy8OJFEAJFzbGC4k0FQ4qIh+QQvIiiBw9ViZJDVAiKigfboqccFIytxtKD7da8sBuWJfuR3cSBhU3mzf83b/bNmzd9OGs+IALsA3YDQfWR0XX1+Qp8ABYAxU62z8ZgADgIHAU22Ymp/cvAU+AF8NdsjBV4BDgFbHEINJotAfeBt+3GtwPLf8eBw4DditjNaV31/jEg761mFJbf54D9dood9r8D7urhRrB4Kt+zF222EZyPNGE9WLwUb70ur9mkZanvAO/FQIP0N96vANt74apO80djq10G1jTwmBrBPeY25SXSiwKW5HAd2NwNaigU6q/VaqsWWn+AtICjjcxzsRvQZDK5M5/PT1Sr1aVwONwKpDbaNwR8Qt2zntgCzeVyE4FAYEBRFGV4ePje/Pz8ionorIAvAHu8UPVQ0clkMq+mpqY+WWh+FvBVYIeZUaFQGIlEIttSqdSbSqXy22jnAioS3wScBTa2A0ej0cG5ubkz0re4uLg8OTn5pFwu/9JsXUJl+IqAbwGDZh6Xy+WxRCIxJHteD/cAbYEtl9rv9/eVSqXxWCy2S4PPzMxU0un0AQkkh9/U6Nd38fiSesibxoIRrijKus/nayYfB4HUTndBBp8GRu2i2gj3AJWhzczlOIEIvFgsjsbj8aFsNvvaZstY+XLTVcoMBoMb6vX6mt0qmfS3Uqb0S7UhGex/tIfAM+10kui85qG+cjrhn40jcRpY1R/6MeCsUwWXdlL+NIs/Y7VxEhh3KWo37DnwQDNqV+ydB/baqXTY/xG4bVXsaatwDDjShfrLcXmrd0QKeln6rR16p5l3XNDrORLth1TvO7nCSCn70u0VRj8BJ5e2L4B8S0eXtn8PfNUdiRk4ywAAAABJRU5ErkJggg=="
 
 /***/ })
 ]]);

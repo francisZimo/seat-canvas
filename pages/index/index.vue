@@ -28,8 +28,7 @@
 								<cover-view class="seat">20座</cover-view>
 							</cover-view>
 						</cover-view>
-						<cover-view class="seat-anchor"></cover-view>
-
+						<cover-image class="seat-anchor" src="/static/triangle-down.png"></cover-image>
 					</cover-view>
 				</view>
 			</view>
@@ -832,7 +831,7 @@ export default {
 	.loading-mask {
 		width: 100%;
 		height: 100%;
-		background-color: gray;
+		background-color: #f8f8f8;
 
 		color: red;
 		position: absolute;
@@ -950,7 +949,7 @@ export default {
 	.seat-anchor {
 		width: 28px;
 		height: 14px;
-		background: url('./img/triangle-down.png') no-repeat center / 100%;
+		// background: url('./img/triangle-down.png') no-repeat center / 100%;
 		margin: 0 auto;
 	}
 }

@@ -193,7 +193,6 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
-//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
