@@ -67,7 +67,8 @@ class Canvas extends Event {
   }
   
     circle(config) {
-        const circle = new Circle(config, this.ctx)
+        config.context = this.ctx
+        const circle = new Circle(config)
         circle.draw()
         this.addChild(circle)
         return circle

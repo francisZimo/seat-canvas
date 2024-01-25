@@ -1,6 +1,8 @@
 <template>
 	<view class="container">
-		<cover-view v-if="isLoading" class="loading-mask ">加载中...</cover-view>
+		<cover-view v-if="isLoading" class="loading-mask ">
+			<cover-view class="loading-text">加载中...</cover-view>
+		</cover-view>
 		<view class="filter-area">
 			筛选区域
 		</view>
@@ -31,19 +33,14 @@
 					</cover-view>
 				</view>
 			</view>
-
-
-
 			<canvas v-if="isShowTemp" class="temp-canvas-box" :style="tempStyle" id="tempCanvas"
 				canvas-id="tempCanvas"></canvas>
 		</view>
 		<view class="footer-area">
-			<view class="btn" @click="zoomIn">放大</view>
-			<view class="btn" @click="zoomOut">缩小</view>
+			<view class="btn" @click="zoomIn(0.2)">放大</view>
+			<view class="btn" @click="zoomOut(0.2)">缩小</view>
 			<view class="btn" @click="reset">还原</view>
 		</view>
-
-
 
 	</view>
 </template>
@@ -62,51 +59,43 @@ let seatInfoList = seatInfo.datas;
 export default {
 	data() {
 		return {
-			canvasContainerBox: {
+			canvasContainerBox: { // 画布容器盒子宽高
 				width: 700,
 				height: 700
 			},
-			// 系统信息
-			wrapperBox: {
-				width: 750,
-				height: 400
-			},
-			scaleBase: 1,
-			baseXPoint: 0,
-			baseYPoint: 0,
-			canvasClass: null,
-			maxScale: 8,
-			minScale: 0.4,
-			scaleStep: 0.2,
-			ctx: null,
-			scale: 1,
-			preScale: 1,
-			offset: {
+			scaleBase: 1, // 初始基础缩放
+			scale: 1,  // 实时缩放
+			preScale: 1, // 上一次缩放
+			baseXPoint: 0, // 基础x坐标偏移
+			baseYPoint: 0, // 基础y坐标偏移
+			canvasClass: null, // 自定义canvas实例
+			maxScale: 1, // 最大缩放
+			minScale: 0.1, // 最小缩放
+			scaleStep: 0.02, // 每次缩放步长
+			offset: { // 画布绘制前偏移
 				x: 0,
 				y: 0
 			},
-			curOffset: {
+			curOffset: { // 绘制后的当前偏移
 				x: 0,
 				y: 0
 			},
-			mousePos: {
+			mousePos: { // 中心点放大还是参照鼠标位置放大 【目前统一按照中心点放大】
 				x: 0,
 				y: 0
 			},
-			isLoading: true,
-
-			widthRatio: 1,
-			heightRatio: 1,
-			startX: 0,
-			startY: 0,
-			canvasStyle: 'width: 400px; height: 400px; ',
-			tempStyle: ' ',
+			isLoading: true, // canvas loading
+			widthRatio: 1, // 左右 宽度偏移比例
+			heightRatio: 1, // 上下 高度偏移比例
+			startX: 0, // 手指触摸开始x坐标
+			startY: 0, // 手指触摸开始y坐标
+			canvasStyle: 'width: 400px; height: 400px; ', // 画布样式
+			tempStyle: '', // 临时画布样式
 			imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
-			seatPosition: '',
-			isShowSeatImg: false,
-			curSelectSeat: null,
-			thumbnailImg: '',
-			thumbnailInfo: {
+			seatPosition: '', // 座位视角定位
+			isShowSeatImg: false, // 座位视角是否显示
+			curSelectSeat: null, // 当前选中的座位的信息
+			thumbnailInfo: { // 缩略图信息
 				width: 200,
 				height: 200,
 				top: 0,
@@ -114,21 +103,19 @@ export default {
 				changeWidth: 0,
 				changeHeight: 0
 			},
-			thumbnailStyle: '',
+			thumbnailStyle: '',  // 缩略图样式
 			isShowCanvas: false,
-			visibleAreaStyle: '',
-			canvasInitInfo: {
+			visibleAreaStyle: '', // 缩略图可视区域【小矩形】样式
+			canvasInitInfo: { // 缩放后的画布信息
 				width: 400,
 				height: 400
 			},
-			thumbnailScale: 1,
-			seatBoxHeight: 330,
-			hasOffScreenCanvasData: false,
-			isTouchMoving: false,
+			thumbnailScale: 1, // 缩略图缩放比例
+			seatBoxHeight: 330, // 座位视角盒子高度
+			isTouchMoving: false, // 是否正在移动
 			canvasType: '', // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
-			tempFilePath: '',
-			isShowTemp: true,
-			thumbnailTempImg: '',
+			tempFilePath: '', // 临时画布资源图片路径
+			isShowTemp: true, // 是否显示缓存canvas
 			boundary: {
 				left: 0,
 				right: 0,
@@ -137,8 +124,6 @@ export default {
 			},
 			isCancelDraw: false,
 			diffOffsetY: 0, // 画布与真实座位中间的差值
-			mainStyle: ''
-
 		}
 	},
 	onLoad() {
@@ -150,20 +135,11 @@ export default {
 
 	mounted() {
 
+		// 动态获取画布容器盒子宽高
 		uni.createSelectorQuery().select('.main-content').boundingClientRect((rect) => {
-
 			const width = parseInt(rect.width)
 			const height = parseInt(rect.height)
 			this.canvasContainerBox = {
-				width,
-				height
-			}
-			console.log(this.canvasContainerBox, '===canvasContainerBox')
-			this.mainStyle = `height: ${height}px;`
-
-			const systemInfo = uni.getSystemInfoSync();
-			// this.wrapperBox.width = systemInfo.windowWidth;
-			this.wrapperBox = {
 				width,
 				height
 			}
@@ -171,41 +147,29 @@ export default {
 		}).exec();
 	},
 	methods: {
-
-
-
+		// 导出缩略图
 		exportThumbnail() {
-
-
+			// tempCanvas 作为离屏canvas
 			const tempCtx = uni.createCanvasContext('tempCanvas', this);
 			this.canvasContext = tempCtx;
-
 			tempCtx.setLineWidth(4)
 			this.canvasType = 'cache'
 			this.userDraw()
 
 			uni.canvasToTempFilePath({
 				canvasId: 'tempCanvas',
-				// width: this.canvasInfo.width,
-				// height: this.canvasInfo.height,
-				// destWidth: this.canvasInfo.width,
-				// destHeight: this.canvasInfo.height,
 				success: (res) => {
 					this.tempFilePath = res.tempFilePath;
-
 					this.visibleAreaStyle =
 						`width: ${this.thumbnailInfo.width - 3}px; height: ${this.thumbnailInfo.height - 3}px;`;
-				},
-				fail: () => {
-
 				}
 			}, this);
 		},
 
+		// 初始化数据
 		initData() {
 			const rectCanvas = this.calculateBoundingRectangle()
 			this.canvasInfo = rectCanvas;
-
 			const {
 				x,
 				y,
@@ -215,13 +179,7 @@ export default {
 			this.baseXPoint = x;
 			this.baseYPoint = y;
 			let scale = 1;
-			// if (width > height) {
-			// 	scale = this.wrapperBox.width / width
-			// } else {
-			// 	scale = this.wrapperBox.height / height
-			// }
-			scale = +(this.wrapperBox.width / width).toFixed(2)
-
+			scale = +(this.canvasContainerBox.width / width).toFixed(2)
 			this.scaleBase = scale;
 			this.scale = scale;
 			this.preScale = scale;
@@ -231,6 +189,7 @@ export default {
 			this.heightRatio = 2;
 		},
 
+		// 计算画布边界
 		calculateBoundingRectangle() {
 			let minX = Infinity;
 			let minY = Infinity;
@@ -258,8 +217,6 @@ export default {
 
 			const width = maxX - minX;
 			const height = maxY - minY;
-
-
 			return {
 				x: minX,
 				y: minY,
@@ -267,13 +224,7 @@ export default {
 				height: height
 			};
 		},
-		async sleep(time = 1000) {
-			return new Promise((resolve) => {
-				setTimeout(() => {
-					resolve()
-				}, time)
-			})
-		},
+		// 初始化页面
 		async init() {
 			this.initData()
 			this.tempStyle = `width: ${this.canvasInfo.width}px; height: ${this.canvasInfo.height}px;`
@@ -286,11 +237,10 @@ export default {
 
 		},
 
+		// 开始绘制目标canvas
 		startTargetCanvas() {
 			let width = Math.round(this.canvasInfo.width * this.scale)
 			let height = Math.round(this.canvasInfo.height * this.scale)
-
-			console.log('===newcc', this.canvasContainerBox.height, height,)
 			// 反推原数据偏移
 			this.diffOffsetY = (this.canvasContainerBox.height - height) / 2
 			this.baseYPoint -= this.diffOffsetY / this.scale;
@@ -317,11 +267,8 @@ export default {
 			this.canvasStyle = style;
 			const ctx = uni.createCanvasContext('myCanvas', this);
 			this.canvasContext = ctx;
-
-
-
-
 			this.canvasType = 'target'
+			// 生成自定义canvas实例
 			const canvasBase = new CanvasBase({
 				ctx
 			})
@@ -329,21 +276,16 @@ export default {
 			this.draw()
 			this.isShowCanvas = true;
 		},
-
+		// 重新绘制
 		draw() {
-
 			this.canvasClass.reset()
 			this.clearCanvas();
-
 			this.canvasContext.translate(this.offset.x, this.offset.y);
 			this.canvasContext.scale(this.scale, this.scale);
 			this.canvasContext.setLineWidth(4); // 设置边框宽度
-
 			if (this.isTouchMoving) {
-				// this.canvasContext.translate(this.offset.x, this.offset.y);
-				// this.canvasContext.scale(this.scale, this.scale);
 				if (this.tempFilePath) {
-
+					console.log('缩略图绘制')
 					this.canvasContext.drawImage(this.tempFilePath, 0, this.diffOffsetY / this.scaleBase * (this
 						.scale /
 						this.preScale),
@@ -357,18 +299,15 @@ export default {
 					this.userDraw();
 				}
 			} else {
-				// this.canvasContext.translate(this.offset.x, this.offset.y);
-				// this.canvasContext.scale(this.scale, this.scale);
 				console.log('重新绘制2')
 				this.userDraw();
 			}
 
-			// 弹窗定位
+			// 视角弹窗定位
 			if (this.curSelectSeat) {
 				const config = this.curSelectSeat
 				const left = config.x * this.scale + this.offset.x + 'px'
 				const top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px'
-				console.log(top, '===top')
 				this.seatPosition = `left: ${left}; top: ${top};`
 			}
 
@@ -395,6 +334,7 @@ export default {
 				`${changeStyle} left:${this.thumbnailInfo.left}px; top:${this.thumbnailInfo.top}px;`
 
 		},
+		// 缩略图展示
 		drawThumbnail() {
 			// 缩略图展示
 			const {
@@ -433,8 +373,8 @@ export default {
 		},
 
 		// 放大
-		zoomIn() {
-			this.scale += this.scaleStep;
+		zoomIn(step) {
+			this.scale += step ? step : this.scaleStep;
 			this.scale = +this.scale.toFixed(2)
 			if (this.scale > this.maxScale) {
 				this.scale = this.maxScale;
@@ -444,8 +384,8 @@ export default {
 		},
 
 		// 缩小
-		zoomOut() {
-			this.scale -= this.scaleStep;
+		zoomOut(step) {
+			this.scale -= step ? step : this.scaleStep;
 			this.scale = +this.scale.toFixed(2)
 
 			if (this.scale < this.minScale) {
@@ -459,7 +399,6 @@ export default {
 
 			// 是否居中放大
 			this.mousePos.x = this.canvasInitInfo.width / 2;
-			// this.mousePos.y = this.canvasInitInfo.height / 2;
 			this.mousePos.y = this.canvasContainerBox.height / 2;
 			// 放大系数：this.scale / this.preScale =>n
 			// 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
@@ -471,9 +410,7 @@ export default {
 			this.curOffset.y = this.offset.y;
 		},
 		clearCanvas() {
-
 			this.canvasContext.clearRect(0, 0, this.canvasInitInfo.width, this.canvasInitInfo.height);
-
 		},
 		// 还原
 		reset() {
@@ -493,89 +430,14 @@ export default {
 				x: 0,
 				y: 0
 			}; // 当前偏移
-			this.mousePos = {
+			this.mousePos = { // 中心点放大还是参照鼠标位置放大 【目前统一按照中心点放大】
 				x: 0,
 				y: 0
-			}; //
-		},
-		handleRegion(info) {
-			const style = info.s
-			const position = info.p
-			if (style['vector.shape'] && style['vector.shape'] === 'rectangle') {
-				this.drawRectangle({
-					context: this.canvasContext,
-					x: position.location.x - this.baseXPoint,
-					y: position.location.y - this.baseYPoint,
-					width: position.width,
-					height: position.height,
-				})
-			}
-
-			if (style['vector.shape'] && style['vector.shape'] === 'circle') {
-				this.drawCircle({
-					context: this.canvasContext,
-					x: position.location.x - this.baseXPoint + position.width / 2,
-					y: position.location.y - this.baseYPoint + position.height / 2,
-					radius: position.height / 2,
-					isFill: false
-				})
-
-
-			}
-		},
-		// 处理座位
-		handleSeat(info) {
-			const position = info.p;
-			const circleInfo = {
-				context: this.canvasContext,
-				radius: position.height / 2,
-				x: position.location.x - this.baseXPoint,
-				y: position.location.y - this.baseYPoint,
-				info,
-				isFill: true
-			}
-			if (this.canvasType === 'target') {
-				const circleInstance = this.canvasClass.circle(circleInfo)
-				circleInstance.on('touchend', (shapeInfo) => {
-					const originData = shapeInfo.config.info
-					if (originData.c) {
-						for (let i = 0; i < seatInfoList.length; i++) {
-							const item = seatInfoList[i]
-							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
-								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
-								if (seatInfoList[i].isSelect) {
-									const {
-										config
-									} = shapeInfo
-									this.curSelectSeat = config
-									const left = config.x * this.scale + this.offset.x + 'px'
-									const top = config.y * this.scale + this.offset.y - config.radius * this
-										.scale - this.seatBoxHeight + 'px'
-									this.seatPosition = `left: ${left}; top: ${top};`
-									this.isShowSeatImg = true;
-
-								} else {
-									this.isShowSeatImg = false;
-								}
-
-							} else {
-								seatInfoList[i].isSelect = false
-							}
-						}
-					}
-					this.draw()
-
-				})
-			} else {
-				// 绘制圆形
-				this.drawCircle(circleInfo)
-
-			}
-
+			};
 		},
 
+		// 用户绘制逻辑
 		userDraw(isDraw = true) {
-
 			seatInfoList.forEach((item) => {
 				console.log('==遍历中')
 				let type = 'seat'
@@ -689,6 +551,81 @@ export default {
 			context.stroke()
 
 		},
+		handleRegion(info) {
+			const style = info.s
+			const position = info.p
+			if (style['vector.shape'] && style['vector.shape'] === 'rectangle') {
+				this.drawRectangle({
+					context: this.canvasContext,
+					x: position.location.x - this.baseXPoint,
+					y: position.location.y - this.baseYPoint,
+					width: position.width,
+					height: position.height,
+				})
+			}
+
+			if (style['vector.shape'] && style['vector.shape'] === 'circle') {
+				this.drawCircle({
+					context: this.canvasContext,
+					x: position.location.x - this.baseXPoint + position.width / 2,
+					y: position.location.y - this.baseYPoint + position.height / 2,
+					radius: position.height / 2,
+					isFill: false
+				})
+			}
+		},
+		// 处理座位
+		handleSeat(info) {
+			const position = info.p;
+			const circleInfo = {
+				radius: position.height / 2,
+				x: position.location.x - this.baseXPoint,
+				y: position.location.y - this.baseYPoint,
+				info: {
+					isSelect: info.isSelect,
+				},
+				isFill: true
+			}
+			if (this.canvasType === 'target') {
+				const circleInstance = this.canvasClass.circle(circleInfo)
+				circleInstance.on('touchend', (shapeInfo) => {
+					const originData = shapeInfo.config.info
+					if (originData.c) {
+						for (let i = 0; i < seatInfoList.length; i++) {
+							const item = seatInfoList[i]
+							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
+								if (seatInfoList[i].isSelect) {
+									const {
+										config
+									} = shapeInfo
+									this.curSelectSeat = config
+									const left = config.x * this.scale + this.offset.x + 'px'
+									const top = config.y * this.scale + this.offset.y - config.radius * this
+										.scale - this.seatBoxHeight + 'px'
+									this.seatPosition = `left: ${left}; top: ${top};`
+									this.isShowSeatImg = true;
+
+								} else {
+									this.isShowSeatImg = false;
+								}
+
+							} else {
+								seatInfoList[i].isSelect = false
+							}
+						}
+					}
+					this.draw()
+
+				})
+			} else {
+				// 绘制圆形
+				circleInfo.context = this.canvasContext
+				this.drawCircle(circleInfo)
+
+			}
+
+		},
 		handleShapeRegion(info) {
 			const position = info.p
 			const positionList = position.points;
@@ -704,7 +641,6 @@ export default {
 			})
 		},
 		handleStage(stageInfo) {
-
 			const StagePayload = {
 				context: this.canvasContext,
 				x: stageInfo.p.location.x - this.baseXPoint,
@@ -712,8 +648,6 @@ export default {
 				width: stageInfo.p.width,
 				height: stageInfo.p.height,
 			}
-
-
 			this.drawRectangle(StagePayload)
 			const textInfo = {
 				context: this.canvasContext,
@@ -735,8 +669,6 @@ export default {
 			}
 			this.drawText(payload)
 		},
-
-
 		onCanvasTouchStart(e) {
 			this.isTouchMoving = false
 			if (e.touches.length >= 2) {
@@ -813,7 +745,6 @@ export default {
 			// if (this.scaleBase === this.scale) {
 			// 	return
 			// }
-
 			if (!this.isCancelDraw) {
 				this.curOffset.x = this.offset.x;
 				this.curOffset.y = this.offset.y;
@@ -828,8 +759,6 @@ export default {
 
 
 		}
-
-
 	}
 }
 </script>
@@ -862,7 +791,6 @@ export default {
 		flex: 1;
 		background-color: gray;
 		position: relative;
-		// overflow: hidden;
 
 		.canvas-area {
 			position: absolute;
@@ -873,31 +801,29 @@ export default {
 		width: 100%;
 		height: 100%;
 		background-color: gray;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+
 		color: red;
 		position: absolute;
 		left: 0;
-		top: 0;
+		right: 0;
 		z-index: 99999;
+
+		.loading-text {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 }
 
 .content {
 	width: 750rpx;
 	height: 600px;
-	// overflow: scroll;
-	// position: absolute;
-	// left: 0;
-	// top: 0;
 	border: 1px solid red;
 	display: flex;
 	align-items: center;
 	background-color: #f8f8f8;
-
-
-
 }
 
 .thumbnail-box {
@@ -908,8 +834,6 @@ export default {
 	top: 0px;
 	right: 3px;
 	z-index: 200;
-	// overflow: hidden;
-
 
 	.thumbnail-img {
 		width: 100%;
@@ -929,8 +853,6 @@ export default {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-
-	// background: yellowgreen;
 }
 
 .seat-view {
@@ -996,7 +918,6 @@ export default {
 	.seat-anchor {
 		width: 28px;
 		height: 14px;
-		background-color: red;
 		background: url('./img/triangle-down.png') no-repeat center / 100%;
 		margin: 0 auto;
 	}

@@ -33,7 +33,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _index_vue_vue_type_template_id_57280228_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./index.vue?vue&type=template&id=57280228&scoped=true& */ 35);
 /* harmony import */ var _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./index.vue?vue&type=script&lang=js& */ 37);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& */ 52);
+/* harmony import */ var _index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& */ 53);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js */ 32);
 
 var renderjs
@@ -194,9 +194,6 @@ var _canvas = _interopRequireDefault(__webpack_require__(/*! ./utils/canvas.js *
 //
 //
 //
-//
-//
-//
 
 var initialDistance = 0;
 var seatInfoList = _seatData.seatInfo.datas;
@@ -204,49 +201,66 @@ var _default = {
   data: function data() {
     return {
       canvasContainerBox: {
+        // 画布容器盒子宽高
         width: 700,
         height: 700
       },
-      // 系统信息
-      wrapperBox: {
-        width: 750,
-        height: 400
-      },
       scaleBase: 1,
-      baseXPoint: 0,
-      baseYPoint: 0,
-      canvasClass: null,
-      maxScale: 8,
-      minScale: 0.4,
-      scaleStep: 0.2,
-      ctx: null,
+      // 初始基础缩放
       scale: 1,
+      // 实时缩放
       preScale: 1,
+      // 上一次缩放
+      baseXPoint: 0,
+      // 基础x坐标偏移
+      baseYPoint: 0,
+      // 基础y坐标偏移
+      canvasClass: null,
+      // 自定义canvas实例
+      maxScale: 1,
+      // 最大缩放
+      minScale: 0.1,
+      // 最小缩放
+      scaleStep: 0.02,
+      // 每次缩放步长
       offset: {
+        // 画布绘制前偏移
         x: 0,
         y: 0
       },
       curOffset: {
+        // 绘制后的当前偏移
         x: 0,
         y: 0
       },
       mousePos: {
+        // 中心点放大还是参照鼠标位置放大 【目前统一按照中心点放大】
         x: 0,
         y: 0
       },
       isLoading: true,
+      // canvas loading
       widthRatio: 1,
+      // 左右 宽度偏移比例
       heightRatio: 1,
+      // 上下 高度偏移比例
       startX: 0,
+      // 手指触摸开始x坐标
       startY: 0,
+      // 手指触摸开始y坐标
       canvasStyle: 'width: 400px; height: 400px; ',
-      tempStyle: ' ',
+      // 画布样式
+      tempStyle: '',
+      // 临时画布样式
       imgUrl: 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F35a87c2e-fd4b-4d46-92d8-58886d5caeea%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1705415354&t=743620e4a460804f9783ad939be4912d',
       seatPosition: '',
+      // 座位视角定位
       isShowSeatImg: false,
+      // 座位视角是否显示
       curSelectSeat: null,
-      thumbnailImg: '',
+      // 当前选中的座位的信息
       thumbnailInfo: {
+        // 缩略图信息
         width: 200,
         height: 200,
         top: 0,
@@ -255,21 +269,27 @@ var _default = {
         changeHeight: 0
       },
       thumbnailStyle: '',
+      // 缩略图样式
       isShowCanvas: false,
       visibleAreaStyle: '',
+      // 缩略图可视区域【小矩形】样式
       canvasInitInfo: {
+        // 缩放后的画布信息
         width: 400,
         height: 400
       },
       thumbnailScale: 1,
+      // 缩略图缩放比例
       seatBoxHeight: 330,
-      hasOffScreenCanvasData: false,
+      // 座位视角盒子高度
       isTouchMoving: false,
+      // 是否正在移动
       canvasType: '',
       // 当前canvas类型 cache(缓存资源:伪离屏canvas) || target(目标)
       tempFilePath: '',
+      // 临时画布资源图片路径
       isShowTemp: true,
-      thumbnailTempImg: '',
+      // 是否显示缓存canvas
       boundary: {
         left: 0,
         right: 0,
@@ -277,15 +297,14 @@ var _default = {
         bottom: 0
       },
       isCancelDraw: false,
-      diffOffsetY: 0,
-      // 画布与真实座位中间的差值
-      mainStyle: ''
+      diffOffsetY: 0 // 画布与真实座位中间的差值
     };
   },
   onLoad: function onLoad() {},
   onReady: function onReady() {},
   mounted: function mounted() {
     var _this = this;
+    // 动态获取画布容器盒子宽高
     uni.createSelectorQuery().select('.main-content').boundingClientRect(function (rect) {
       var width = parseInt(rect.width);
       var height = parseInt(rect.height);
@@ -293,20 +312,14 @@ var _default = {
         width: width,
         height: height
       };
-      console.log(_this.canvasContainerBox, '===canvasContainerBox');
-      _this.mainStyle = "height: ".concat(height, "px;");
-      var systemInfo = uni.getSystemInfoSync();
-      // this.wrapperBox.width = systemInfo.windowWidth;
-      _this.wrapperBox = {
-        width: width,
-        height: height
-      };
       _this.init();
     }).exec();
   },
   methods: {
+    // 导出缩略图
     exportThumbnail: function exportThumbnail() {
       var _this2 = this;
+      // tempCanvas 作为离屏canvas
       var tempCtx = uni.createCanvasContext('tempCanvas', this);
       this.canvasContext = tempCtx;
       tempCtx.setLineWidth(4);
@@ -314,17 +327,13 @@ var _default = {
       this.userDraw();
       uni.canvasToTempFilePath({
         canvasId: 'tempCanvas',
-        // width: this.canvasInfo.width,
-        // height: this.canvasInfo.height,
-        // destWidth: this.canvasInfo.width,
-        // destHeight: this.canvasInfo.height,
         success: function success(res) {
           _this2.tempFilePath = res.tempFilePath;
           _this2.visibleAreaStyle = "width: ".concat(_this2.thumbnailInfo.width - 3, "px; height: ").concat(_this2.thumbnailInfo.height - 3, "px;");
-        },
-        fail: function fail() {}
+        }
       }, this);
     },
+    // 初始化数据
     initData: function initData() {
       var rectCanvas = this.calculateBoundingRectangle();
       this.canvasInfo = rectCanvas;
@@ -335,12 +344,7 @@ var _default = {
       this.baseXPoint = x;
       this.baseYPoint = y;
       var scale = 1;
-      // if (width > height) {
-      // 	scale = this.wrapperBox.width / width
-      // } else {
-      // 	scale = this.wrapperBox.height / height
-      // }
-      scale = +(this.wrapperBox.width / width).toFixed(2);
+      scale = +(this.canvasContainerBox.width / width).toFixed(2);
       this.scaleBase = scale;
       this.scale = scale;
       this.preScale = scale;
@@ -349,6 +353,7 @@ var _default = {
       this.widthRatio = 2;
       this.heightRatio = 2;
     },
+    // 计算画布边界
     calculateBoundingRectangle: function calculateBoundingRectangle() {
       var minX = Infinity;
       var minY = Infinity;
@@ -381,34 +386,13 @@ var _default = {
         height: height
       };
     },
-    sleep: function sleep() {
-      var _arguments = arguments;
+    // 初始化页面
+    init: function init() {
+      var _this3 = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var time;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
-              case 0:
-                time = _arguments.length > 0 && _arguments[0] !== undefined ? _arguments[0] : 1000;
-                return _context.abrupt("return", new Promise(function (resolve) {
-                  setTimeout(function () {
-                    resolve();
-                  }, time);
-                }));
-              case 2:
-              case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }))();
-    },
-    init: function init() {
-      var _this3 = this;
-      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
-        return _regenerator.default.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
               case 0:
                 _this3.initData();
                 _this3.tempStyle = "width: ".concat(_this3.canvasInfo.width, "px; height: ").concat(_this3.canvasInfo.height, "px;");
@@ -420,16 +404,16 @@ var _default = {
                 }, 300);
               case 3:
               case "end":
-                return _context2.stop();
+                return _context.stop();
             }
           }
-        }, _callee2);
+        }, _callee);
       }))();
     },
+    // 开始绘制目标canvas
     startTargetCanvas: function startTargetCanvas() {
       var width = Math.round(this.canvasInfo.width * this.scale);
       var height = Math.round(this.canvasInfo.height * this.scale);
-      console.log('===newcc', this.canvasContainerBox.height, height);
       // 反推原数据偏移
       this.diffOffsetY = (this.canvasContainerBox.height - height) / 2;
       this.baseYPoint -= this.diffOffsetY / this.scale;
@@ -453,6 +437,7 @@ var _default = {
       var ctx = uni.createCanvasContext('myCanvas', this);
       this.canvasContext = ctx;
       this.canvasType = 'target';
+      // 生成自定义canvas实例
       var canvasBase = new _canvas.default({
         ctx: ctx
       });
@@ -460,17 +445,16 @@ var _default = {
       this.draw();
       this.isShowCanvas = true;
     },
+    // 重新绘制
     draw: function draw() {
       this.canvasClass.reset();
       this.clearCanvas();
       this.canvasContext.translate(this.offset.x, this.offset.y);
       this.canvasContext.scale(this.scale, this.scale);
       this.canvasContext.setLineWidth(4); // 设置边框宽度
-
       if (this.isTouchMoving) {
-        // this.canvasContext.translate(this.offset.x, this.offset.y);
-        // this.canvasContext.scale(this.scale, this.scale);
         if (this.tempFilePath) {
+          console.log('缩略图绘制');
           this.canvasContext.drawImage(this.tempFilePath, 0, this.diffOffsetY / this.scaleBase * (this.scale / this.preScale), this.canvasInfo.width, this.canvasInfo.height);
           this.canvasContext.draw();
         } else {
@@ -478,18 +462,15 @@ var _default = {
           this.userDraw();
         }
       } else {
-        // this.canvasContext.translate(this.offset.x, this.offset.y);
-        // this.canvasContext.scale(this.scale, this.scale);
         console.log('重新绘制2');
         this.userDraw();
       }
 
-      // 弹窗定位
+      // 视角弹窗定位
       if (this.curSelectSeat) {
         var config = this.curSelectSeat;
         var left = config.x * this.scale + this.offset.x + 'px';
         var top = config.y * this.scale + this.offset.y - config.radius * this.scale - this.seatBoxHeight + 'px';
-        console.log(top, '===top');
         this.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
       }
 
@@ -512,6 +493,7 @@ var _default = {
       var changeStyle = "width: ".concat(this.thumbnailInfo.changeWidth, "px; height:").concat(this.thumbnailInfo.changeHeight, "px; ");
       this.visibleAreaStyle = "".concat(changeStyle, " left:").concat(this.thumbnailInfo.left, "px; top:").concat(this.thumbnailInfo.top, "px;");
     },
+    // 缩略图展示
     drawThumbnail: function drawThumbnail() {
       // 缩略图展示
       var _this$thumbnailInfo = this.thumbnailInfo,
@@ -545,8 +527,8 @@ var _default = {
       return offsetInfo;
     },
     // 放大
-    zoomIn: function zoomIn() {
-      this.scale += this.scaleStep;
+    zoomIn: function zoomIn(step) {
+      this.scale += step ? step : this.scaleStep;
       this.scale = +this.scale.toFixed(2);
       if (this.scale > this.maxScale) {
         this.scale = this.maxScale;
@@ -555,8 +537,8 @@ var _default = {
       this.zoom.call(this);
     },
     // 缩小
-    zoomOut: function zoomOut() {
-      this.scale -= this.scaleStep;
+    zoomOut: function zoomOut(step) {
+      this.scale -= step ? step : this.scaleStep;
       this.scale = +this.scale.toFixed(2);
       if (this.scale < this.minScale) {
         this.scale = this.minScale;
@@ -567,7 +549,6 @@ var _default = {
     zoom: function zoom() {
       // 是否居中放大
       this.mousePos.x = this.canvasInitInfo.width / 2;
-      // this.mousePos.y = this.canvasInitInfo.height / 2;
       this.mousePos.y = this.canvasContainerBox.height / 2;
       // 放大系数：this.scale / this.preScale =>n
       // 先偏移后缩放：offsetX = x*n-x;  偏移为：-offsetX
@@ -600,77 +581,14 @@ var _default = {
         y: 0
       }; // 当前偏移
       this.mousePos = {
+        // 中心点放大还是参照鼠标位置放大 【目前统一按照中心点放大】
         x: 0,
         y: 0
-      }; //
-    },
-    handleRegion: function handleRegion(info) {
-      var style = info.s;
-      var position = info.p;
-      if (style['vector.shape'] && style['vector.shape'] === 'rectangle') {
-        this.drawRectangle({
-          context: this.canvasContext,
-          x: position.location.x - this.baseXPoint,
-          y: position.location.y - this.baseYPoint,
-          width: position.width,
-          height: position.height
-        });
-      }
-      if (style['vector.shape'] && style['vector.shape'] === 'circle') {
-        this.drawCircle({
-          context: this.canvasContext,
-          x: position.location.x - this.baseXPoint + position.width / 2,
-          y: position.location.y - this.baseYPoint + position.height / 2,
-          radius: position.height / 2,
-          isFill: false
-        });
-      }
-    },
-    // 处理座位
-    handleSeat: function handleSeat(info) {
-      var _this4 = this;
-      var position = info.p;
-      var circleInfo = {
-        context: this.canvasContext,
-        radius: position.height / 2,
-        x: position.location.x - this.baseXPoint,
-        y: position.location.y - this.baseYPoint,
-        info: info,
-        isFill: true
       };
-      if (this.canvasType === 'target') {
-        var circleInstance = this.canvasClass.circle(circleInfo);
-        circleInstance.on('touchend', function (shapeInfo) {
-          var originData = shapeInfo.config.info;
-          if (originData.c) {
-            for (var i = 0; i < seatInfoList.length; i++) {
-              var item = seatInfoList[i];
-              if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
-                seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
-                if (seatInfoList[i].isSelect) {
-                  var config = shapeInfo.config;
-                  _this4.curSelectSeat = config;
-                  var left = config.x * _this4.scale + _this4.offset.x + 'px';
-                  var top = config.y * _this4.scale + _this4.offset.y - config.radius * _this4.scale - _this4.seatBoxHeight + 'px';
-                  _this4.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
-                  _this4.isShowSeatImg = true;
-                } else {
-                  _this4.isShowSeatImg = false;
-                }
-              } else {
-                seatInfoList[i].isSelect = false;
-              }
-            }
-          }
-          _this4.draw();
-        });
-      } else {
-        // 绘制圆形
-        this.drawCircle(circleInfo);
-      }
     },
+    // 用户绘制逻辑
     userDraw: function userDraw() {
-      var _this5 = this;
+      var _this4 = this;
       var isDraw = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
       seatInfoList.forEach(function (item) {
         console.log('==遍历中');
@@ -691,19 +609,19 @@ var _default = {
           type = 'seat';
         }
         if (type === 'stage') {
-          _this5.handleStage(item);
+          _this4.handleStage(item);
         }
         if (type === 'region') {
-          _this5.handleRegion(item);
+          _this4.handleRegion(item);
         }
         if (type === 'shapeRegion') {
-          _this5.handleShapeRegion(item);
+          _this4.handleShapeRegion(item);
         }
         if (type === 'row') {
-          _this5.handleRow(item);
+          _this4.handleRow(item);
         }
         if (type === 'seat') {
-          _this5.handleSeat(item);
+          _this4.handleSeat(item);
         }
       });
       isDraw && this.canvasContext.draw();
@@ -767,6 +685,73 @@ var _default = {
       context.setStrokeStyle('black');
       context.closePath();
       context.stroke();
+    },
+    handleRegion: function handleRegion(info) {
+      var style = info.s;
+      var position = info.p;
+      if (style['vector.shape'] && style['vector.shape'] === 'rectangle') {
+        this.drawRectangle({
+          context: this.canvasContext,
+          x: position.location.x - this.baseXPoint,
+          y: position.location.y - this.baseYPoint,
+          width: position.width,
+          height: position.height
+        });
+      }
+      if (style['vector.shape'] && style['vector.shape'] === 'circle') {
+        this.drawCircle({
+          context: this.canvasContext,
+          x: position.location.x - this.baseXPoint + position.width / 2,
+          y: position.location.y - this.baseYPoint + position.height / 2,
+          radius: position.height / 2,
+          isFill: false
+        });
+      }
+    },
+    // 处理座位
+    handleSeat: function handleSeat(info) {
+      var _this5 = this;
+      var position = info.p;
+      var circleInfo = {
+        radius: position.height / 2,
+        x: position.location.x - this.baseXPoint,
+        y: position.location.y - this.baseYPoint,
+        info: {
+          isSelect: info.isSelect
+        },
+        isFill: true
+      };
+      if (this.canvasType === 'target') {
+        var circleInstance = this.canvasClass.circle(circleInfo);
+        circleInstance.on('touchend', function (shapeInfo) {
+          var originData = shapeInfo.config.info;
+          if (originData.c) {
+            for (var i = 0; i < seatInfoList.length; i++) {
+              var item = seatInfoList[i];
+              if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+                seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
+                if (seatInfoList[i].isSelect) {
+                  var config = shapeInfo.config;
+                  _this5.curSelectSeat = config;
+                  var left = config.x * _this5.scale + _this5.offset.x + 'px';
+                  var top = config.y * _this5.scale + _this5.offset.y - config.radius * _this5.scale - _this5.seatBoxHeight + 'px';
+                  _this5.seatPosition = "left: ".concat(left, "; top: ").concat(top, ";");
+                  _this5.isShowSeatImg = true;
+                } else {
+                  _this5.isShowSeatImg = false;
+                }
+              } else {
+                seatInfoList[i].isSelect = false;
+              }
+            }
+          }
+          _this5.draw();
+        });
+      } else {
+        // 绘制圆形
+        circleInfo.context = this.canvasContext;
+        this.drawCircle(circleInfo);
+      }
     },
     handleShapeRegion: function handleShapeRegion(info) {
       var _this6 = this;
@@ -879,7 +864,6 @@ var _default = {
       // if (this.scaleBase === this.scale) {
       // 	return
       // }
-
       if (!this.isCancelDraw) {
         this.curOffset.x = this.offset.x;
         this.curOffset.y = this.offset.y;
@@ -899,7 +883,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 52:
+/***/ 53:
 /*!************************************************************************************************************************************!*\
   !*** /Users/wangyongju/Documents/个人资料/seat-canvas/pages/index/index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& ***!
   \************************************************************************************************************************************/
@@ -908,14 +892,14 @@ exports.default = _default;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--8-oneOf-1-0!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& */ 53);
+/* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/mini-css-extract-plugin/dist/loader.js??ref--8-oneOf-1-0!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/postcss-loader/src??ref--8-oneOf-1-3!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!../../../../../../../Applications/HBuilderX.app/Contents/HBuilderX/plugins/uniapp-cli/node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!./index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& */ 54);
 /* harmony import */ var _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__);
 /* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
  /* harmony default export */ __webpack_exports__["default"] = (_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_mini_css_extract_plugin_dist_loader_js_ref_8_oneOf_1_0_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_css_loader_dist_cjs_js_ref_8_oneOf_1_1_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_loaders_stylePostLoader_js_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_2_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_postcss_loader_src_index_js_ref_8_oneOf_1_3_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_sass_loader_dist_cjs_js_ref_8_oneOf_1_4_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_webpack_preprocess_loader_index_js_ref_8_oneOf_1_5_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_vue_cli_plugin_uni_packages_vue_loader_lib_index_js_vue_loader_options_Applications_HBuilderX_app_Contents_HBuilderX_plugins_uniapp_cli_node_modules_dcloudio_webpack_uni_mp_loader_lib_style_js_index_vue_vue_type_style_index_0_id_57280228_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ 53:
+/***/ 54:
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--8-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--8-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-2!./node_modules/postcss-loader/src??ref--8-oneOf-1-3!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/sass-loader/dist/cjs.js??ref--8-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--8-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!/Users/wangyongju/Documents/个人资料/seat-canvas/pages/index/index.vue?vue&type=style&index=0&id=57280228&lang=scss&scoped=true& ***!
   \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/

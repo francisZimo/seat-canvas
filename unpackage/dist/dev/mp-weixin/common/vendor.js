@@ -40573,7 +40573,8 @@ var Canvas = /*#__PURE__*/function (_Event) {
   }, {
     key: "circle",
     value: function circle(config) {
-      var circle = new _graphic.Circle(config, this.ctx);
+      config.context = this.ctx;
+      var circle = new _graphic.Circle(config);
       circle.draw();
       this.addChild(circle);
       return circle;
@@ -40774,18 +40775,18 @@ var _inherits2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/h
 var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/possibleConstructorReturn */ 48));
 var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/getPrototypeOf */ 49));
 var _eventBus = _interopRequireDefault(__webpack_require__(/*! ./eventBus.js */ 50));
-var _select = _interopRequireDefault(__webpack_require__(/*! ./select.png */ 56));
+var _select = _interopRequireDefault(__webpack_require__(/*! ./select.png */ 52));
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 // 圆形
 var Circle = /*#__PURE__*/function (_Event) {
   (0, _inherits2.default)(Circle, _Event);
   var _super = _createSuper(Circle);
-  function Circle(opts, context) {
+  function Circle(opts) {
     var _this;
     (0, _classCallCheck2.default)(this, Circle);
     _this = _super.call(this);
-    _this.ctx = context;
+    _this.ctx = opts.context;
     _this.config = opts, _this.isSelect = false;
     _this.type = 'circle';
     return _this;
@@ -40809,34 +40810,10 @@ var Circle = /*#__PURE__*/function (_Event) {
       ctx.setFillStyle('white');
       ctx.fill();
       ctx.stroke();
-
-      // fillStyle&&(ctx.fillStyle = fillStyle)
-      // ctx.beginPath()
-      // ctx.setStrokeStyle('red'); // 设置边框颜色
-      // ctx.arc(x, y, radius, 0, 2 * Math.PI)
-      // ctx.closePath()
-      // ctx.setFillStyle('white');
-      // ctx.fill();
-      // ctx.stroke();
-
-      // 绘制一个对号
-      // ctx.beginPath();
-      // ctx.setStrokeStyle('red'); // 设置边框颜色
-      // ctx.moveTo(x - radius / 2, y);
-      // ctx.lineTo(x, y + radius / 2);
-      // ctx.lineTo(x + radius / 2, y - radius / 2);
-      // ctx.stroke();
-      // ctx.closePath();
-
-      // 已经有了对号图片，添加上去
-
       if (this.isSelect) {
         var img = _select.default;
         ctx.drawImage(img, x - radius, y - radius, radius * 2, radius * 2);
       }
-
-      // 恢复之前的填充颜色
-      //   this.ctx.setFillStyle(currentFillStyle);
     }
   }, {
     key: "isEventInRegion",
@@ -40861,11 +40838,7 @@ var Circle = /*#__PURE__*/function (_Event) {
 exports.Circle = Circle;
 
 /***/ }),
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
+/* 52 */
 /*!*********************************************************************************!*\
   !*** /Users/wangyongju/Documents/个人资料/seat-canvas/pages/index/utils/select.png ***!
   \*********************************************************************************/
