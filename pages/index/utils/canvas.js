@@ -32,7 +32,7 @@ class Canvas extends Event {
 
 
 
-  handleEvent = (event,canvasInfo) => {    
+  handleEvent = (event,canvasInfo) => {   
     this.children
     .filter(shape => {
         let x= event.touches[0]?.x||event?.changedTouches[0]?.x

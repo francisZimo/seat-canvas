@@ -611,6 +611,7 @@ export default {
 				x: position.location.x - this.baseXPoint,
 				y: position.location.y - this.baseYPoint,
 				info: {
+					c: info.c,
 					isSelect: info.isSelect,
 				},
 				isFill: true
@@ -623,6 +624,7 @@ export default {
 						for (let i = 0; i < seatInfoList.length; i++) {
 							const item = seatInfoList[i]
 							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+								console.log('===命中了')
 								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
 								if (seatInfoList[i].isSelect) {
 									const {
@@ -644,6 +646,7 @@ export default {
 							}
 						}
 					}
+
 					this.draw()
 
 				})

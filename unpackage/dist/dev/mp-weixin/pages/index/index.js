@@ -740,6 +740,7 @@ var _default = {
         x: position.location.x - this.baseXPoint,
         y: position.location.y - this.baseYPoint,
         info: {
+          c: info.c,
           isSelect: info.isSelect
         },
         isFill: true
@@ -752,6 +753,7 @@ var _default = {
             for (var i = 0; i < seatInfoList.length; i++) {
               var item = seatInfoList[i];
               if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+                console.log('===命中了');
                 seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
                 if (seatInfoList[i].isSelect) {
                   var config = shapeInfo.config;
