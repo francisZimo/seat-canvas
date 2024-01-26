@@ -8,7 +8,6 @@
 		</view>
 		<view class="main-content">
 			<cover-view :style="thumbnailStyle" class="thumbnail-box">
-
 				<cover-image :src="tempFilePath" class="thumbnail-img"></cover-image>
 				<cover-view :style="visibleAreaStyle" class="visible-area"></cover-view>
 			</cover-view>
@@ -21,9 +20,9 @@
 						<cover-view class="seat-toast-content">
 							<cover-image class="seat-img" :src="imgUrl" alt=""></cover-image>
 							<cover-view class="blank-space">
-								<cover-view class="seat-region">1楼</cover-view>
+								<cover-view class="seat">1楼</cover-view>
 								<cover-view class="divider"></cover-view>
-								<cover-view class="seat-row">10排</cover-view>
+								<cover-view class="seat">10排</cover-view>
 								<cover-view class="divider"></cover-view>
 								<cover-view class="seat">20座</cover-view>
 							</cover-view>
@@ -45,9 +44,12 @@
 </template>
 
 <script>
+// import {
+// 	seatInfo
+// } from './seatData.js'
 import {
 	seatInfo
-} from './seatData.js'
+} from './seatNew.js'
 import {
 	throttle
 } from 'lodash'
@@ -156,7 +158,7 @@ export default {
 			// tempCanvas 作为离屏canvas
 			const tempCtx = uni.createCanvasContext('tempCanvas', this);
 			this.canvasContext = tempCtx;
-			tempCtx.setLineWidth(4)
+			// tempCtx.setLineWidth(4)
 			this.canvasType = 'cache'
 			this.userDraw()
 
@@ -288,19 +290,15 @@ export default {
 			this.canvasClass = canvasBase;
 			this.draw()
 			this.isShowCanvas = true;
-
-
-
 		},
 		// 重新绘制
 		draw() {
 			this.canvasClass.reset()
 			this.clearCanvas();
-
 			if (this.scale === this.scaleBase) {
 				this.canvasContext.translate(0, 0);
 				this.canvasContext.scale(this.scale, this.scale);
-				this.canvasContext.setLineWidth(4); // 设置边框宽度
+				// this.canvasContext.setLineWidth(4); // 设置边框宽度
 				this.userDraw();
 
 				// 缩略图
@@ -312,7 +310,7 @@ export default {
 			} else {
 				this.canvasContext.translate(this.offset.x, this.offset.y);
 				this.canvasContext.scale(this.scale, this.scale);
-				this.canvasContext.setLineWidth(4); // 设置边框宽度
+				// this.canvasContext.setLineWidth(4); // 设置边框宽度
 				if (this.isTouchMoving) {
 					if (this.tempFilePath) {
 						console.log('缩略图绘制')
@@ -545,15 +543,22 @@ export default {
 				x,
 				y,
 				radius,
-				isFill
+				isFill,
+				info
 			} = payload;
-
+			const angle = info.angle;
 			context.beginPath();
 			context.setStrokeStyle('black')
 			context.arc(x, y, radius, 0, 2 * Math.PI);
 			if (isFill) {
-				context.closePath();
-				context.setFillStyle('white');
+
+				let curColor = angle && angle.picture ? '#CF3B34' : '#C8C8C8'
+				context.setStrokeStyle(curColor); // 设置边框颜色
+				context.arc(x, y, radius, 0, 2 * Math.PI)
+				context.closePath()
+				context.setFillStyle(curColor);
+				// context.closePath();
+				// context.setFillStyle('white');
 				context.fill();
 			}
 			context.stroke()
@@ -612,6 +617,7 @@ export default {
 				info: {
 					c: info.c,
 					isSelect: info.isSelect,
+					angle: info.angle
 				},
 				isFill: true
 			}
@@ -619,35 +625,38 @@ export default {
 				const circleInstance = this.canvasClass.circle(circleInfo)
 				circleInstance.on('touchend', (shapeInfo) => {
 					const originData = shapeInfo.config.info
-					if (originData.c) {
-						for (let i = 0; i < seatInfoList.length; i++) {
-							const item = seatInfoList[i]
-							if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
-								console.log('===命中了')
-								seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
-								if (seatInfoList[i].isSelect) {
-									const {
-										config
-									} = shapeInfo
-									this.curSelectSeat = config
-									const left = config.x * this.scale + this.offset.x + 'px'
-									const top = config.y * this.scale + this.offset.y - config.radius * this
-										.scale - this.seatBoxHeight + 'px'
-									this.seatPosition = `left: ${left}; top: ${top};`
-									this.isShowSeatImg = true;
+					const angle = originData.angle
+					// 有图片才点击
+					if (angle && angle.picture) {
+						if (originData.c) {
+							for (let i = 0; i < seatInfoList.length; i++) {
+								const item = seatInfoList[i]
+								if (JSON.stringify(originData.c) === JSON.stringify(item.c)) {
+									console.log('===命中了')
+									seatInfoList[i].isSelect = !seatInfoList[i].isSelect;
+									if (seatInfoList[i].isSelect) {
+										const {
+											config
+										} = shapeInfo
+										this.curSelectSeat = config
+										const left = config.x * this.scale + this.offset.x + 'px'
+										const top = config.y * this.scale + this.offset.y - config.radius * this
+											.scale - this.seatBoxHeight + 'px'
+										this.seatPosition = `left: ${left}; top: ${top};`
+										this.isShowSeatImg = true;
+
+									} else {
+										this.isShowSeatImg = false;
+									}
 
 								} else {
-									this.isShowSeatImg = false;
+									seatInfoList[i].isSelect = false
 								}
-
-							} else {
-								seatInfoList[i].isSelect = false
 							}
 						}
+
+						this.draw()
 					}
-
-					this.draw()
-
 				})
 			} else {
 				// 绘制圆形
@@ -805,7 +814,7 @@ export default {
 	.filter-area {
 		width: 100%;
 		height: 100px;
-		background-color: #f8f8f8;
+		background-color: #F5F5F5;
 		border: 1px solid red;
 	}
 
@@ -820,7 +829,7 @@ export default {
 	.main-content {
 		width: 100%;
 		flex: 1;
-		background-color: gray;
+		background-color: #F5F5F5;
 		position: relative;
 
 		.canvas-area {
@@ -898,7 +907,7 @@ export default {
 	justify-content: center;
 
 	.seat-toast-content {
-		background: #F5F5F5;
+		background-color: #fff;
 		box-shadow: 0px 6px 12px 2px rgba(0, 0, 0, 0.16);
 		border-radius: 20px 20px 20px 20px;
 	}
@@ -908,18 +917,16 @@ export default {
 		width: 100%;
 		height: 236px;
 		overflow: hidden;
-		border-radius: 20px 20px 0px 0px;
+		border-radius: 0px 0px 0px 0px;
 	}
 
 	.blank-space {
 		width: 100%;
 		height: 80px;
 		display: flex;
+		justify-content: center;
 		align-items: center;
 
-
-		.seat-region,
-		.seat-row,
 		.seat {
 			flex: 1;
 			display: flex;
@@ -927,13 +934,11 @@ export default {
 			justify-content: center;
 			font-size: 24rpx;
 			color: #333;
-
+			text-align: center;
 			height: 34px;
 			font-size: 24px;
 			font-family: PingFang SC, PingFang SC;
 			font-weight: 500;
-			color: #000000;
-
 		}
 
 		.divider {

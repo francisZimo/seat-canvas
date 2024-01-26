@@ -20,15 +20,21 @@ class Circle extends Event {
             info
         } = this.config
         this.isSelect=!!info.isSelect
+        const angle=info.angle
     
         fillStyle&&(ctx.fillStyle = fillStyle)
         ctx.beginPath()  
-        ctx.setStrokeStyle('black'); // 设置边框颜色
+        
+
+        let curColor=angle&&angle.picture?'#CF3B34':'#C8C8C8'
+        ctx.setStrokeStyle(curColor); // 设置边框颜色
         ctx.arc(x, y, radius, 0, 2 * Math.PI)
         ctx.closePath()
-        ctx.setFillStyle('white');
+        ctx.setFillStyle(curColor);
         ctx.fill();
         ctx.stroke()
+
+
     
         if(this.isSelect){
             // const img = selectImg
